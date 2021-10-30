@@ -42,10 +42,11 @@ class DuckDuckGoScraperController extends Controller
             if (empty($duplicate_check)) {
                 echo "$source_url->url";
 
-                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle(false)->userAgent('Wget/1.9.1')->evaluate("document.documentElement.outerHTML");
+                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle(false)->userAgent('Mozilla / 5.0 (compatible; MSIE 7.0; Windows; U; Windows NT 10.0; Trident / 4.0)')->evaluate("document.documentElement.outerHTML");
                 // $response = Browsershot::url($source_url->url)->base64Screenshot();
-                //$response = Http::get($source_url->url);
+
                 echo $response;
+
                 $pokemon_doc = new \DOMDocument();
                 libxml_use_internal_errors(true); //disable libxml errors
 
