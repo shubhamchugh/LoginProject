@@ -11,8 +11,6 @@
         @endforeach
 
     </ul>
-    <h4 class="sidebar-title text-capitalize my-3">Frequently Asked Questions</h4>
-    {{ faq(3) }}
 
     <h3 id="drop">Troubleshoot:</h3>
 

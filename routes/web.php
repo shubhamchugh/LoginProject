@@ -102,6 +102,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+//search page
+Route::get('/search', [
+    'uses' => 'App\Http\Controllers\Frontend\HomeController@search',
+    'as'   => 'search.show',
+]);
+
 //Frontend Product Page
 Route::get(config('app.POST_SLUG') . '/{post}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@show',
@@ -129,11 +135,6 @@ Route::get('/page/{page} ', [
 Route::get('/sitemap/{sitemap}', [
     'uses' => 'App\Http\Controllers\Frontend\HomeController@sitemap',
     'as'   => 'sitemap.show',
-]);
-
-Route::get('/search', [
-    'uses' => 'App\Http\Controllers\Frontend\HomeController@search',
-    'as'   => 'search.show',
 ]);
 
 Route::get('/docs/{page}', StaticPageController::class)->name('docs')->where('page', 'about|contact|terms|privacy|dmca');

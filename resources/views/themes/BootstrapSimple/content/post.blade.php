@@ -76,11 +76,11 @@
             <div class="row my-3">
                 <h3>FAQ</h3>
                 <div class="col-md-6">
-                    {{ faq(3) }}
+                    {{ faq(3,$content->content_title) }}
                 </div>
 
                 <div class="col-md-6">
-                    {{ faq(3) }}
+                    {{ faq(3,$content->content_title) }}
                 </div>
             </div>
 
