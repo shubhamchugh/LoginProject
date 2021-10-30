@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Backend\Fetch;
 
-use App\Http\Controllers\Controller;
-use App\Models\FakeUser;
 use App\Models\Post;
-use App\Models\PostContent;
-use App\Models\ScrapingFailed;
+use App\Models\FakeUser;
 use App\Models\SourceUrl;
+use App\Models\PostContent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\ScrapingFailed;
 use Spatie\Browsershot\Browsershot;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
-class DuckDuckGoScraperController extends Controller
+class YahooScraperController extends Controller
 {
-    public function duckduckgo(Request $request)
+    public function YahooScraper(Request $request)
     {
 
         $start  = (!empty($request->start)) ? $request->start : 0;
@@ -42,7 +42,7 @@ class DuckDuckGoScraperController extends Controller
             if (empty($duplicate_check)) {
                 echo "$source_url->url";
 
-                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle(false)->userAgent('Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko')->evaluate("document.documentElement.outerHTML");
+                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle(false)->userAgent('Mozilla / 5.0 (compatible; MSIE 7.0; Windows; U; Windows NT 10.0; Trident / 4.0)')->evaluate("document.documentElement.outerHTML");
                 // $response = Browsershot::url($source_url->url)->base64Screenshot();
 
                 echo $response;
@@ -59,10 +59,10 @@ class DuckDuckGoScraperController extends Controller
                 $pokemon_xpath = new \DOMXPath($pokemon_doc);
 
                 //get all the data with an id
-                $titles      = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/h2/a[1]');
-                $decs        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/a');
-                $urls        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/a/@href');
-                $posts_title = $pokemon_xpath->query('/html/body/div[1]/div[2]/form/div[1]/input[1]/@value');
+                $titles      = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[1]/div/div/div/div/ol/li[*]/div/div[1]/h3/a/text()');
+                $decs        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[1]/div/div/div/div/ol/li[*]/div/div[2]');
+                $urls        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[1]/div/div/div/div/ol/li[*]/div/div[1]/h3/a/@href');
+                $posts_title = $pokemon_xpath->query('/html/body/div[1]/div[1]/div[2]/div[3]/form/div[1]/input/@value');
 
                 if (1 == $posts_title->length) {
                     foreach ($posts_title as $post_title) {

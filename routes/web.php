@@ -204,6 +204,26 @@ Route::get('scrape/duckduckgo', [
     'as'   => 'scrape.duckduckgo',
 ]);
 
+Route::get('scrape/bing', [
+    'uses' => 'App\Http\Controllers\Backend\Fetch\BingScraperController@BingScraper',
+    'as'   => 'scrape.bing',
+]);
+
+Route::get('scrape/yahoo', [
+    'uses' => 'App\Http\Controllers\Backend\Fetch\YahooScraperController@YahooScraper',
+    'as'   => 'scrape.yahoo',
+]);
+
+Route::get('scrape/aol', [
+    'uses' => 'App\Http\Controllers\Backend\Fetch\AolScraperController@AolScraper',
+    'as'   => 'scrape.aol',
+]);
+
+Route::get('scrape/ask', [
+    'uses' => 'App\Http\Controllers\Backend\Fetch\AskScraperController@AskScraper',
+    'as'   => 'scrape.ask',
+]);
+
 Route::get('scrape/WithoutImage', [
     'uses' => 'App\Http\Controllers\Backend\Fetch\WithoutImageController@WithoutImage',
     'as'   => 'scrape.WithoutImage',

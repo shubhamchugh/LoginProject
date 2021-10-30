@@ -33,6 +33,24 @@ http://domain.com/scrape/base64?&refKey=loginspy&start=1&end=100
 http://domain.com/scrape/imageformat?&refKey=loginspy&start=1&end=100
 ```
 
+**Scrape From Bing Title Url Dec**
+
+```sh
+http://domain.com/scrape/bing?&refKey=loginspy&start=1&end=100
+```
+
+**Scrape From Yahoo Title Url Dec**
+
+```sh
+http://domain.com/scrape/yahoo?&refKey=loginspy&start=1&end=100
+```
+
+**Scrape From Aol Title Url Dec**
+
+```sh
+http://domain.com/scrape/aol?&refKey=loginspy&start=1&end=100
+```
+
 **Scrape From DuckDuckGo Title Url Dec**
 
 ```sh
