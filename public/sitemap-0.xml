@@ -2,9 +2,21 @@
 <?xml-stylesheet href="/vendor/sitemap/styles/xml.xsl" type="text/xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 	<url>
-	<loc>http://localhost/test/test-slug</loc>
+	<loc>http://localhost/test/waytogocard</loc>
 		<priority>1.0</priority>
-		<lastmod>2021-10-15T18:07:42+00:00</lastmod>
+		<lastmod>2021-04-02T05:59:47+00:00</lastmod>
+		<changefreq>Weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/test/4myhr</loc>
+		<priority>1.0</priority>
+		<lastmod>2021-04-11T08:21:02+00:00</lastmod>
+		<changefreq>Weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/test/test</loc>
+		<priority>1.0</priority>
+		<lastmod>2021-04-29T04:54:31+00:00</lastmod>
 		<changefreq>Weekly</changefreq>
 	</url>
 </urlset>

@@ -47,8 +47,10 @@ Route::get('createsitemap', function () {
             $sitemapCounter++;
         }
 
+        $slug = (!empty(config('app.POST_SLUG'))) ? '/' . config('app.POST_SLUG') : config('app.POST_SLUG');
+
         // add product to items array
-        $sitemap->add(config('app.url') . '/' . config('app.POST_SLUG') . '/' . $p->slug, $p->published_at, '1.0', 'Weekly');
+        $sitemap->add(config('app.url') . $slug . '/' . $p->slug, $p->published_at, '1.0', 'Weekly');
         // count number of elements
         $counter++;
     }
