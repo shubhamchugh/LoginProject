@@ -20,13 +20,14 @@
                                     </strong></p>
                                 <p>
                                 <div class="buttons buttons has-addons is-centered">
-                                    <button onclick="{{ $slug }}" class="button is-primary">Back to list</button>
-                                    <button onclick="{{ $url }}" class="button is-link">Go To
-                                        The
-                                        Website</button>
+                                    <a href="{{ $slug }}" class="button is-primary">
+                                        < Back to list</a>
+                                            <a href="{{ $url }}" class="button is-link">Go To
+                                                The
+                                                Website ></a>
 
 
-                                    </p>
+                                            </p>
                                 </div>
 
                             </div>
