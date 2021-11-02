@@ -63,10 +63,26 @@
                             $content->contentFakeAuthor->name }}</a>
                     </div>
                     <div class="text-end">
+
+
+
+                        @if (config('app.CID_STATUS'))
                         <span class="float-right">
-                            <a href="{{route('post.cid', ['title' => $content->content_title, 'url' => $content->content_url, 'dec' => $content->content_dec, 'slug' => URL::current()]) }}"
+                            <a href="{{route('post.cid', ['id' => $content->id, 'title' => $content->content_title, 'url' => $content->content_url, 'dec' => $content->content_dec, 'slug' => URL::current()]) }}"
                                 rel="nofollow" target="_blank" class="btn btn-primary btn-sm">Show
                                 details <i class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                        @else
+                        <span class="float-right">
+                            <a href="{{ $content->content_url }}" rel="nofollow" target="_blank"
+                                class="btn btn-primary btn-sm">Show
+                                details <i class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                        @endif
+
+
+
+
+
+
                     </div>
                 </div>
             </div>

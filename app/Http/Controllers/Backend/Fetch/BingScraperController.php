@@ -16,7 +16,6 @@ class BingScraperController extends Controller
 {
     public function BingScraper(Request $request)
     {
-
         $start  = (!empty($request->start)) ? $request->start : 0;
         $end    = (!empty($request->end)) ? $request->end : 999999999999999999;
         $refKey = (!empty($request->refKey)) ? $request->refKey : null;
@@ -42,7 +41,7 @@ class BingScraperController extends Controller
             if (empty($duplicate_check)) {
                 echo "$source_url->url";
 
-                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle(false)->userAgent('Mozilla / 5.0 (compatible; MSIE 7.0; Windows; U; Windows NT 10.0; Trident / 4.0)')->evaluate("document.documentElement.outerHTML");
+                $response = Browsershot::url($source_url->url)->windowSize(1000, 1000)->waitUntilNetworkIdle()->userAgent('Mozilla / 5.0 (compatible; MSIE 7.0; Windows; U; Windows NT 10.0; Trident / 4.0)')->evaluate("document.documentElement.outerHTML");
                 // $response = Browsershot::url($source_url->url)->base64Screenshot();
 
                 echo $response;

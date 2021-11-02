@@ -117,7 +117,7 @@ Route::get(config('app.POST_SLUG') . '/{post}', [
 ]);
 
 //cid Page
-Route::get(config('app.CID') . '/{title}', [
+Route::get(config('app.CID') . '/{id}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@cid',
     'as'   => 'post.cid',
 ]);

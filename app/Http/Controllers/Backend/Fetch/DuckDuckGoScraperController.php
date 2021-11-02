@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Fetch;
 
-use App\Http\Controllers\Controller;
-use App\Models\FakeUser;
 use App\Models\Post;
-use App\Models\PostContent;
-use App\Models\ScrapingFailed;
+use App\Models\FakeUser;
 use App\Models\SourceUrl;
+use App\Models\PostContent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\ScrapingFailed;
 use Spatie\Browsershot\Browsershot;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class DuckDuckGoScraperController extends Controller
 {
@@ -59,10 +59,10 @@ class DuckDuckGoScraperController extends Controller
                 $pokemon_xpath = new \DOMXPath($pokemon_doc);
 
                 //get all the data with an id
-                $titles      = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/h2/a[1]');
-                $decs        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/a');
-                $urls        = $pokemon_xpath->query('/html/body/div[1]/div[3]/div/div/div[*]/div/a/@href');
-                $posts_title = $pokemon_xpath->query('/html/body/div[1]/div[2]/form/div[1]/input[1]/@value');
+                $titles      = $pokemon_xpath->query('/html/body/div[2]/div[5]/div[3]/div/div[1]/div[5]/div[*]/div/h2/a[1]');
+                $decs        = $pokemon_xpath->query('/html/body/div[2]/div[5]/div[3]/div/div[1]/div[5]/div[*]/div/div[2]');
+                $urls        = $pokemon_xpath->query('/html/body/div[2]/div[5]/div[3]/div/div[1]/div[5]/div[*]/div/h2/a[1]/@href');
+                $posts_title = $pokemon_xpath->query('/html/body/div[2]/div[2]/div[1]/div[1]/div/form/input[1]/@value');
 
                 if (1 == $posts_title->length) {
                     foreach ($posts_title as $post_title) {

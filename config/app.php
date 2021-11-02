@@ -25,6 +25,7 @@ return [
     'THEME_NAME'               => env('THEME_NAME'),
     'GOOGLE_SEARCH'            => env('GOOGLE_SEARCH'),
     'SEARCH_INPUT_TEXT'        => env('SEARCH_INPUT_TEXT'),
+    'CID_STATUS'               => env('CID_STATUS'),
     'CID'                      => env('CID'),
 
     /*
