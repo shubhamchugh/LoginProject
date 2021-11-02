@@ -558,12 +558,6 @@
                         of our site, or your dealings with our site, you may contact us at : contact@staffslogin.com For
                         support
                         related to the PORTAL-GOD Android App, click here.</span></p>
-        <p><a href="https://login-db.onl/about"><span style="font-weight: 400;">About Us</span></a><a
-                        href="https://login-db.onl/contact"><span style="font-weight: 400;">Contact Us</span></a><a
-                        href="https://login-db.onl/policy"><span style="font-weight: 400;">Privacy Policy</span></a><a
-                        href="https://login-db.onl/terms"><span style="font-weight: 400;">Terms</span></a> <a
-                        href="https://login-db.onl/terms"><span style="font-weight: 400;">of Use</span></a><a
-                        href="https://login-db.onl/dmca"><span style="font-weight: 400;">DMCA Disclaimer</span></a></p>
 </div>
 <!-- /container -->
 
