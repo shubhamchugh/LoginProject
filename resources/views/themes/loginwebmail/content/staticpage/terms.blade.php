@@ -1,4 +1,4 @@
-@extends('themes.BootstrapSimple.layouts.master')
+@extends('themes.loginwebmail.layouts.master')
 
 
 @section('title', 'Home Page')
