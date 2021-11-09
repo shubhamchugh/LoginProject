@@ -50,7 +50,7 @@ PUSHER_APP_CLUSTER=mt1
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 
-THEME_NAME=BootstrapSimple
+THEME_NAME=loginwebmail
 ScrapeApi=http://worthmysite.test
 
 
@@ -73,11 +73,14 @@ HOMEPAGE_POST_COUNT=500
 HOMEPAGE_POST_PAGINATION=4
 GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=011820281619407342747:wrj13vdv1qw
 SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
-CID=testcid
+
 
 GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=011820281619407342747:wrj13vdv1qw
 SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
-CID=testcid
+
 
 RANDOM_POST_START_COUNT=1
 RANDOM_POST_END_COUNT=10
+
+CID_STATUS=true
+CID=testcid
