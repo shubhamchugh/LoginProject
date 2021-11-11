@@ -8,6 +8,6 @@
     <link rel="stylesheet" href='{{ asset("themes/loginwebmail/custom/custom-main.css") }}' type="text/css">
     <link rel="stylesheet" href='{{ asset("themes/loginwebmail/main.css") }}' type="text/css">
     {{ $HeaderCode->value ?? "" }}
-    @section(' head')
+    @section('head')
     @show
 </head>
