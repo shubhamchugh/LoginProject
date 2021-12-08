@@ -15,7 +15,7 @@
 
     <div class="content has-text-centered">
         <p>
-            <strong> &copy; 2021 Loginwebmail.com</strong>
+          <strong> &copy; 2021 {{ config('app.name') }}</strong>
         </p>
     </div>
 </footer>
