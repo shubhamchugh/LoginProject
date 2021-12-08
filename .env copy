@@ -71,12 +71,10 @@ SIDEBAR_POST_COUNT=20
 WASABI_BUCKET_NAME=loginproject
 HOMEPAGE_POST_COUNT=500
 HOMEPAGE_POST_PAGINATION=4
-GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=011820281619407342747:wrj13vdv1qw
+GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=18bf839411a945950
 SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
 
 
-GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=011820281619407342747:wrj13vdv1qw
-SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
 
 
 RANDOM_POST_START_COUNT=1
