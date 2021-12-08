@@ -130,11 +130,11 @@
                         <h2 class="title is-5"><strong>FAQ</strong></h2>
                     </div>
                     <div class="col-md-6">
-                        {{ faq(3,$content->content_title) }}
+                        {{ faq(3,$post->post_title) }}
                     </div>
 
                     <div class="col-md-6">
-                        {{ faq(3,$content->content_title) }}
+                        {{ faq(3,$post->post_title) }}
                     </div>
                 </div>
             </div>
