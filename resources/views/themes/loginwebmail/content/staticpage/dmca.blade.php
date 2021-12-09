@@ -1,16 +1,21 @@
-@extends('themes.loginwebmail.layouts.master')
+@extends('themes.BootstrapSimple.layouts.master')
 
 
 @section('title', 'Home Page')
 @section('content')
 <div class="container margin_60_35">
         <div class="detail_title_1">
-                <h1>DMCA Disclaimer</h1>
+                <h1>Disclaimer</h1>
         </div>
+<div>We are an independent website trying to help the internet users find correct login websites and secure their Online Banking, Credit Card, Emails, and other login information.
+</br> We are not associated with any brands mentioned on this website. All brands, logos, and websites mentioned we are directing to belong to respective organizations.
+       
+       </div>
+       <p>&nbsp;</p>
         <h3><strong>DMCA Copyright Infringement Notification</strong></h3>
         <p><span style="font-weight: 400;">All trademarks, registered trademarks, product names and company names or
                         logos
-                        appearing on the site are the property of their respective owners. staffslogin.com abides by the
+                        appearing on the site are the property of their respective owners. We abides by the
                         federal
                         Digital Millennium Copyright Act (DMCA) by responding to notices of alleged infringement that
                         complies with
@@ -23,18 +28,10 @@
                         so that they may make a counter notification, also in accordance with the DMCA.</span></p>
         <p>&nbsp;</p>
         <p><span style="font-weight: 400;">Before serving either a Notice of Infringing Material or
-                        Counter-Notification,
-                        you may wish to contact a lawyer to better understand your rights and obligations under the DMCA
-                        and other
-                        applicable laws. The following notice requirements are intended to comply with staffslogin.coms
-                        rights and
-                        obligations under the DMCA, in particular, section 512(c), and do not constitute legal
-                        advice.</span></p>
+                        Counter-Notification, You can can <b>Contact Us</b> directly for easy resolution. 
+                 </span></p>
         <p>&nbsp;</p>
-        <h3><strong>Notice of Copyright Infringing</strong></h3>
-        <p><span style="font-weight: 400;">To file a notice of infringing material on staffslogin.com please provide a
-                        notification containing the following details</span></p>
-        <p>&nbsp;</p>
+       
 </div>
 <!-- /container -->
 
