@@ -27,7 +27,7 @@
                 <div class="columns">
                     <div class="column ">
 
-                        <h1 class="title is-4">
+                        <h1 class="title is-4 is-capitalized">
                             {{ $post->post_title }}
                         </h1>
                         <div class="user">
@@ -154,6 +154,6 @@
 
 
 @section('head')
-<title>{{ $PrePostPageTitle->value ?? ""}} {{ $post->post_title ?? "Default Message"}}
+<title class="is-capitalized">{{ $PrePostPageTitle->value ?? ""}} {{ $post->post_title ?? "Default Message"}}
     {{ $AfterPostPageTitle->value ?? ""}}</title>
 @endsection
