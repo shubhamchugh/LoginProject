@@ -14,7 +14,7 @@
                     <a class="nav-link" href="{{ route('docs',['privacy']) }}">Privacy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('docs',['dmca']) }}">DMCA</a>
+                    <a class="nav-link" href="{{ route('docs',['dmca']) }}">Disclaimer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('docs',['contact']) }}">Contact Us</a>
