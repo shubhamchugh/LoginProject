@@ -116,6 +116,5 @@
 
 
 @section('head')
-<title>{{ $PrePostPageTitle->value ?? ""}} {{ $post->post_title ?? "Default Message"}}
-    {{ $AfterPostPageTitle->value ?? ""}}</title>
+<title>{{ucwords($post->post_title ?? "Default Message")}}</title>
 @endsection
