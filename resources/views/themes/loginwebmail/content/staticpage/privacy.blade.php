@@ -1,4 +1,4 @@
-@extends('themes.loginwebmail.layouts.master')
+@extends('themes.BootstrapSimple.layouts.master')
 
 
 @section('title', 'Home Page')
@@ -11,7 +11,7 @@
                         it,
                         and the choices you have, including how to manage your privacy and cookies settings, access the
                         information
-                        we have about you, and delete your account. http://staffslogin.com/ is committed to protecting
+                        we have about you, and delete your account. the site is committed to protecting
                         consumer
                         privacy online. We believe that greater protection of personal privacy on the Web will not only
                         protect our
@@ -21,18 +21,18 @@
                         you visit our
                         site, how we may use that information, whether we disclose it to anyone, and the choices you
                         have regarding
-                        our use of the information. staffslogin.com strives to offer its visitors the many advantages of
+                        our use of the information. the site strives to offer its visitors the many advantages of
                         Internet
                         technology and to provide an interactive and personalized experience.</span></p>
         <h3><strong>Your Consent</strong></h3>
-        <p><span style="font-weight: 400;">BY USER http://staffslogin.com/ SERVICES, INSTALLING AND/OR RUNNING ON YOUR
+        <p><span style="font-weight: 400;">BY USER the site SERVICES, INSTALLING AND/OR RUNNING ON YOUR
                         MOBILE DEVICE OR BROWSER, ENTERING INTO, CONNECTING TO, ACCESSING AND/OR USING THE APP, YOU
                         AGREE TO THE
                         TERMS AND CONDITIONS SET FORTH IN THIS PRIVACY POLICY, INCLUDING TO THE POSSIBLE COLLECTION AND
                         PROCESSING
                         OF YOUR PERSONAL INFORMATION. PLEASE NOTE: IF YOU OR, AS APPLICABLE, YOUR LEGAL GUARDIAN,
                         DISAGREE TO ANY
-                        TERM PROVIDED HEREIN, YOU MUST NOT INSTALL, ACCESS AND/OR USE THE APP, http://staffslogin.com/
+                        TERM PROVIDED HEREIN, YOU MUST NOT INSTALL, ACCESS AND/OR USE THE APP, the site
                         OTHER
                         SERVICES AND YOU ARE REQUESTED TO PROMPTLY ERASE THE APP FROM YOUR MOBILE DEVICE OR STOP USING
                         OUR
@@ -131,9 +131,9 @@
                         stored on
                         your hard drive and communicate with our servers only when you are visiting our websites. We use
                         cookies to
-                        improve the quality of staffslogin.com. They allow us to monitor aggregate metrics such as total
+                        improve the quality of the site. They allow us to monitor aggregate metrics such as total
                         number of
-                        visitors and number of pages viewed. They also allow us to optimize staffslogin.com to make sure
+                        visitors and number of pages viewed. They also allow us to optimize the site to make sure
                         that we
                         are delivering the best possible experience to our users. Your web browser is likely already set
                         to accept
@@ -142,46 +142,46 @@
                         cookies may result in some features not being able to function properly. To learn more about
                         controlling
                         browser cookies visit: http://www.aboutcookies.org/Default.aspx?page=1. Note that
-                        http://staffslogin.com/
+                        the site
                         has no access to or control over these cookies that are used by third-party advertisers. Learn
                         more about
                         our Cookies Policy.</span></p>
         <h3><strong>Device Information.</strong></h3>
         <p><span style="font-weight: 400;">We collect information regarding the Internet browser, computer, tablet,
                         mobile
-                        phone, smartphone or other device utilized to access staffslogin.com to ensure that
-                        staffslogin.com is
+                        phone, smartphone or other device utilized to access the site to ensure that
+                        the site is
                         optimized for those devices.</span></p>
         <h3><strong>Log Files.</strong></h3>
         <p><span style="font-weight: 400;">We may also automatically log certain anonymous information about visitors to
-                        staffslogin.com, including, but not limited to, where the user came from to visit our site, IP
+                        the site, including, but not limited to, where the user came from to visit our site, IP
                         address,
                         search terms utilized, browser type and a reading history of the pages viewed.</span></p>
         <h3><strong>Analytics</strong></h3>
         <p><span style="font-weight: 400;">We use third party information, reports and analysis about the usage and
                         browsing
-                        patterns of users of staffslogin.com. We allow the third party analytics companies to include
+                        patterns of users of the site. We allow the third party analytics companies to include
                         web beacons
-                        and cookies on staffslogin.com. The collected information includes search terms, search
+                        and cookies on the site. The collected information includes search terms, search
                         parameters,
                         click-throughs by users, and other similar information. We utilize this information to improve
-                        staffslogin.com and make sure we are delivering relevant content to our users. The Analytics we
+                        the site and make sure we are delivering relevant content to our users. The Analytics we
                         use do not
-                        identify individual users of staffslogin.com.</span></p>
+                        identify individual users of the site.</span></p>
         <h3><strong>Third Party Ad Networks and Social Networks</strong></h3>
-        <p><span style="font-weight: 400;">staffslogin.com expects its partners, advertisers to respect the privacy of
+        <p><span style="font-weight: 400;">the site expects its partners, advertisers to respect the privacy of
                         our
                         users. However, third parties, including our partners, advertisers and other content providers
                         accessible
                         through our site, may have their own privacy and data collection policies and practices. For
                         example, during
-                        your visit to our site you may link to, or view as part of a frame on staffslogin.com page,
+                        your visit to our site you may link to, or view as part of a frame on the site page,
                         certain content
-                        that is actually created or hosted by a third party. Also, through staffslogin.com you may be
+                        that is actually created or hosted by a third party. Also, through the site you may be
                         introduced
                         to, or be able to access, information, Web sites, advertisements, features, contests or
                         sweepstakes offered
-                        by other parties. staffslogin.com is not responsible for the actions or policies of such third
+                        by other parties. the site is not responsible for the actions or policies of such third
                         parties. You
                         should check the applicable privacy policies of those third parties when providing information
                         on a feature
@@ -195,7 +195,7 @@
                         before.
                         Through features available on our site, third parties may use cookies or other technology to
                         gather
-                        information. staffslogin.com does not control the use of this technology or the resulting
+                        information. the site does not control the use of this technology or the resulting
                         information and
                         is not responsible for any actions or policies of such third parties. We use third-party
                         advertising
@@ -209,9 +209,9 @@
                         you can
                         visit both the Network Advertising Initiative and the Digital Advertising Alliance. In addition
                         to the
-                        above, we have implemented at staffslogin.com certain "Google Analytics" features that support
+                        above, we have implemented at the site certain "Google Analytics" features that support
                         display
-                        advertising, including re-targeting. Visitors to staffslogin.com may opt out of Google
+                        advertising, including re-targeting. Visitors to the site may opt out of Google
                         Analytics, customize
                         the Google Display Network ads by using the Google Ad Preferences Manager and learn more about
                         how google
@@ -223,7 +223,7 @@
                         the
                         internet. We encourage parents and guardians to observe, participate in, and/or monitor and
                         guide their
-                        online activity. http://staffslogin.com/ does not knowingly collect any Personal Identifiable
+                        online activity. the site does not knowingly collect any Personal Identifiable
                         Information
                         from children under the age of 13. If you think that your child provided this kind of
                         information on our
@@ -231,20 +231,20 @@
                         promptly
                         remove such information from our records.</span></p>
         <h3><strong>Information security and accuracy</strong></h3>
-        <h3><strong>We intend to protect your personal information and to maintain its accuracy. http://staffslogin.com/
+        <h3><strong>We intend to protect your personal information and to maintain its accuracy. the site
                         implements reasonable physical, administrative and technical safeguards to help us protect your
                         personal
                         information from unauthorized access, use and disclosure.</strong></h3>
         <h3><strong>Online Privacy Policy Only</strong></h3>
         <p><span style="font-weight: 400;">This privacy policy applies only to our online activities and is valid for
                         visitors to our website with regards to the information that they shared and/or collect in
-                        http://staffslogin.com/. This policy is not applicable to any information collected offline or
+                        the site. This policy is not applicable to any information collected offline or
                         via channels
                         other than this website.</span></p>
         <h3><strong>Access to information</strong></h3>
         <p><span style="font-weight: 400;">You have the right to request access to the information we have on you. You
                         can
-                        do this by contacting us at support@staffslogin.com. We will make sure to provide you with a
+                        do this by contacting us at support@the site. We will make sure to provide you with a
                         copy of the
                         data we process about you. In order to comply with your request, we may ask you to verify your
                         identity. We
@@ -255,31 +255,31 @@
         <p><span style="font-weight: 400;">If you believe that the information we have about you is incorrect, you are
                         welcome to contact us so we can update it and keep your data accurate. If at any point you wish
                         for
-                        http://staffslogin.com/ to delete information about you, you can simply contact us at
+                        the site to delete information about you, you can simply contact us at
                         link.</span></p>
         <h3><strong>Changes in Privacy Policy</strong></h3>
-        <p><span style="font-weight: 400;">staffslogin.com reserves the right to change or update this Privacy Policy at
+        <p><span style="font-weight: 400;">the site reserves the right to change or update this Privacy Policy at
                         any time by posting a notice at the Site explaining that we are changing our Privacy
                         Policy.</span></p>
         <h3><strong>Contacting the Site</strong></h3>
-        <p><span style="font-weight: 400;">We welcome your feedback and we thank you for using http://staffslogin.com/!
+        <p><span style="font-weight: 400;">We welcome your feedback and we thank you for using the site!
                         If
                         you have additional questions or require more information about our Privacy Policy, do not
                         hesitate to
                         contact us through email at link.</span></p>
         <p><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></p>
-        <h3><strong>Terms of Use - </strong><span style="font-weight: 400;">staffslogin.com</span></h3>
+        <h3><strong>Terms of Use - </strong><span style="font-weight: 400;">the site</span></h3>
         <p><span style="font-weight: 400;">These terms of use (the "terms of use") set out the legal duties of the
                         parties
-                        with respect to the use of our services and of staffslogin.com (the "site"). Please read them
+                        with respect to the use of our services and of the site (the "site"). Please read them
                         carefully
                         before using this website.</span></p>
         <h3><strong>The Agreement</strong></h3>
         <p><span style="font-weight: 400;">These terms of use are a legal agreement between you (referred to hereinafter
                         as
-                        "you", "your," or "user") and PORTAL-GOD, Inc., including its parent company and all of its
+                        "you", "your," or "user") and the site, Inc., including its parent company and all of its
                         subsidiaries and
-                        affiliated entities (referred to hereinafter as "staffslogin.com", "we," "us", or "our"). These
+                        affiliated entities (referred to hereinafter as "the site", "we," "us", or "our"). These
                         terms of
                         use set forth the Terms and Conditions under which you may use our site and any services (i.e.
                         search) that
@@ -291,7 +291,7 @@
                         these terms of
                         use from time to time without notice to you, and you agree to be bound by any such amendments.
                         Therefore,
-                        you should review these terms of use each time you use our site. staffslogin.com only provides
+                        you should review these terms of use each time you use our site. the site only provides
                         general
                         information and nothing on the site should be taken as any form of advice, warranty or
                         endorsement. The
@@ -346,7 +346,7 @@
                         the site you
                         will land on may not be controlled by us and different terms of use and privacy policies shall
                         apply. By
-                        clicking on such links you hereby acknowledge that staffslogin.com is not responsible for those
+                        clicking on such links you hereby acknowledge that the site is not responsible for those
                         websites or
                         their associated content or services. We also reserve the right to disable links from any
                         third-party sites,
@@ -555,9 +555,8 @@
         <h3><strong>9. Questions or Comments</strong></h3>
         <p><span style="font-weight: 400;">If you have any questions or comments regarding these terms of use, the
                         practices
-                        of our site, or your dealings with our site, you may contact us at : contact@staffslogin.com For
-                        support
-                        related to the PORTAL-GOD Android App, click here.</span></p>
+                        of our site, or your dealings with our site, you may contact us <a href=/docs/contact>here</a> </span></p>
+        
 </div>
 <!-- /container -->
 
@@ -569,3 +568,4 @@
 <meta name="description" content="Abouts Us">
 <title>Privacy</title>
 @endsection
+
