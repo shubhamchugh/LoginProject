@@ -21,7 +21,7 @@
                         complies with
                         the DMCA and other applicable laws. As part of our response, we may remove or disable access to
                         material
-                        residing on site that is controlled or operated by staffslogin.com that is claimed to be
+                        residing on site that is controlled or operated by {{ config('app.name') }} that is claimed to be
                         infringing, in
                         which case we will make a good-faith attempting to contact the developer who submitted the
                         affected material
