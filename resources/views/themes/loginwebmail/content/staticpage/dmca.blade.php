@@ -1,4 +1,4 @@
-@extends('themes.BootstrapSimple.layouts.master')
+@extends('themes.loginwebmail.layouts.master')
 
 
 @section('title', 'Home Page')
@@ -41,5 +41,5 @@
 
 @section('head')
 <meta name="description" content="DMCA Disclaimer">
-<title>DMCA Disclaimer</title>
+<title>Disclaimer</title>
 @endsection
