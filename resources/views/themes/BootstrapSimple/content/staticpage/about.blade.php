@@ -7,14 +7,10 @@
     <div class="detail_title_1">
         <h1>About Us</h1>
     </div>
-    <p>You have done with your browser, you have search a lot there for many login pages but you won't get the perfect
-        solution, but here you can log in at any website and portal from StaffsLogin.com.</p>
-    <p>Just search your page or website name in the search bar and you will get the official page links opens in a
-        minute.</p>
-    <p>Staffslogin.com is a multipurpose website for online uses who are searching for any login website on their
-        browser.</p>
-    <p>You can easily log in to your desired website with this website and you just need to fill in your credentials to
-        access any official portal online.</p>
+    <p> We are web devlopment agency who is working from last 10 years in the industry.</p> 
+    <p>We as a {{ config('app.name') }} trying to help all internet users by providing the list of trusted pages as per their query. </p>
+    <p>With our site {{ config('app.name') }}, you can easily find desired website and pages easily. Just search and navigate to the listed pages. 
+    If you find any issue you can fill our contact us page we will try to help you.</p>
 </div>
 <!-- /container -->
 
