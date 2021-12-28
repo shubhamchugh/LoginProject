@@ -45,6 +45,7 @@
         <div class="col-xl-8 col-lg-8 col-md-8 col-md-8 col-12 mb-2">
 
             @foreach ($post->content as $content)
+
             <div class="post-box mt-2">
                 <h3 class="text-primary cursorp">{{ $loop->iteration }}. {{ $content->content_title }}</h3>
                 <p><strong>Url: </strong>{{ $content->content_url }}</p>
