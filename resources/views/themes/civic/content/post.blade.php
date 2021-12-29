@@ -93,7 +93,7 @@
             <div class="faq">
                 <div class="list-group-title">faq</div>
                 <div class="accordion p-3" id="myAccordion">
-                    {{ faq(3, $post->post_title) }}
+                    {{ faqCivic(3, $post->post_title) }}
                 </div>
             </div>
 

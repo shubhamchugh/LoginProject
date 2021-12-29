@@ -10,6 +10,6 @@
     <link rel="stylesheet" href="{{ asset('themes/civic/css/custom.css') }}">
 
     {{ $HeaderCode->value ?? "" }}
-    @section(' head')
+    @section('head')
     @show
 </head>
