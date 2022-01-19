@@ -192,14 +192,19 @@ Route::get('user/confirm/{users}', [
 
 Route::resource('scraping', 'App\Http\Controllers\Backend\Settings\ScrapingPageController');
 
-Route::get('scrape/bing-serp', [
-    'uses' => 'App\Http\Controllers\Backend\scrape\BingSerpScrapeController@bingScrape',
-    'as'   => 'scrape.bing',
-]);
+// Route::get('scrape/bing-serp', [
+//     'uses' => 'App\Http\Controllers\Backend\scrape\BingSerpScrapeController@bingScrape',
+//     'as'   => 'scrape.bing',
+// ]);
 
-Route::get('related-keyword/{keyword}', [
-    'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
-    'as'   => 'scrape.keyword.update',
+// Route::get('related-keyword/{keyword}', [
+//     'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
+//     'as'   => 'scrape.keyword.update',
+// ]);
+
+Route::get('scrape/source-urls', [
+    'uses' => 'App\Http\Controllers\Backend\scrape\ScrapeSourceUrlsController@scrapeSourceUrl',
+    'as'   => 'scrape.sourceUrls',
 ]);
 
 // Settings //

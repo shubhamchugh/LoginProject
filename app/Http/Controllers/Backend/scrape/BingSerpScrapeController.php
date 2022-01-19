@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Backend\scrape;
 
-use App\Models\Post;
-use App\Models\FakeUser;
-use App\Models\SourceUrl;
-use App\Models\PostContent;
-use Illuminate\Http\Request;
-use App\Models\ScrapingFailed;
-use Spatie\Browsershot\Browsershot;
 use App\Http\Controllers\Controller;
+use App\Models\FakeUser;
+use App\Models\Post;
+use App\Models\PostContent;
 use App\Models\PostContentExtension;
+use App\Models\ScrapingFailed;
+use App\Models\SourceUrl;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Spatie\Browsershot\Browsershot;
 
 class BingSerpScrapeController extends Controller
 {
