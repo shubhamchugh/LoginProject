@@ -9,9 +9,8 @@ class ScrapingFailed extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
-        'source_url',
-        'error'
+        'source_value',
+        'error',
     ];
 }

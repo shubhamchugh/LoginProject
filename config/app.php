@@ -27,6 +27,7 @@ return [
     'SEARCH_INPUT_TEXT'        => env('SEARCH_INPUT_TEXT'),
     'CID_STATUS'               => env('CID_STATUS'),
     'CID'                      => env('CID'),
+    'POST_UPDATE_DURATION'     => env('POST_UPDATE_DURATION'),
 
     /*
     |--------------------------------------------------------------------------

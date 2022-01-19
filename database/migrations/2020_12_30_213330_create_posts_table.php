@@ -17,12 +17,10 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->boolean('is_content')->default('0');
             $table->string('post_type', 50)->default('post');
-            $table->string('post_ref', 50)->default('slave');
             $table->string('post_title');
             $table->string('slug', 191)->unique();
-            $table->string('source_url', 150)->unique();
+            $table->string('source_value')->unique();
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
-            $table->boolean('status')->default('1');
             $table->timestamp('published_at')->useCurrent();
             $table->bigInteger('view_count')->default('0');
             $table->softDeletes();

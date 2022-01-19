@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\FakeUser;
 use App\Models\PostContent;
+use App\Models\PostContentExtension;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,20 +26,24 @@ class Post extends Model
         'post_type',
         'post_title',
         'slug',
-        'source_url',
+        'source_value',
         'fake_user_id',
         'status',
         'view_count',
         'created_at',
         'updated_at',
         'published_at',
-        'post_ref',
 
     ];
 
     public function content()
     {
         return $this->hasMany(PostContent::class, 'post_id');
+    }
+
+    public function contentExtension()
+    {
+        return $this->hasMany(PostContentExtension::class, 'post_id');
     }
 
     public function fakeAuthor()
@@ -58,7 +63,7 @@ class Post extends Model
 
     public function scopePublished($query)
     {
-        return $query->where("published_at", "<=", Carbon::now())->where("status", "=", "1");
+        return $query->where("published_at", "<=", Carbon::now());
     }
 
     public function scopeScheduled($query)

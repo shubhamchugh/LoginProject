@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSourceUrlsTable extends Migration
+class CreatePostContentExtensionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateSourceUrlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('source_urls', function (Blueprint $table) {
+        Schema::create('post_content_extensions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('is_scraped');
-            $table->string('value');
+            $table->bigInteger('post_id')->unsigned();
+            $table->text('related_keywords')->nullable();
+            $table->text('news')->nullable();
+            $table->text('videos')->nullable();
+            $table->text('faq')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateSourceUrlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('source_urls');
+        Schema::dropIfExists('post_content_extensions');
     }
 }

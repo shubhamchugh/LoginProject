@@ -12,12 +12,14 @@ class HomeController extends Controller
 
     public function homeList()
     {
+        $last_id = Post::orderBy('id', 'DESC')->published()->first();
 
         $theme_path_home = 'themes.' . config('app.THEME_NAME') . '.content.home';
 
-        $posts = Post::where('post_ref', config('app.REKEY'))->wherein('id', (getRandomNumberArray(config('app.RANDOM_POST_START_COUNT'), config('app.RANDOM_POST_END_COUNT'), config('app.HOMEPAGE_POST_COUNT'))))
+        $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('app.HOMEPAGE_POST_COUNT'))))
             ->published()
             ->paginate(config('app.HOMEPAGE_POST_PAGINATION'));
+
         return view($theme_path_home, [
             'posts' => $posts,
         ]);
@@ -28,7 +30,7 @@ class HomeController extends Controller
 
         $theme_path_sitemap = 'themes.' . config('app.THEME_NAME') . '.content.sitemap';
 
-        $sitemap = Post::published()->where('post_ref', config('app.REKEY'))->where("slug", "like", "$sitemap%")->paginate($this->limit);
+        $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate($this->limit);
 
         return view($theme_path_sitemap, [
             'sitemap' => $sitemap,

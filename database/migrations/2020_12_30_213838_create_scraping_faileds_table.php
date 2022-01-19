@@ -15,7 +15,7 @@ class CreateScrapingFailedsTable extends Migration
     {
         Schema::create('scraping_faileds', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('source_url');
+            $table->string('source_value');
             $table->string('error', 100);
             $table->timestamps();
         });

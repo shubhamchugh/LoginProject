@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\Metadata;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PostContent extends Model
 {

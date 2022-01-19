@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateScrapingChunksTable extends Migration
 {
@@ -16,9 +16,9 @@ class CreateScrapingChunksTable extends Migration
         Schema::create('scraping_chunks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type', 50);
-            $table->string('start',50);
-            $table->string('end',50);
-            $table->string('limit',5);
+            $table->string('start', 50);
+            $table->string('end', 50);
+            $table->string('limit', 5);
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CacheClearController;
 use App\Http\Controllers\Frontend\StaticPageController;
@@ -26,7 +27,7 @@ Route::get('createsitemap', function () {
     $sitemap = App::make('sitemap');
 
     // get all products from db (or wherever you store them)
-    $products = DB::table('posts')->where('post_ref', config('app.REKEY'))->orderBy('created_at', 'desc')->get();
+    $products = DB::table('posts')->orderBy('created_at', 'desc')->get();
 
     // counters
     $counter        = 0;
@@ -114,7 +115,7 @@ Route::get('/search', [
 Route::get(config('app.POST_SLUG') . '/{post}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@show',
     'as'   => 'post.show',
-]);
+])->middleware('checkdate');
 
 //cid Page
 Route::get(config('app.CID') . '/{id}', [
@@ -191,64 +192,14 @@ Route::get('user/confirm/{users}', [
 
 Route::resource('scraping', 'App\Http\Controllers\Backend\Settings\ScrapingPageController');
 
-Route::get('scrape/base64', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\ScrapeBase64Controller@ScrapeBase64',
-    'as'   => 'scrape.base64',
-]);
-
-Route::get('scrape/onlyurltitle', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\OnlyUrlTitleScrapeController@OnlyUrlTitle',
-    'as'   => 'scrape.onlyurltitle',
-]);
-
-Route::get('scrape/duckduckgo', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\DuckDuckGoScraperController@duckduckgo',
-    'as'   => 'scrape.duckduckgo',
-]);
-
-Route::get('scrape/bing', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\BingScraperController@BingScraper',
+Route::get('scrape/bing-serp', [
+    'uses' => 'App\Http\Controllers\Backend\scrape\BingSerpScrapeController@bingScrape',
     'as'   => 'scrape.bing',
 ]);
 
-Route::get('scrape/yahoo', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\YahooScraperController@YahooScraper',
-    'as'   => 'scrape.yahoo',
-]);
-
-Route::get('scrape/aol', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\AolScraperController@AolScraper',
-    'as'   => 'scrape.aol',
-]);
-
-Route::get('scrape/ask', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\AskScraperController@AskScraper',
-    'as'   => 'scrape.ask',
-]);
-
-Route::get('scrape/WithoutImage', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\WithoutImageController@WithoutImage',
-    'as'   => 'scrape.WithoutImage',
-]);
-
-Route::get('scrape/TitleImgDec', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\TitleImgDecController@TitleImgDec',
-    'as'   => 'scrape.TitleImgDec',
-]);
-
-Route::get('scrape/imageformat', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\ScrapeImageFormat@ScrapeImageFormat',
-    'as'   => 'scrape.image',
-]);
-
-Route::get('scrape/images', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\ScreenshotController@saveImage',
-    'as'   => 'scrape.saveImage',
-]);
-
-Route::get('scrape/metadata', [
-    'uses' => 'App\Http\Controllers\Backend\Fetch\MetadataController@saveMetadata',
-    'as'   => 'scrape.saveMetadata',
+Route::get('related-keyword/{keyword}', [
+    'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
+    'as'   => 'scrape.keyword.update',
 ]);
 
 // Settings //

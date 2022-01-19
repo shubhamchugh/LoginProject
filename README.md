@@ -15,6 +15,25 @@ http://domain.com/clear
 
 ```
 
+**parameters**
+
+```sh
+
+&ScrapingStatus=true //default false
+
+&where=pending //default pending
+
+&refKey=loginspy //default slave
+
+&count=10 //default 20
+
+&start=0 //default 0
+
+&end=1000 //default 999999999999
+
+
+```
+
 **create Sitemap**
 
 ```sh

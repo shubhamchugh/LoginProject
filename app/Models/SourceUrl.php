@@ -10,6 +10,7 @@ class SourceUrl extends Model
     use HasFactory;
 
     protected $fillable = [
-        'is_scraped'
+        'is_scraped',
+        'value',
     ];
 }
