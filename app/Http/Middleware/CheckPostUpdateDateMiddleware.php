@@ -6,7 +6,7 @@ use Closure;
 use Carbon\Carbon;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Backend\Update\BingAutoUpdateController;
+use App\Http\Controllers\Backend\Update\StackPostUpdateController;
 
 class CheckPostUpdateDateMiddleware
 {
@@ -27,7 +27,7 @@ class CheckPostUpdateDateMiddleware
             return $next($request);
         } else {
             try {
-                BingAutoUpdateController::update($request->route('post')->id, $request->route('post')->post_title);
+                StackPostUpdateController::update($request->route('post')->id);
             } catch (\Throwable $th) {
                 Post::Where('id', $request->route('post')->id)->update([
                     'updated_at' => Carbon::now(),

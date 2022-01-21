@@ -117,6 +117,11 @@ Route::get(config('app.POST_SLUG') . '/{post}', [
     'as'   => 'post.show',
 ])->middleware('checkdate');
 
+Route::get('tag/{tag}', [
+    'uses' => 'App\Http\Controllers\Frontend\HomeController@tags',
+    'as'   => 'tag.show',
+]);
+
 //cid Page
 Route::get(config('app.CID') . '/{id}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@cid',
@@ -205,6 +210,11 @@ Route::resource('scraping', 'App\Http\Controllers\Backend\Settings\ScrapingPageC
 Route::get('scrape/source-urls', [
     'uses' => 'App\Http\Controllers\Backend\scrape\ScrapeSourceUrlsController@scrapeSourceUrl',
     'as'   => 'scrape.sourceUrls',
+]);
+
+Route::get('scrape/stack', [
+    'uses' => 'App\Http\Controllers\Backend\scrape\StackoverflowScrapeController@stackScrape',
+    'as'   => 'scrape.stack',
 ]);
 
 // Settings //

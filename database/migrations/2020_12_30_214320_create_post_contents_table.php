@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreatePostContentsTable extends Migration
 {
@@ -17,13 +17,7 @@ class CreatePostContentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('post_id')->unsigned();
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
-            $table->boolean('is_metadata')->default('0');
-            $table->boolean('is_image')->default('0');
-            $table->string('content_title', 191)->nullable();
-            $table->string('domain_name', 191)->nullable();
-            $table->mediumText('content_url')->nullable();
-            $table->mediumText('content_dec')->nullable();
-            $table->string('content_image', 191)->nullable();
+            $table->text('content_dec')->nullable();
             $table->timestamps();
         });
     }

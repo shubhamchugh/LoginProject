@@ -17,6 +17,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     use Sluggable;
+    use \Conner\Tagging\Taggable;
 
     protected $dates = ['published_at'];
 

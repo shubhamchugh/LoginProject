@@ -25,6 +25,16 @@ class HomeController extends Controller
         ]);
     }
 
+    public function tags($tag)
+    {
+        $posts = Post::withAnyTag($tag)->paginate(config('app.HOMEPAGE_POST_PAGINATION'));
+
+        $theme_path_home = 'themes.' . config('app.THEME_NAME') . '.content.home';
+        return view($theme_path_home, [
+            'posts' => $posts,
+        ]);
+    }
+
     public function sitemap($sitemap)
     {
 
