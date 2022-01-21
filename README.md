@@ -36,6 +36,8 @@ insert?count=10 // add counter
 /scrape/source-urls?start=1&end=1000 //scrape StackOverflow Urls please insert counter before this
 
 scrape/stack?where=pending&start=1&end=100 // start scraping Questions & Answers
+
+&domain=https://stackoverflow.com // default is stackoverflow.com
 ```
 
 **create Sitemap**

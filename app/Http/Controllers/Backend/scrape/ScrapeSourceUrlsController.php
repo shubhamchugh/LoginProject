@@ -13,16 +13,16 @@ class ScrapeSourceUrlsController extends Controller
     public function scrapeSourceUrl(Request $request)
     {
 
-        $start = (!empty($request->start)) ? $request->start : 0;
-        $end   = (!empty($request->end)) ? $request->end : 999999999999999999;
-
-        $count = Count::where('is_scrape', 0)->whereBetween('id', [$start, $end])->first();
+        $start  = (!empty($request->start)) ? $request->start : 0;
+        $end    = (!empty($request->end)) ? $request->end : 999999999999999999;
+        $domain = (!empty($request->domain)) ? $request->domain : 'https://stackoverflow.com';
+        $count  = Count::where('is_scrape', 0)->whereBetween('id', [$start, $end])->first();
         if (!empty($count)) {
             $count->update([
                 'is_scrape' => 1,
             ]);
 
-            $url      = 'https://stackoverflow.com/questions?tab=newest&page=' . $count->count;
+            $url      = $domain . '/questions?tab=newest&page=' . $count->count;
             $response = Http::get($url);
             $html     = $response->body();
 
