@@ -16,7 +16,7 @@ class CreateSourceUrlsTable extends Migration
         Schema::create('source_urls', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('is_scraped');
-            $table->string('value');
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }

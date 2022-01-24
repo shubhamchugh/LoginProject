@@ -17,6 +17,7 @@ class ScrapeSourceUrlsController extends Controller
         $end    = (!empty($request->end)) ? $request->end : 999999999999999999;
         $domain = (!empty($request->domain)) ? $request->domain : 'https://stackoverflow.com';
         $count  = Count::where('is_scrape', 0)->whereBetween('id', [$start, $end])->first();
+
         if (!empty($count)) {
             $count->update([
                 'is_scrape' => 1,
@@ -41,10 +42,10 @@ class ScrapeSourceUrlsController extends Controller
             $Urls = $document_xpath->query('//a[@class="question-hyperlink"]/@href');
             $i    = 1;
             foreach ($Urls as $url) {
-
+                $url_to_save = $domain . $url->nodeValue;
                 SourceUrl::insertOrIgnore([
                     'is_scraped' => 'pending',
-                    'value'      => $url->nodeValue,
+                    'value'      => $url_to_save,
                 ]);
                 $i++;
             }

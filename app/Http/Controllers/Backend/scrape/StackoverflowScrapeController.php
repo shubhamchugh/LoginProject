@@ -15,15 +15,14 @@ class StackoverflowScrapeController extends Controller
 {
     public function stackScrape(Request $request)
     {
-
         $count          = (!empty($request->count)) ? $request->count : 20;
         $start          = (!empty($request->start)) ? $request->start : 1;
         $end            = (!empty($request->end)) ? $request->end : 999999999999999999;
         $domain         = (!empty($request->domain)) ? $request->domain : 'https://stackoverflow.com';
         $scrapingStatus = (!empty($request->ScrapingStatus)) ? $request->ScrapingStatus : false;
 
-        if (empty($request->where) && empty($request->domain)) {
-            dd("Please Add &where=value&domain=https://stackoverflow.com/");
+        if (empty($request->where)) {
+            dd("Please Add &where=value");
         }
 
         if (!empty($scrapingStatus)) {
@@ -47,7 +46,7 @@ class StackoverflowScrapeController extends Controller
                 'is_scraped' => 'scraping_start',
             ]);
 
-            $url_to_scrape = $domain . $slug->value;
+            $url_to_scrape = $slug->value;
             echo $url_to_scrape;
 
             $duplicate_check = Post::where('source_value', $url_to_scrape)->first();
