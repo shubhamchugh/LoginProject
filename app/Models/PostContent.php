@@ -2,27 +2,34 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\Metadata;
-use App\Models\Post;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PostContent extends Model
 {
     use HasFactory;
 
-    protected $dates = ['published_at'];
+    public $timestamps = false;
 
     protected $fillable = [
         'post_id',
         'fake_user_id',
-        'content_title',
-        'content_url',
-        'content_dec',
-        'content_image',
-        'is_image',
-        'is_metadata',
+        'bing_related_keywords',
+        'google_related_keywords',
+        'news',
+        'videos',
+        'bing_search_result',
+        'bing_paa',
+        'bing_rich_snippet',
+        'bing_slider_faq',
+        'bing_pop_faq',
+        'bing_tab_faq',
+        'google_faq',
+        'google_rich_snippet',
+        'google_search_result',
     ];
 
     public function post()

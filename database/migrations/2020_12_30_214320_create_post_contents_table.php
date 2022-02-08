@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreatePostContentsTable extends Migration
 {
@@ -17,14 +17,19 @@ class CreatePostContentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('post_id')->unsigned();
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
-            $table->boolean('is_metadata')->default('0');
-            $table->boolean('is_image')->default('0');
-            $table->string('content_title', 191)->nullable();
-            $table->string('domain_name', 191)->nullable();
-            $table->mediumText('content_url')->nullable();
-            $table->mediumText('content_dec')->nullable();
-            $table->string('content_image', 191)->nullable();
-            $table->timestamps();
+            $table->text('bing_related_keywords')->nullable();
+            $table->text('google_related_keywords')->nullable();
+            $table->text('news')->nullable();
+            $table->text('videos')->nullable();
+            $table->text('bing_search_result')->nullable();
+            $table->text('bing_paa')->nullable();
+            $table->text('bing_rich_snippet')->nullable();
+            $table->text('bing_slider_faq')->nullable();
+            $table->text('bing_pop_faq')->nullable();
+            $table->text('bing_tab_faq')->nullable();
+            $table->text('google_faq')->nullable();
+            $table->text('google_rich_snippet')->nullable();
+            $table->text('google_search_result')->nullable();
         });
     }
 

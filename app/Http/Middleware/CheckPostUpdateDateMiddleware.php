@@ -6,7 +6,7 @@ use Closure;
 use Carbon\Carbon;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Backend\Update\BingAutoUpdateController;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class CheckPostUpdateDateMiddleware
 {
@@ -19,19 +19,27 @@ class CheckPostUpdateDateMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $postDate = $request->route('post')->updated_at;
-        $nowTime  = Carbon::now();
-        $days     = $nowTime->diffInDays($postDate);
+
+        $update_date = $request->route('post')->updated_at;
+        $nowTime     = Carbon::now();
+        $days        = $nowTime->diffInDays($update_date);
 
         if ($days < config('app.POST_UPDATE_DURATION')) {
             return $next($request);
         } else {
             try {
-                BingAutoUpdateController::update($request->route('post')->id, $request->route('post')->post_title);
-            } catch (\Throwable $th) {
+                AutoUpdatePostController::update($request->route('post')->id, $request->route('post')->post_title);
+
                 Post::Where('id', $request->route('post')->id)->update([
                     'updated_at' => Carbon::now(),
                 ]);
+
+            } catch (\Throwable $th) {
+
+                Post::Where('id', $request->route('post')->id)->update([
+                    'updated_at' => Carbon::now(),
+                ]);
+
                 return $next($request);
             }
         }

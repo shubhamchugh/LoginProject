@@ -13,16 +13,20 @@ class HomeController extends Controller
     public function homeList()
     {
         $last_id = Post::orderBy('id', 'DESC')->published()->first();
+        if (!empty($last_id)) {
+            $theme_path_home = 'themes.' . config('app.THEME_NAME') . '.content.home';
 
-        $theme_path_home = 'themes.' . config('app.THEME_NAME') . '.content.home';
+            $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('app.HOMEPAGE_POST_COUNT'))))
+                ->published()
+                ->paginate(config('app.HOMEPAGE_POST_PAGINATION'));
 
-        $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('app.HOMEPAGE_POST_COUNT'))))
-            ->published()
-            ->paginate(config('app.HOMEPAGE_POST_PAGINATION'));
+            return view($theme_path_home, [
+                'posts' => $posts,
+            ]);
+        } else {
+            echo "<h1 align='center'>Post Not Found Please Do Some Scraping</h1>";
+        }
 
-        return view($theme_path_home, [
-            'posts' => $posts,
-        ]);
     }
 
     public function sitemap($sitemap)

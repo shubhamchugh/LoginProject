@@ -15,14 +15,14 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('is_content')->default('0');
+            $table->integer('is_content')->default('0');
             $table->string('post_type', 50)->default('post');
             $table->string('post_title');
             $table->string('slug', 191)->unique();
             $table->string('source_value')->unique();
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
-            $table->timestamp('published_at')->useCurrent();
             $table->bigInteger('view_count')->default('0');
+            $table->timestamp('published_at')->useCurrent();
             $table->softDeletes();
             $table->timestamps();
         });

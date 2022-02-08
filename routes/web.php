@@ -197,6 +197,11 @@ Route::get('scrape/bing-serp', [
     'as'   => 'scrape.bing',
 ]);
 
+Route::get('scrape/faq', [
+    'uses' => 'App\Http\Controllers\Backend\Scrape\FaqScrapeController@FaqScrape',
+    'as'   => 'scrape.faq',
+]);
+
 Route::get('related-keyword/{keyword}', [
     'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
     'as'   => 'scrape.keyword.update',

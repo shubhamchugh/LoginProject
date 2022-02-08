@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\FakeUser;
 use App\Models\PostContent;
-use App\Models\PostContentExtension;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,11 +38,6 @@ class Post extends Model
     public function content()
     {
         return $this->hasMany(PostContent::class, 'post_id');
-    }
-
-    public function contentExtension()
-    {
-        return $this->hasMany(PostContentExtension::class, 'post_id');
     }
 
     public function fakeAuthor()

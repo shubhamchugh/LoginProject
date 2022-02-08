@@ -12,7 +12,7 @@
 
     </ul>
 
-    <h3 id="drop">Troubleshoot:</h3>
+    {{-- <h3 id="drop">Troubleshoot:</h3>
 
     <ul>
         <li>Make sure the Caps Lock is off.</li>
@@ -30,7 +30,7 @@
             recover your password instructions here.</li>
         <li>If you are still having issues, and cannot access your account, please feel free to contact us and we will
             be happy to help you as soon as we can</li>
-    </ul>
+    </ul> --}}
 
 
 

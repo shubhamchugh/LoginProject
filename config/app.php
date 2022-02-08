@@ -28,6 +28,7 @@ return [
     'CID_STATUS'               => env('CID_STATUS'),
     'CID'                      => env('CID'),
     'POST_UPDATE_DURATION'     => env('POST_UPDATE_DURATION'),
+    'NODE_SCRAPER_IP'          => env('NODE_SCRAPER_IP'),
 
     /*
     |--------------------------------------------------------------------------
