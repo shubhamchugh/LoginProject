@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
 {
     public function show(Post $post)
     {
+        $postContent = $post->content->toArray();
+        //if Post Content not found then first get the post content and refresh the page
+        if (empty($postContent)) {
+            AutoUpdatePostController::update($post->id, $post->post_title);
+            return redirect()->route('post.show', ['post' => $post->slug]);
+        }
 
-        $postContent             = $post->content->toArray();
         $postContent             = $postContent[mt_rand(0, (count($postContent) - 1))];
         $author                  = $postContent['fake_user_id'];
         $bing_related_keywords   = (!empty($postContent['bing_related_keywords'])) ? unserialize($postContent['bing_related_keywords']) : array();
@@ -56,8 +62,8 @@ class PostController extends Controller
                 'indexedArray'            => $indexedArray,
                 'totalimages'             => $totalimages,
                 'totalvideos'             => $totalvideos,
-
             ]);
+
     }
 
     public function cid(Request $request)
