@@ -24,6 +24,119 @@ class AutoUpdatePostController extends Controller
             'fake_user_id' => mt_rand(1, $totalFakeUser),
         ]);
 
+        // try to save images in database
+        try {
+            $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:licenseType-Any&first=1&tsc=ImageBasicHover';
+
+            $imageHtml = Browsershot::url($imageUrl)
+                ->windowSize(1000, 1000)
+                ->waitUntilNetworkIdle()
+                ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                ->bodyHtml();
+
+            $dom_document_news = new \DOMDocument();
+            libxml_use_internal_errors(true); //disable libxml errors
+
+            $dom_document_news->loadHTML($imageHtml);
+            libxml_clear_errors(); //remove errors for yucky html
+
+            $dom_document_news->preserveWhiteSpace = false;
+            $dom_document_news->saveHTML();
+
+            $document_xpath_news = new \DOMXPath($dom_document_news);
+
+            //News Xpath to get Data
+            $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+            if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                foreach ($images as $image) {
+                    $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                }
+
+                if (!empty($images_j['images'][0])) {
+
+                    $images = (!empty($images_j)) ? serialize($images_j) : null;
+                } else {
+                    $images = (!empty($news)) ? serialize($news) : null;
+                }
+
+                //Updating images in database
+                try {
+                    $post_content->update([
+                        'bing_images' => $images,
+                    ]);
+
+                } catch (\Throwable $th) {
+                    echo "Fail to store Bing images In database <br>";
+
+                }
+            } else {
+                echo "images_update_fail_no_data_found";
+            }
+        } catch (\Throwable $th) {
+
+            echo "Something bad With Bing images Please check: $imageUrl <br>";
+
+        }
+
+        // try to save thumbnail_images in database
+        try {
+            $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&qft=+filterui:licenseType-Any&first=1&tsc=ImageBasicHover';
+
+            $imageHtml = Browsershot::url($imageUrl)
+                ->windowSize(1000, 1000)
+                ->waitUntilNetworkIdle()
+                ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                ->bodyHtml();
+
+            $dom_document_news = new \DOMDocument();
+            libxml_use_internal_errors(true); //disable libxml errors
+
+            $dom_document_news->loadHTML($imageHtml);
+            libxml_clear_errors(); //remove errors for yucky html
+
+            $dom_document_news->preserveWhiteSpace = false;
+            $dom_document_news->saveHTML();
+
+            $document_xpath_news = new \DOMXPath($dom_document_news);
+
+            //News Xpath to get Data
+            $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+            if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                foreach ($images as $image) {
+                    $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                }
+
+                if (!empty($images_j['images'][0])) {
+
+                    $images = (!empty($images_j)) ? serialize($images_j) : null;
+                } else {
+                    $images = (!empty($news)) ? serialize($news) : null;
+                }
+                $thumbnail = json_decode($images_j['images'][0], true);
+
+                //Updating thumbnail_images in database
+                try {
+                    $post_content->update([
+                        'post_thumbnail' => $thumbnail['murl'],
+                    ]);
+
+                } catch (\Throwable $th) {
+                    echo "Fail to store Bing thumbnail_images In database <br>";
+
+                }
+            } else {
+                echo "thumbnail_images_fail_no_data_found";
+            }
+        } catch (\Throwable $th) {
+
+            echo "Something bad With Bing thumbnail_images Please check: $imageUrl <br>";
+
+        }
+
         // try to update New From bing News search
         try {
             $newsUrl = 'https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
@@ -59,6 +172,8 @@ class AutoUpdatePostController extends Controller
                     $news_d['description'][] = (!empty($news_description->nodeValue)) ? $news_description->nodeValue : null;
                 }
 
+                $post_description = (!empty($news_d['description'][0])) ? $news_d['description'][0] : null;
+
                 if (!empty($news_t) && !empty($news_d)) {
                     $news = array_merge($news_t, $news_d);
                     // echo "news";
@@ -71,7 +186,8 @@ class AutoUpdatePostController extends Controller
                 //Updating news in database
                 try {
                     $post_content->update([
-                        'news' => $news,
+                        'bing_news'        => $news,
+                        'post_description' => $post_description,
                     ]);
 
                 } catch (\Throwable $th) {
@@ -120,7 +236,7 @@ class AutoUpdatePostController extends Controller
 
                 try {
                     $post_content->update([
-                        'videos' => $video_j,
+                        'bing_videos' => $video_j,
                     ]);
 
                 } catch (\Throwable $th) {
@@ -205,7 +321,7 @@ class AutoUpdatePostController extends Controller
 
         }
 
-        $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? $bing_data['richSnippet'] : null;
+        $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? preg_replace('/<img[^>]+\>/i', ' ', $bing_data['richSnippet']) : null;
         $bing_rich_snippet_link['bing_rich_snippet_link'][] = (!empty($bing_data['richSnippetLink'])) ? $bing_data['richSnippetLink'] : null;
 
         if (!empty($bing_rich_snippet_text['bing_rich_snippet_text'][0]) && !empty($bing_rich_snippet_link['bing_rich_snippet_link'][0])) {
@@ -382,7 +498,9 @@ class AutoUpdatePostController extends Controller
 
     }
 
-    // add post if not Found in database use in Related Keyword function
+    ////////////////////////////////////////////////////////////////////////////
+    //// ?add post if not Found in database use in Related Keyword function/////
+    ///////////////////////////////////////////////////////////////////////////
     public static function addPost($slug)
     {
         $keyword = str_replace('-', ' ', $slug);
@@ -405,6 +523,119 @@ class AutoUpdatePostController extends Controller
                     'post_id'      => $post->id,
                     'fake_user_id' => mt_rand(1, $totalFakeUser),
                 ]);
+
+                // try to save images in database
+                try {
+                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:licenseType-Any&first=1&tsc=ImageBasicHover';
+
+                    $imageHtml = Browsershot::url($imageUrl)
+                        ->windowSize(1000, 1000)
+                        ->waitUntilNetworkIdle()
+                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                        ->bodyHtml();
+
+                    $dom_document_news = new \DOMDocument();
+                    libxml_use_internal_errors(true); //disable libxml errors
+
+                    $dom_document_news->loadHTML($imageHtml);
+                    libxml_clear_errors(); //remove errors for yucky html
+
+                    $dom_document_news->preserveWhiteSpace = false;
+                    $dom_document_news->saveHTML();
+
+                    $document_xpath_news = new \DOMXPath($dom_document_news);
+
+                    //News Xpath to get Data
+                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+                    if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                        foreach ($images as $image) {
+                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                        }
+
+                        if (!empty($images_j['images'][0])) {
+
+                            $images = (!empty($images_j)) ? serialize($images_j) : null;
+                        } else {
+                            $images = (!empty($news)) ? serialize($news) : null;
+                        }
+
+                        //Updating images in database
+                        try {
+                            $post_content->update([
+                                'bing_images' => $images,
+                            ]);
+
+                        } catch (\Throwable $th) {
+                            echo "Fail to store Bing images In database <br>";
+
+                        }
+                    } else {
+                        echo "images_update_fail_no_data_found";
+                    }
+                } catch (\Throwable $th) {
+
+                    echo "Something bad With Bing images Please check: $imageUrl <br>";
+
+                }
+
+                // try to save thumbnail in database
+                try {
+                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&qft=+filterui:licenseType-Any&first=1&tsc=ImageBasicHover';
+
+                    $imageHtml = Browsershot::url($imageUrl)
+                        ->windowSize(1000, 1000)
+                        ->waitUntilNetworkIdle()
+                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                        ->bodyHtml();
+
+                    $dom_document_news = new \DOMDocument();
+                    libxml_use_internal_errors(true); //disable libxml errors
+
+                    $dom_document_news->loadHTML($imageHtml);
+                    libxml_clear_errors(); //remove errors for yucky html
+
+                    $dom_document_news->preserveWhiteSpace = false;
+                    $dom_document_news->saveHTML();
+
+                    $document_xpath_news = new \DOMXPath($dom_document_news);
+
+                    //News Xpath to get Data
+                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+                    if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                        foreach ($images as $image) {
+                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                        }
+
+                        if (!empty($images_j['images'][0])) {
+
+                            $images = (!empty($images_j)) ? serialize($images_j) : null;
+                        } else {
+                            $images = (!empty($news)) ? serialize($news) : null;
+                        }
+                        $thumbnail = json_decode($images_j['images'][0], true);
+
+                        //Updating images in database
+                        try {
+                            $post_content->update([
+                                'post_thumbnail' => $thumbnail['murl'],
+                            ]);
+
+                        } catch (\Throwable $th) {
+                            echo "Fail to store Bing thumbnail_images In database <br>";
+
+                        }
+                    } else {
+                        echo "thumbnail_images_update_fail_no_data_found";
+                    }
+                } catch (\Throwable $th) {
+
+                    echo "Something bad With Bing thumbnail_images Please check: $imageUrl <br>";
+
+                }
 
                 // try to update New From bing News search
                 try {
@@ -441,6 +672,8 @@ class AutoUpdatePostController extends Controller
                             $news_d['description'][] = (!empty($news_description->nodeValue)) ? $news_description->nodeValue : null;
                         }
 
+                        $post_description = (!empty($news_d['description'][0])) ? $news_d['description'][0] : null;
+
                         if (!empty($news_t) && !empty($news_d)) {
                             $news = array_merge($news_t, $news_d);
                             // echo "news";
@@ -453,7 +686,8 @@ class AutoUpdatePostController extends Controller
                         //Updating news in database
                         try {
                             $post_content->update([
-                                'news' => $news,
+                                'bing_news'        => $news,
+                                'post_description' => $post_description,
                             ]);
 
                         } catch (\Throwable $th) {
@@ -504,7 +738,7 @@ class AutoUpdatePostController extends Controller
 
                         try {
                             $post_content->update([
-                                'videos' => $video_j,
+                                'bing_videos' => $video_j,
                             ]);
 
                         } catch (\Throwable $th) {
@@ -589,7 +823,7 @@ class AutoUpdatePostController extends Controller
 
                 }
 
-                $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? $bing_data['richSnippet'] : null;
+                $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? preg_replace('/<img[^>]+\>/i', ' ', $bing_data['richSnippet']) : null;
                 $bing_rich_snippet_link['bing_rich_snippet_link'][] = (!empty($bing_data['richSnippetLink'])) ? $bing_data['richSnippetLink'] : null;
 
                 if (!empty($bing_rich_snippet_text['bing_rich_snippet_text'][0]) && !empty($bing_rich_snippet_link['bing_rich_snippet_link'][0])) {

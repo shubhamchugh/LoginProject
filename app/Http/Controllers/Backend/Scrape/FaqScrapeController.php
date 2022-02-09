@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Backend\Scrape;
 
-use App\Http\Controllers\Controller;
-use App\Models\FakeUser;
-use App\Models\Post;
-use App\Models\PostContent;
-use App\Models\ScrapingFailed;
-use App\Models\SourceUrl;
 use Carbon\Carbon;
+use App\Models\Post;
+use App\Models\FakeUser;
+use App\Models\SourceUrl;
+use App\Models\PostContent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\ScrapingFailed;
 use Spatie\Browsershot\Browsershot;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class FaqScrapeController extends Controller
 {
@@ -53,6 +53,7 @@ class FaqScrapeController extends Controller
         $keyword = SourceUrl::where('is_scraped', $request->where)->whereBetween('id', [$start, $end])->orderBy('id', 'ASC')->first();
 
         if (!empty($keyword->value)) {
+            echo "keyword: $keyword->value<br>";
             //is_scraped Updated in database before insert
             $keyword->update(['is_scraped' => 'processing_start']);
             $duplicate_check = Post::where('source_value', $keyword->value)->first();
@@ -71,6 +72,126 @@ class FaqScrapeController extends Controller
                     'fake_user_id' => mt_rand(1, $totalFakeUser),
                 ]);
                 $keyword->update(['is_scraped' => 'fake_user_created']);
+
+                // try to save thumbnail_images in database
+                try {
+                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&form=IRFLTR&first=1&tsc=ImageBasicHover';
+
+                    $imageHtml = Browsershot::url($imageUrl)
+                        ->windowSize(1000, 1000)
+                        ->waitUntilNetworkIdle()
+                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                        ->bodyHtml();
+
+                    $dom_document_news = new \DOMDocument();
+                    libxml_use_internal_errors(true); //disable libxml errors
+
+                    $dom_document_news->loadHTML($imageHtml);
+                    libxml_clear_errors(); //remove errors for yucky html
+
+                    $dom_document_news->preserveWhiteSpace = false;
+                    $dom_document_news->saveHTML();
+
+                    $document_xpath_news = new \DOMXPath($dom_document_news);
+
+                    //News Xpath to get Data
+                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+                    $keyword->update(['is_scraped' => 'bing_image_search_hit_success']);
+
+                    if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                        foreach ($images as $image) {
+                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                        }
+
+                        if (!empty($images_j['images'][0])) {
+
+                            $images = (!empty($images_j)) ? serialize($images_j) : null;
+                        } else {
+                            $images = (!empty($news)) ? serialize($news) : null;
+                        }
+
+                        $thumbnail = json_decode($images_j['images'][0], true);
+
+                        //Updating thumbnail_images in database
+                        try {
+                            $post_content->update([
+                                'post_thumbnail' => $thumbnail['murl'],
+                            ]);
+                            $keyword->update(['is_scraped' => 'bing_thumbnail_images_updated']);
+                        } catch (\Throwable $th) {
+                            echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                            $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
+                        }
+                    } else {
+                        $keyword->update(['is_scraped' => 'thumbnail_images_update_fail_no_data_found']);
+                    }
+                } catch (\Throwable $th) {
+
+                    echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
+                    $keyword->update(['is_scraped' => 'bing_thumbnail_images_hit_fail']);
+                }
+
+                // try to save images for bing_images
+                try {
+                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&form=IRFLTR&first=1&tsc=ImageBasicHover';
+
+                    $imageHtml = Browsershot::url($imageUrl)
+                        ->windowSize(1000, 1000)
+                        ->waitUntilNetworkIdle()
+                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
+                        ->bodyHtml();
+
+                    $dom_document_news = new \DOMDocument();
+                    libxml_use_internal_errors(true); //disable libxml errors
+
+                    $dom_document_news->loadHTML($imageHtml);
+                    libxml_clear_errors(); //remove errors for yucky html
+
+                    $dom_document_news->preserveWhiteSpace = false;
+                    $dom_document_news->saveHTML();
+
+                    $document_xpath_news = new \DOMXPath($dom_document_news);
+
+                    //News Xpath to get Data
+                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
+
+                    $keyword->update(['is_scraped' => 'bing_image_search_hit_success']);
+
+                    if (!empty($imageHtml) && (1 <= $images->length)) {
+
+                        foreach ($images as $image) {
+                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
+                        }
+
+                        if (!empty($images_j['images'][0])) {
+
+                            $images = (!empty($images_j)) ? serialize($images_j) : null;
+                        } else {
+                            $images = (!empty($news)) ? serialize($news) : null;
+                        }
+
+                        //Updating images in database
+                        try {
+                            $post_content->update([
+                                'bing_images' => $images,
+                            ]);
+                            $keyword->update(['is_scraped' => 'bing_images_updated']);
+                        } catch (\Throwable $th) {
+                            echo "Fail to store Bing images In database check:$imageUrl<br>";
+                            $keyword->update(['is_scraped' => 'bing_images_update_fail']);
+                        }
+                    } else {
+                        echo "images_update_fail_no_data_found check:$imageUrl<br>";
+                        $keyword->update(['is_scraped' => 'images_update_fail_no_data_found']);
+                    }
+                } catch (\Throwable $th) {
+
+                    echo "Something bad With Bing images Please check: $imageUrl <br>";
+                    $keyword->update(['is_scraped' => 'bing_images_hit_fail']);
+                }
+
                 // try to update New From bing News search
                 try {
                     $newsUrl = 'https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
@@ -101,12 +222,14 @@ class FaqScrapeController extends Controller
                     if (!empty($newsHtml) && (1 <= $news_titles->length)) {
 
                         foreach ($news_titles as $news_title) {
-                            $news_t['title'][] = (!empty($news_title->nodeValue)) ? $news_title->nodeValue : "NotFound";
+                            $news_t['title'][] = (!empty($news_title->nodeValue)) ? $news_title->nodeValue : null;
                         }
 
                         foreach ($news_descriptions as $news_description) {
                             $news_d['description'][] = (!empty($news_description->nodeValue)) ? $news_description->nodeValue : null;
                         }
+
+                        $post_description = (!empty($news_d['description'][0])) ? $news_d['description'][0] : null;
 
                         if (!empty($news_t) && !empty($news_d)) {
                             $news = array_merge($news_t, $news_d);
@@ -120,15 +243,17 @@ class FaqScrapeController extends Controller
                         //Updating news in database
                         try {
                             $post_content->update([
-                                'news' => $news,
+                                'bing_news'        => $news,
+                                'post_description' => $post_description,
                             ]);
                             $keyword->update(['is_scraped' => 'bing_news_updated']);
                         } catch (\Throwable $th) {
-                            echo "Fail to store Bing News In database <br>";
+                            echo "Fail to store Bing News In database check: $newsUrl<br>";
                             $keyword->update(['is_scraped' => 'bing_news_update_fail']);
                         }
                     } else {
                         $keyword->update(['is_scraped' => 'news_update_fail_no_data_found']);
+                        echo "news not found please check  $newsUrl <br>";
                     }
 
                 } catch (\Throwable $th) {
@@ -171,15 +296,16 @@ class FaqScrapeController extends Controller
 
                         try {
                             $post_content->update([
-                                'videos' => $video_j,
+                                'bing_videos' => $video_j,
                             ]);
                             $keyword->update(['is_scraped' => 'bing_video_updated']);
                         } catch (\Throwable $th) {
-                            echo "Fail to store Bing Video in Database";
+                            echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
                             $keyword->update(['is_scraped' => 'bing_video_update_fail']);
                         }
                     } else {
                         $keyword->update(['is_scraped' => 'bing_update_fail_data_not_found']);
+                        echo "videos not found please check: $videoUrl <br>";
                     }
                 } catch (\Throwable $th) {
                     echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
@@ -207,7 +333,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_related_keyword_updated']);
                 } catch (\Throwable $th) {
-                    echo "fail to update Bing_keywords";
+                    echo "fail to update Bing_keywords<br>";
                     $keyword->update(['is_scraped' => 'bing_related_keyword_fail_to_update']);
                 }
 
@@ -229,7 +355,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_search_result_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with search results";
+                    echo "Something bad with search results Please check Api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_search_result_update_fail']);
                 }
 
@@ -252,11 +378,11 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_paa_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask";
+                    echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_pass_update_fail']);
                 }
 
-                $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? $bing_data['richSnippet'] : null;
+                $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? preg_replace('/<img[^>]+\>/i', ' ', $bing_data['richSnippet']) : null;
                 $bing_rich_snippet_link['bing_rich_snippet_link'][] = (!empty($bing_data['richSnippetLink'])) ? $bing_data['richSnippetLink'] : null;
 
                 if (!empty($bing_rich_snippet_text['bing_rich_snippet_text'][0]) && !empty($bing_rich_snippet_link['bing_rich_snippet_link'][0])) {
@@ -275,7 +401,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_rich_snippet_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask";
+                    echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_rich_snippet_update_fail']);
                 }
 
@@ -298,7 +424,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_slider_faq_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask<br>";
+                    echo "Something bad with People Also Ask Please check APi: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_slider_faq_update_fail']);
                 }
 
@@ -321,7 +447,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_pop_faq_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask<br>";
+                    echo "Something bad with People Also Ask Please Check Api<br>";
                     $keyword->update(['is_scraped' => 'bing_pop_faq_update_fail']);
                 }
 
@@ -344,7 +470,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'bing_tab_faq_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask<br>";
+                    echo "Something bad with People Also Ask Please Check api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_tab_faq_update_fail']);
                 }
 
@@ -369,7 +495,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'google_related_keywords_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with google_related_keywords <br>";
+                    echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_related_keywords _update_fail']);
                 }
 
@@ -380,7 +506,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'google_rich_snippet_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with google_related_keywords <br>";
+                    echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_rich_snippet_update_fail']);
                 }
 
@@ -403,7 +529,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'google_faq_updated']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with People Also Ask <br>";
+                    echo "Something bad with People Also Ask Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_faq_update_fail']);
                 }
 
@@ -427,7 +553,7 @@ class FaqScrapeController extends Controller
                     ]);
                     $keyword->update(['is_scraped' => 'google_search_result_update']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with google_search_result <br>";
+                    echo "Something bad with google_search_result Please Check: $api_url_google <br>";
                     $keyword->update(['is_scraped' => 'google_search_result_update_fail']);
                 }
 

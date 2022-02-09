@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Post;
 use App\Models\FakeUser;
-use App\Models\Metadata;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,10 +16,13 @@ class PostContent extends Model
     protected $fillable = [
         'post_id',
         'fake_user_id',
+        'post_description',
+        'post_thumbnail',
         'bing_related_keywords',
         'google_related_keywords',
-        'news',
-        'videos',
+        'bing_news',
+        'bing_videos',
+        'bing_images',
         'bing_search_result',
         'bing_paa',
         'bing_rich_snippet',
@@ -41,10 +43,4 @@ class PostContent extends Model
     {
         return $this->belongsTo(FakeUser::class, 'fake_user_id');
     }
-
-    public function postMeta()
-    {
-        return $this->hasOne(Metadata::class, 'content_id');
-    }
-
 }
