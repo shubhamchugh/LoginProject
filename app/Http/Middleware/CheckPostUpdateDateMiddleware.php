@@ -35,7 +35,7 @@ class CheckPostUpdateDateMiddleware
             return $next($request);
         } else {
             try {
-                AutoUpdatePostController::update($request->route('post')->id, $request->route('post')->post_title);
+                AutoUpdatePostController::update_and_create($request->route('post')->id, $request->route('post')->post_title);
 
                 Post::Where('id', $request->route('post')->id)->update([
                     'updated_at' => Carbon::now(),

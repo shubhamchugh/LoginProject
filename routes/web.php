@@ -123,6 +123,12 @@ Route::get(config('app.CID') . '/{id}', [
     'as'   => 'post.cid',
 ]);
 
+//Update Existing Post Content
+Route::get('/update-post-content/{post_content_id}/{keyword}', [
+    'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
+    'as'   => 'post_content.update_existing',
+]);
+
 //Frontend Home Page
 Route::get('/', [
     'uses' => 'App\Http\Controllers\Frontend\HomeController@homeList',

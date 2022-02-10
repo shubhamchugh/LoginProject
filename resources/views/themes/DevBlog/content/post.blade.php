@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <article class="blog-post px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         <header class="blog-post-header">
@@ -17,10 +16,16 @@
                 <span class="time">
                     Updated {{ $post->updated_at->diffforhumans() }}
                 </span>
+                @if (config('app.debug'))
+                <span class="comment">
+                    <a class="text-link" target="_blank" href="{{ route('post_content.update_existing',[
+                        'post_content_id' => $postContent['id'],
+                        'keyword' => $post['source_value'],
+                        ]) }}">Update Post</a>
+                </span>
+                @endif
 
-                {{-- <span class="comment">
-                    <a class="text-link" href="#">4 comments</a>
-                </span> --}}
+
             </div>
         </header>
 
