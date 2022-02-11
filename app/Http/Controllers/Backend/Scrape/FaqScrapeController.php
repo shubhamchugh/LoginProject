@@ -78,6 +78,18 @@ class FaqScrapeController extends Controller
                     $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&form=IRFLTR&first=1&tsc=ImageBasicHover';
 
                     $imageHtml = Browsershot::url($imageUrl)
+                        ->noSandbox()
+                        ->ignoreHttpsErrors()
+                        ->preventUnsuccessfulResponse()
+                        ->setOption('args', [
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--single-process', // <- this one doesn't works in Windows
+                            '--disable-gpu',
+                        ])
                         ->windowSize(1000, 1000)
                         ->waitUntilNetworkIdle()
                         ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
@@ -114,6 +126,9 @@ class FaqScrapeController extends Controller
 
                         $thumbnail = json_decode($images_j['images'][0], true);
 
+                        echo "thumbnail<br>";
+                        print_r($thumbnail);
+
                         //Updating thumbnail_images in database
                         try {
                             $post_content->update([
@@ -128,9 +143,9 @@ class FaqScrapeController extends Controller
                         $keyword->update(['is_scraped' => 'thumbnail_images_update_fail_no_data_found']);
                     }
                 } catch (\Throwable $th) {
-
                     echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
                     $keyword->update(['is_scraped' => 'bing_thumbnail_images_hit_fail']);
+
                 }
 
                 // try to save images for bing_images
@@ -138,6 +153,18 @@ class FaqScrapeController extends Controller
                     $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&form=IRFLTR&first=1&tsc=ImageBasicHover';
 
                     $imageHtml = Browsershot::url($imageUrl)
+                        ->noSandbox()
+                        ->ignoreHttpsErrors()
+                        ->preventUnsuccessfulResponse()
+                        ->setOption('args', [
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--single-process', // <- this one doesn't works in Windows
+                            '--disable-gpu',
+                        ])
                         ->windowSize(1000, 1000)
                         ->waitUntilNetworkIdle()
                         ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
@@ -172,6 +199,9 @@ class FaqScrapeController extends Controller
                             $images = (!empty($news)) ? serialize($news) : null;
                         }
 
+                        echo "Images: <br>";
+                        print_r($images);
+
                         //Updating images in database
                         try {
                             $post_content->update([
@@ -179,6 +209,7 @@ class FaqScrapeController extends Controller
                             ]);
                             $keyword->update(['is_scraped' => 'bing_images_updated']);
                         } catch (\Throwable $th) {
+
                             echo "Fail to store Bing images In database check:$imageUrl<br>";
                             $keyword->update(['is_scraped' => 'bing_images_update_fail']);
                         }
@@ -197,6 +228,18 @@ class FaqScrapeController extends Controller
                     $newsUrl = 'https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
 
                     $newsHtml = Browsershot::url($newsUrl)
+                        ->noSandbox()
+                        ->ignoreHttpsErrors()
+                        ->preventUnsuccessfulResponse()
+                        ->setOption('args', [
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--single-process', // <- this one doesn't works in Windows
+                            '--disable-gpu',
+                        ])
                         ->windowSize(1000, 1000)
                         ->waitUntilNetworkIdle()
                         ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
@@ -240,6 +283,9 @@ class FaqScrapeController extends Controller
                             $news = (!empty($news)) ? serialize($news) : null;
                         }
 
+                        echo "news<br>";
+                        print_r($news);
+
                         //Updating news in database
                         try {
                             $post_content->update([
@@ -265,8 +311,20 @@ class FaqScrapeController extends Controller
                 try {
                     $videoUrl  = 'https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui%3amsite-youtube.com';
                     $videoHtml = Browsershot::url($videoUrl)
+                        ->noSandbox()
+                        ->ignoreHttpsErrors()
+                        ->preventUnsuccessfulResponse()
+                        ->setOption('args', [
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--single-process', // <- this one doesn't works in Windows
+                            '--disable-gpu',
+                        ])
                         ->windowSize(1000, 1000)
-                        ->waitUntilNetworkIdle(false)
+                        ->waitUntilNetworkIdle()
                         ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
                         ->bodyHtml();
                     $keyword->update(['is_scraped' => 'bing_video_search_hit_success']);
@@ -288,9 +346,9 @@ class FaqScrapeController extends Controller
                         foreach ($videos_json as $video_json) {
                             $video_j[] = (!empty($video_json->nodeValue)) ? $video_json->nodeValue : null;
                         }
-                        // echo "videos: ";
+                        echo "videos: ";
 
-                        // print_r($video_j);
+                        print_r($video_j);
 
                         $video_j = (!empty($video_j)) ? serialize($video_j) : null;
 
@@ -318,6 +376,9 @@ class FaqScrapeController extends Controller
                     $api_data     = Http::retry(3, 60)->get($api_url_bing)->body();
 
                     $bing_data = json_decode($api_data, true);
+
+                    echo "Bing APi Data :<br>";
+                    print_r($bing_data);
 
                     $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
                     $keyword->update(['is_scraped' => 'bing_api_hit_success']);
@@ -479,6 +540,9 @@ class FaqScrapeController extends Controller
                     $api_data_google = Http::retry(3, 60)->get($api_url_google)->body();
 
                     $google_data = json_decode($api_data_google, true);
+
+                    echo "Google Api Data:<br>";
+                    print_r($google_data);
 
                     $google_related_keywords = (!empty($google_data['relatedKeywordsGoogle'])) ? serialize($google_data['relatedKeywordsGoogle']) : null;
                     $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'])) ? serialize($google_data['richSnippetGoogle']) : null;

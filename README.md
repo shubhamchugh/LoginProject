@@ -220,3 +220,56 @@ curl -sS https://getcomposer.org/installer -o composer-setup.php
 To install composer globally, use the following command which will download and install Composer as a system-wide command named composer, under /usr/local/bin:
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 ```
+
+**Make DataBase remotely accessible **
+```sh 
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+or 
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+
+
+bind-address            = 127.0.0.1
+To 
+bind-address            = 0.0.0.0
+
+By default, this value is set to 127.0.0.1, meaning that the server will only look for local connections. You will need to change this directive to reference an external IP address
+
+
+sudo systemctl restart mysql
+
+Login with 
+
+sudo mysql 
+or 
+mysql -u root -p
+
+
+
+CREATE USER 'technofiz'@'%' IDENTIFIED BY 'Xperia14Xperia';
+
+output: Query OK, 0 rows affected (0.004 sec)
+
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'technofiz'@'%' WITH GRANT OPTION;
+
+output: Query OK, 0 rows affected (0.002 sec)
+
+
+FLUSH PRIVILEGES;
+
+
+exit;
+
+close terminal
+
+open runcloud.io
+droplet > Servers > Security
+
+add new rule button
+enter port number: 3306
+save rule
+
+click on deploy
+
+
+```

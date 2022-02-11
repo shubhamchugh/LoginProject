@@ -65,36 +65,39 @@
 
 <section class="blog-list px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
-
         @foreach ($posts as $post)
+        @if (count($post->content) > 0)
         <div class="item mb-5">
             <div class="row g-3 g-xl-0">
                 <div class="col-2 col-xl-3">
-                    <img class="img-fluid post-thumb "
-                        src="{{$post->content[mt_rand(0,(count($post->content)-1))]->post_thumbnail  ?? 'default.jpg'}}"
+                    <img class="img-fluid post-thumb"
+                        src="{{$post->content[mt_rand(0,(count($post->content)-1))]->post_thumbnail  ?? config('app.DEFAULT_IMAGE')}}"
                         alt="{{
-                            $post->post_title ?? 'Image_default_content' }}">
+                            $post->post_title ?? "" }}">
                 </div>
                 <div class="col">
-                    <h3 class="title mb-1"><a class="text-link" href="{{ route('post.show',$post->slug) }}">{{
-                            $post->post_title }}</a></h3>
+                    <h3 class="title mb-1"><a class="text-link" href="{{ route('post.show',$post->slug) ?? "" }}">{{
+                            $post->post_title ?? "" }}</a></h3>
                     <div class="meta mb-1"><span class="date">Published {{
-                            $post->published_at->diffforhumans() }}</span><span class="time">Updated {{
-                            $post->updated_at->diffforhumans() }}</span>
+                            $post->published_at->diffforhumans() ?? ""}}</span><span class="time">Updated {{
+                            $post->updated_at->diffforhumans() ?? "" }}</span>
 
                         {{-- <span class="comment"><a class="text-link" href="#">8
                                 comments</a></span>
                     </div> --}}
 
 
-                    <div class="intro">{{$post->content[mt_rand(0,(count($post->content)-1))]->post_description }}</div>
-                    <a class="text-link" href="{{ route('post.show',$post->slug) }}">Read more &rarr;</a>
+                    <div class="intro">{{ $post->content[mt_rand(0,(count($post->content)-1))]->post_description ?? ""}}
+                    </div>
+                    <a class="text-link" href="{{ route('post.show',$post->slug) ??  "" }}">Read more &rarr;</a>
                 </div>
                 <!--//col-->
             </div>
             <!--//row-->
         </div>
         <!--//item-->
+        @endif
+
         @endforeach
         <nav class="blog-nav nav nav-justified my-5">
             {{ $posts->links() }}

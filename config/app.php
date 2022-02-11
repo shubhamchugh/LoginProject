@@ -29,6 +29,7 @@ return [
     'CID'                      => env('CID'),
     'POST_UPDATE_DURATION'     => env('POST_UPDATE_DURATION'),
     'NODE_SCRAPER_IP'          => env('NODE_SCRAPER_IP'),
+    'DEFAULT_IMAGE'            => env('DEFAULT_IMAGE'),
 
     /*
     |--------------------------------------------------------------------------

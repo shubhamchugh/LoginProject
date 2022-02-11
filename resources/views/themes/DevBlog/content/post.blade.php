@@ -5,23 +5,23 @@
 <article class="blog-post px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         <header class="blog-post-header">
-            <h1 class="title text-capitalize  mb-2">{{ $post->post_title }}</h1>
+            <h1 class="title text-capitalize  mb-2">{{ $post->post_title ?? "" }}</h1>
             <div class="meta mb-3">
                 <span class="time">
-                    by {{ $post->fakeAuthor->name }}
+                    by {{ $post->fakeAuthor->name ?? "" }}
                 </span>
                 <span class="date">
-                    Published {{ $post->published_at->diffforhumans() }}
+                    Published {{ $post->published_at->diffforhumans() ?? "" }}
                 </span>
                 <span class="time">
-                    Updated {{ $post->updated_at->diffforhumans() }}
+                    Updated {{ $post->updated_at->diffforhumans() ?? "" }}
                 </span>
                 @if (config('app.debug'))
                 <span class="comment">
                     <a class="text-link" target="_blank" href="{{ route('post_content.update_existing',[
                         'post_content_id' => $postContent['id'],
                         'keyword' => $post['source_value'],
-                        ]) }}">Update Post</a>
+                        ]) ?? "" }}">Update Post</a>
                 </span>
                 @endif
 
@@ -35,11 +35,12 @@
             @if(!empty($bing_images['images'][0]))
             <figure class="blog-banner">
                 <img class="img-fluid img-responsive center-block d-block mx-auto"
-                    src="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['murl'] }}" alt="image">
+                    src="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['murl'] ?? ""}}"
+                    alt="image">
                 <figcaption class="mt-2 text-center image-caption">Image Credit: <a class="theme-link"
-                        href="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['purl'] }}"
+                        href="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['purl'] ?? ""}}"
                         rel="noopener noreferrer nofollow" target="_blank">{{
-                        json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['t']
+                        json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['t'] ?? ""
                         }}</a></figcaption>
             </figure>
             @endif

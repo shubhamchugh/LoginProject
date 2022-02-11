@@ -19,20 +19,20 @@ class CreatePostContentsTable extends Migration
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
             $table->string('post_description')->nullable();
             $table->string('post_thumbnail')->nullable();
-            $table->text('bing_related_keywords')->nullable();
-            $table->text('google_related_keywords')->nullable();
-            $table->text('bing_news')->nullable();
-            $table->text('bing_videos')->nullable();
-            $table->text('bing_images')->nullable();
-            $table->text('bing_search_result')->nullable();
-            $table->text('bing_paa')->nullable();
-            $table->text('bing_rich_snippet')->nullable();
-            $table->text('bing_slider_faq')->nullable();
-            $table->text('bing_pop_faq')->nullable();
-            $table->text('bing_tab_faq')->nullable();
-            $table->text('google_faq')->nullable();
-            $table->text('google_rich_snippet')->nullable();
-            $table->text('google_search_result')->nullable();
+            $table->longText('bing_related_keywords')->nullable();
+            $table->longText('google_related_keywords')->nullable();
+            $table->longText('bing_news')->nullable();
+            $table->longText('bing_videos')->nullable();
+            $table->longText('bing_images')->nullable();
+            $table->longText('bing_search_result')->nullable();
+            $table->longText('bing_paa')->nullable();
+            $table->longText('bing_rich_snippet')->nullable();
+            $table->longText('bing_slider_faq')->nullable();
+            $table->longText('bing_pop_faq')->nullable();
+            $table->longText('bing_tab_faq')->nullable();
+            $table->longText('google_faq')->nullable();
+            $table->longText('google_rich_snippet')->nullable();
+            $table->longText('google_search_result')->nullable();
 
         });
     }
