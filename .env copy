@@ -72,6 +72,8 @@ HOMEPAGE_POST_COUNT=500
 HOMEPAGE_POST_PAGINATION=5
 GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=18bf839411a945950
 SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
+DEFAULT_IMAGE='default.jpg'
+
 
 CID_STATUS=true
 CID=testcid
