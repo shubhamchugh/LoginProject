@@ -26,7 +26,7 @@ class CheckPostUpdateDateMiddleware
 
         if (count($request->route('post')->content) > 0) {
             $post_content = $request->route('post')->content[mt_rand(0, (count($request->route('post')->content) - 1))];
-            if (empty($post_content->bing_videos)) {
+            if (empty($post_content->bing_images)) {
                 PostContent::where('id', $post_content->id)->delete();
             }
         }
