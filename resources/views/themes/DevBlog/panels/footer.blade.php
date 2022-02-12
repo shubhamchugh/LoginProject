@@ -2,13 +2,14 @@
 <!--************ FOOTER *************************************************************************************-->
 <!--*********************************************************************************************************-->
 
-<div class="col-xl-12 col-md-12 col-xs-12 text-center">
+<div class="px-3 py-5 p-md-5">
     @foreach (array_merge(range('A', 'Z'),range(1,9)) as $char)
-    <a href='{{ route("sitemap.show", ["sitemap" => $char]) }}' class="btn btn-outline-primary
-                    btn-sm"><strong>{{ $char }}</strong></a>
+    <a href='{{ route("sitemap.show", ["sitemap" => $char]) }}'
+        class="btn btn-outline-primary text-center mt-2 "><strong>{{
+            $char
+            }}</strong></a>
 
     @endforeach
-
 </div>
 
 

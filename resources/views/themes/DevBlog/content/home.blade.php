@@ -99,9 +99,8 @@
         @endif
 
         @endforeach
-        <nav class="blog-nav nav nav-justified my-5">
-            {{ $posts->links() }}
-        </nav>
+
+        {{ $posts->links('pagination::DevBlog') }}
 
     </div>
 

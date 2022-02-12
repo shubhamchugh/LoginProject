@@ -39,17 +39,17 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('docs',['dmca']) }}"><i
-                        class="fas fa-bookmark fa-fw me-2"></i>dmca</a>
+                        class="fas fa-bookmark fa-fw me-2"></i>DMCA</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('docs',['privacy']) }}"><i
-                        class="fas fa-bookmark fa-fw me-2"></i>privacy</a>
+                        class="fas fa-bookmark fa-fw me-2"></i>Privacy</a>
             </li>
         </ul>
 
         <div class="my-2 my-md-3">
-            <a class="btn btn-primary" href="{{ route('docs',['contact']) }}" target="_blank">contact</a>
+            <a class="btn btn-primary" href="{{ route('docs',['contact']) }}" target="_blank">Contact</a>
         </div>
     </div>
 </nav>
