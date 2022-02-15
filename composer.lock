@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "885d6dbfddff587ff578ca649ec4d195",
+    "content-hash": "32a280664dd821412f8d9661fc733a12",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -114,16 +114,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.209.22",
+            "version": "3.209.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2f8a8c885daf45fe9f919312a66a68115d6733b5"
+                "reference": "ce68bfc141863a25f4b870f10cfa996312fb1813"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2f8a8c885daf45fe9f919312a66a68115d6733b5",
-                "reference": "2f8a8c885daf45fe9f919312a66a68115d6733b5",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ce68bfc141863a25f4b870f10cfa996312fb1813",
+                "reference": "ce68bfc141863a25f4b870f10cfa996312fb1813",
                 "shasum": ""
             },
             "require": {
@@ -199,9 +199,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.209.22"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.209.24"
             },
-            "time": "2022-02-10T19:14:07+00:00"
+            "time": "2022-02-14T19:15:07+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1093,12 +1093,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1996,16 +1996,16 @@
         },
         {
             "name": "laravelista/comments",
-            "version": "4.4.0",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravelista/comments.git",
-                "reference": "c5ab788caa0105a4fd076baebfefcb414b23ac6a"
+                "reference": "f1c7a476f79b80f0e28ba901436832f773299ee6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravelista/comments/zipball/c5ab788caa0105a4fd076baebfefcb414b23ac6a",
-                "reference": "c5ab788caa0105a4fd076baebfefcb414b23ac6a",
+                "url": "https://api.github.com/repos/laravelista/comments/zipball/f1c7a476f79b80f0e28ba901436832f773299ee6",
+                "reference": "f1c7a476f79b80f0e28ba901436832f773299ee6",
                 "shasum": ""
             },
             "require": {
@@ -2016,7 +2016,7 @@
                 "illuminate/queue": "^8.0",
                 "illuminate/routing": "^8.0",
                 "illuminate/support": "^8.0",
-                "php": "^7.4",
+                "php": "^7.4|^8.0",
                 "spatie/laravel-honeypot": "^3.0"
             },
             "type": "library",
@@ -2050,7 +2050,7 @@
             ],
             "support": {
                 "issues": "https://github.com/laravelista/comments/issues",
-                "source": "https://github.com/laravelista/comments/tree/4.4.0"
+                "source": "https://github.com/laravelista/comments/tree/4.5.0"
             },
             "funding": [
                 {
@@ -2058,7 +2058,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-10-30T11:01:08+00:00"
+            "time": "2021-03-15T14:52:28+00:00"
         },
         {
             "name": "laravelium/sitemap",
@@ -2127,6 +2127,7 @@
                 "source": "https://github.com/Laravelium/laravel-sitemap",
                 "wiki": "https://github.com/Laravelium/laravel-sitemap/wiki"
             },
+            "abandoned": true,
             "time": "2020-09-10T20:49:55+00:00"
         },
         {
@@ -2491,31 +2492,32 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.0.0",
+            "version": "v2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "38efc158e227a864c21bac907a94d80128d50fbf"
+                "reference": "f7150a3d0386c1d41f51b73a161e3d3e24db5812"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/38efc158e227a864c21bac907a94d80128d50fbf",
-                "reference": "38efc158e227a864c21bac907a94d80128d50fbf",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/f7150a3d0386c1d41f51b73a161e3d3e24db5812",
+                "reference": "f7150a3d0386c1d41f51b73a161e3d3e24db5812",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
-                "illuminate/validation": "^7.0|^8.0",
-                "php": "^7.2.5",
-                "symfony/http-kernel": "^5.0"
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "illuminate/validation": "^7.0|^8.0|^9.0",
+                "league/mime-type-detection": "^1.9",
+                "php": "^7.2.5|^8.0",
+                "symfony/http-kernel": "^5.0|^6.0"
             },
             "require-dev": {
                 "calebporzio/sushi": "^2.1",
-                "laravel/framework": "^7.0|^8.0",
+                "laravel/framework": "^7.0|^8.0|^9.0",
                 "mockery/mockery": "^1.3.1",
-                "orchestra/testbench": "^5.0",
-                "orchestra/testbench-dusk": "^5.2",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "orchestra/testbench-dusk": "^5.2|^6.0|^7.0",
                 "phpunit/phpunit": "^8.4|^9.0",
                 "psy/psysh": "@stable"
             },
@@ -2531,6 +2533,9 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
                 "psr-4": {
                     "Livewire\\": "src/"
                 }
@@ -2548,32 +2553,32 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/master"
+                "source": "https://github.com/livewire/livewire/tree/v2.10.3"
             },
             "funding": [
                 {
-                    "url": "https://github.com/calebporzio",
+                    "url": "https://github.com/livewire",
                     "type": "github"
                 }
             ],
-            "time": "2020-09-07T04:28:01+00:00"
+            "time": "2022-02-14T16:44:21+00:00"
         },
         {
             "name": "mcamara/laravel-localization",
-            "version": "1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcamara/laravel-localization.git",
-                "reference": "fdb68d2a1f09c852e557420a1688dec038311938"
+                "reference": "27565315c585e90d8d93aa06afd49d6a5992fe5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/fdb68d2a1f09c852e557420a1688dec038311938",
-                "reference": "fdb68d2a1f09c852e557420a1688dec038311938",
+                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/27565315c585e90d8d93aa06afd49d6a5992fe5a",
+                "reference": "27565315c585e90d8d93aa06afd49d6a5992fe5a",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.2.0||~5.3.0||~5.4.0||~5.5.0||~5.6.0||~5.7.0||~5.8.0||^6.0||^7.0||^8.0",
+                "laravel/framework": "~5.2.0||~5.3.0||~5.4.0||~5.5.0||~5.6.0||~5.7.0||~5.8.0||^6.0||^7.0||^8.0||^9.0",
                 "php": ">=7.1.0"
             },
             "require-dev": {
@@ -2620,7 +2625,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mcamara/laravel-localization/issues",
-                "source": "https://github.com/mcamara/laravel-localization/tree/1.6.0"
+                "source": "https://github.com/mcamara/laravel-localization/tree/v1.7.0"
             },
             "funding": [
                 {
@@ -2632,20 +2637,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-12T14:18:37+00:00"
+            "time": "2022-01-26T10:27:45+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
-            "version": "2.8.37",
+            "version": "2.8.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "9841e3c46f5bd0739b53aed8ac677fa712943df7"
+                "reference": "b6c4ac9686d204c49a432f527f137cf24ac0b90e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/9841e3c46f5bd0739b53aed8ac677fa712943df7",
-                "reference": "9841e3c46f5bd0739b53aed8ac677fa712943df7",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b6c4ac9686d204c49a432f527f137cf24ac0b90e",
+                "reference": "b6c4ac9686d204c49a432f527f137cf24ac0b90e",
                 "shasum": ""
             },
             "require": {
@@ -2686,15 +2691,9 @@
             ],
             "support": {
                 "issues": "https://github.com/serbanghita/Mobile-Detect/issues",
-                "source": "https://github.com/serbanghita/Mobile-Detect/tree/2.8.37"
+                "source": "https://github.com/serbanghita/Mobile-Detect/tree/2.8.38"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/serbanghita",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-02-19T21:22:57+00:00"
+            "time": "2022-02-14T12:38:04+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2827,12 +2826,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "JmesPath\\": "src/"
-                },
                 "files": [
                     "src/JmesPath.php"
-                ]
+                ],
+                "psr-4": {
+                    "JmesPath\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5550,12 +5549,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -6956,12 +6955,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Facade\\FlareClient\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "Facade\\FlareClient\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7368,25 +7367,26 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.17.3",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "e8ac3499af0ea5b440908e06cc0abe5898008b3c"
+                "reference": "0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e8ac3499af0ea5b440908e06cc0abe5898008b3c",
-                "reference": "e8ac3499af0ea5b440908e06cc0abe5898008b3c",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6",
+                "reference": "0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1|^8",
                 "psr/log": "^1|^2|^3",
-                "symfony/var-dumper": "^2.6|^3|^4|^5"
+                "symfony/var-dumper": "^2.6|^3|^4|^5|^6"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.5.20 || ^9.4.2"
+                "phpunit/phpunit": "^7.5.20 || ^9.4.2",
+                "twig/twig": "^1.38|^2.7|^3.0"
             },
             "suggest": {
                 "kriswallsmith/assetic": "The best way to manage assets",
@@ -7427,9 +7427,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maximebf/php-debugbar/issues",
-                "source": "https://github.com/maximebf/php-debugbar/tree/v1.17.3"
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.18.0"
             },
-            "time": "2021-10-19T12:33:27+00:00"
+            "time": "2021-12-27T18:49:48+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8913,16 +8913,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "5.0.4",
+            "version": "5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4"
+                "reference": "0ca8db5a5fc9c8646244e629625ac486fa286bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
-                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/0ca8db5a5fc9c8646244e629625ac486fa286bf2",
+                "reference": "0ca8db5a5fc9c8646244e629625ac486fa286bf2",
                 "shasum": ""
             },
             "require": {
@@ -8965,7 +8965,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
-                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.4"
+                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.5"
             },
             "funding": [
                 {
@@ -8973,7 +8973,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-10T07:01:19+00:00"
+            "time": "2022-02-14T08:28:10+00:00"
         },
         {
             "name": "sebastian/lines-of-code",

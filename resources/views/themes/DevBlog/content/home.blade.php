@@ -19,7 +19,7 @@
                     <?php if (isset($_GET['q'])) { ?>
                     <div class="col-12 col-md-9">
                         <input id="txtGoogleSearch" name="q" class="form-control me-md-1 semail" type="text"
-                            placeholder="{{  config('app.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
+                            placeholder="{{  config('constant.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
                             aria-controls="prova-menu" value="<?php echo $_GET['q']  ?>">
                     </div>
                     <div class="dropdown-menu" id="prova-menu" role="menu">
@@ -31,7 +31,7 @@
 
                 <div class="col-12 col-md-9">
                     <input id="txtGoogleSearch" name="q" class="form-control me-md-1 semail" type="text"
-                        placeholder="{{  config('app.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
+                        placeholder="{{  config('constant.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
                         aria-controls="prova-menu">
                 </div>
 
@@ -71,7 +71,7 @@
             <div class="row g-3 g-xl-0">
                 <div class="col-2 col-xl-3">
                     <img class="img-fluid post-thumb"
-                        src="{{$post->content[mt_rand(0,(count($post->content)-1))]->post_thumbnail  ?? config('app.DEFAULT_IMAGE')}}"
+                        src="{{$post->content[mt_rand(0,(count($post->content)-1))]->post_thumbnail  ?? config('constant.DEFAULT_IMAGE')}}"
                         alt="{{
                             $post->post_title ?? "" }}">
                 </div>

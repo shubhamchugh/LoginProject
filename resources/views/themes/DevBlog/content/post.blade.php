@@ -31,6 +31,14 @@
 
         <div class="blog-post-body">
 
+            {{-- Custom Content Above Content start--}}
+            @if (!empty($postContent['post_content_above']))
+            <div class="mt-5 mb-3">
+                {!! $postContent['post_content_above'] !!}
+            </div>
+            @endif
+            {{-- Custom Content Above Content en--}}
+
             {{-- Bing Random Image start--}}
             @if(!empty($bing_images['images'][0]))
             <figure class="blog-banner">
@@ -71,6 +79,27 @@
             @endif
             {{-- Bing Random video end --}}
 
+            {{-- related Keywords bing start--}}
+            @if (!empty($bing_related_keywords))
+            <div class="row my-6 mt-5 mb-3">
+                <h2>Related Posts: </h2>
+                @foreach ( $bing_related_keywords as $bing_keyword)
+                <li class="col-md-6">
+                    <a rel="noopener noreferrer nofollow"
+                        href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $bing_keyword)]) }}"
+                        target="_blank" class="text-dec-non" title="{{ $bing_keyword }}">{{
+                        $bing_keyword }}</a>
+                </li>
+                @endforeach
+            </div>
+            @endif
+            {{-- related Keywords bing end --}}
+
+            @if (!empty($postContent['post_content_middle']))
+            <div class="mt-5 mb-3">
+                {!! $postContent['post_content_middle'] !!}
+            </div>
+            @endif
 
             {{-- Bing People Also Aks --}}
             @if (!empty($bing_paa['paa_questions']))
@@ -119,6 +148,9 @@
                     </p>
                     @endfor
 
+
+
+
                     {{-- Bing Random videostart--}}
                     @if(!empty($bing_videos[0]))
                     <div class="ratio ratio-16x9">
@@ -136,23 +168,6 @@
 
 
 
-
-                    {{-- related Keywords bing start--}}
-                    @if (!empty($bing_related_keywords))
-                    <div class="row my-3">
-                        <h2>Related keywords: </h2>
-                        @foreach ( $bing_related_keywords as $bing_keyword)
-                        <div class="col-md-3">
-                            <a href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $bing_keyword)]) }}"
-                                class="text-dec-non" title="{{ $bing_keyword }}">{{
-                                $bing_keyword }}</a>
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
-                    {{-- related Keywords bing end --}}
-
-
                     {{-- Bing Slider Questions start--}}
                     @if (!empty($bing_slider_faq['slider_questions'][0]))
                     @for($i = 0; $i < count($bing_slider_faq['slider_questions'][0]); $i++) <h3 class="mt-5 mb-3">
@@ -165,6 +180,23 @@
                         @endfor
                         @endif
                         {{-- Bing Slider Questions start end--}}
+
+                        {{-- related Keywords Google start--}}
+                        @if (!empty($google_related_keywords))
+                        <div class="row my-6 mt-5 mb-3">
+                            <h2 class="title">Posts you might like: </h2>
+                            @foreach ( $google_related_keywords as $google_keyword)
+                            <li class="col-md-12">
+                                <a rel="noopener noreferrer nofollow"
+                                    href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $google_keyword)]) }}"
+                                    target="_blank" class="text-dec-non" title="{{ $google_keyword }}">{{
+                                    $google_keyword }}</a>
+                            </li>
+                            @endforeach
+                        </div>
+                        @endif
+                        {{-- related Keywords Google end --}}
+
 
                         {{-- Bing pop Questions start--}}
                         @if (!empty($bing_pop_faq['pop_questions'][0]))
@@ -182,9 +214,6 @@
                             @endif
                             {{-- Bing Random Image end --}}
 
-
-
-
                             <h3 class="mt-5 mb-3">
                                 {!! $bing_pop_faq['pop_questions'][0][$i] ?? "" !!}
                             </h3>
@@ -195,6 +224,8 @@
                             @endfor
                             @endif
                             {{-- Bing pop Questions start end--}}
+
+
 
 
                             {{-- Bing Slider Questions start--}}
@@ -211,23 +242,28 @@
                                 {{-- Bing Slider Questions start end--}}
 
 
-
-                                {{-- related Keywords bing start--}}
-                                @if (!empty($google_related_keywords))
-                                <div class="row my-3">
-                                    <h2>Related keywords: </h2>
-                                    @foreach ( $google_related_keywords as $google_keyword)
-                                    <div class="col-md-3">
-                                        <a href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $google_keyword)]) }}"
-                                            class="text-dec-non" title="{{ $google_keyword }}">{{
-                                            $google_keyword }}</a>
-                                    </div>
-                                    @endforeach
+                                @if (!empty($postContent['post_content_middle']))
+                                <div class="mt-5 mb-3">
+                                    {!! $postContent['post_content_middle'] !!}
                                 </div>
                                 @endif
-                                {{-- related Keywords bing end --}}
 
 
+                                {{-- Popular Posts start--}}
+                                @if (true)
+                                <div class="mt-5 mb-3">
+                                    <h2 class="title">Popular Posts:</h2>
+                                    @foreach ($sidebar as $item)
+                                    <li class="list-group-item">
+                                        {{ $loop->iteration }}. <a href="{{ route('post.show',$item->slug) }}"
+                                            title="{{ $item->post_title }}"> {{
+                                            $item->post_title }}
+                                            <sup><i class="fa fa-external-link" aria-hidden="true"></i></sup></a>
+                                    </li>
+                                    @endforeach
+                                    @endif
+                                </div>
+                                {{-- Bing Slider Questions end--}}
         </div>
     </div>
     <!--//container-->
@@ -239,5 +275,5 @@
 
 
 @section('head')
-<title>{{ucwords($post->post_title ?? "Default Message")}}</title>
+<title>{{ ucwords($post->post_title ?? "Default Message") }}</title>
 @endsection

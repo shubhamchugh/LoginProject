@@ -14,11 +14,11 @@ class HomeController extends Controller
     {
         $last_id = Post::orderBy('id', 'DESC')->published()->first();
         if (!empty($last_id)) {
-            $theme_path_home = 'themes.' . config('app.THEME_NAME') . '.content.home';
+            $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
-            $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('app.HOMEPAGE_POST_COUNT'))))
+            $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('constant.HOMEPAGE_POST_COUNT'))))
                 ->published()
-                ->paginate(config('app.HOMEPAGE_POST_PAGINATION'));
+                ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'));
 
             return view($theme_path_home, [
                 'posts' => $posts,
@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function sitemap($sitemap)
     {
 
-        $theme_path_sitemap = 'themes.' . config('app.THEME_NAME') . '.content.sitemap';
+        $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
         $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate($this->limit);
 
@@ -43,7 +43,7 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $theme_path_search = 'themes.' . config('app.THEME_NAME') . '.content.search';
+        $theme_path_search = 'themes.' . config('constant.THEME_NAME') . '.content.search';
         return view($theme_path_search);
     }
 }

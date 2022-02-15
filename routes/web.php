@@ -48,7 +48,7 @@ Route::get('createsitemap', function () {
             $sitemapCounter++;
         }
 
-        $slug = (!empty(config('app.POST_SLUG'))) ? '/' . config('app.POST_SLUG') : config('app.POST_SLUG');
+        $slug = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
 
         // add product to items array
         $sitemap->add(config('app.url') . $slug . '/' . $p->slug, $p->published_at, '1.0', 'Weekly');
@@ -112,13 +112,13 @@ Route::get('/search', [
 ]);
 
 //Frontend Product Page
-Route::get(config('app.POST_SLUG') . '/{post}', [
+Route::get(config('constant.POST_SLUG') . '/{post}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@show',
     'as'   => 'post.show',
 ])->middleware('checkdate');
 
 //cid Page
-Route::get(config('app.CID') . '/{id}', [
+Route::get(config('constant.CID') . '/{id}', [
     'uses' => 'App\Http\Controllers\Frontend\PostController@cid',
     'as'   => 'post.cid',
 ]);

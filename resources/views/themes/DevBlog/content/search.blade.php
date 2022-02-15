@@ -14,7 +14,7 @@
         </header>
 
         <div class="blog-post-body">
-            <script async src="{{ config('app.GOOGLE_SEARCH') }}"></script>
+            <script async src="{{ config('constant.GOOGLE_SEARCH') }}"></script>
             <div class="gcse-searchresults-only"></div>
 
         </div>

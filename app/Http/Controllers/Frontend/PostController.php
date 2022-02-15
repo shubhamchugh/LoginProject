@@ -38,7 +38,7 @@ class PostController extends Controller
         $totalimages             = (!empty($bing_images['images'])) ? (count($bing_images['images']) - 1) : null;
         $totalvideos             = (!empty($bing_videos)) ? (count($bing_videos) - 1) : null;
 
-        $theme_path_post = 'themes.' . config('app.THEME_NAME') . '.content.post';
+        $theme_path_post = 'themes.' . config('constant.THEME_NAME') . '.content.post';
 
         return view($theme_path_post,
             [
@@ -72,7 +72,7 @@ class PostController extends Controller
         $title          = $request->title;
         $dec            = $request->dec;
         $slug           = $request->slug;
-        $theme_path_cid = 'themes.' . config('app.THEME_NAME') . '.content.cid';
+        $theme_path_cid = 'themes.' . config('constant.THEME_NAME') . '.content.cid';
 
         return view($theme_path_cid,
             [

@@ -8,15 +8,22 @@ class CacheClearController extends Controller
 {
     public function clear()
     {
-        shell_exec('cd .. && rm -rf .git');
-        shell_exec('cd .. && composer update');
-        $cache  = Artisan::call('cache:clear');
-        $config = Artisan::call('config:cache');
-        $route  = Artisan::call('route:cache');
-        shell_exec('cd .. && composer dump-autoload');
-        echo "cache clear:  $cache <br>";
-        echo "config clear:  $config<br>";
-        echo "config clear:  $route<br>";
+        echo "<pre>";
+        // Artisan::call('cache:clear');
+        // print_r(Artisan::output());
+
+        // Artisan::call('config:cache');
+        // print_r(Artisan::output());
+
+        // Artisan::call('route:cache');
+        // print_r(Artisan::output());
+
+        // Artisan::call('view:clear');
+        // print_r(Artisan::output());
+
+        Artisan::call('optimize:clear');
+        print_r(Artisan::output());
+
         shell_exec('cd .. && sudo chmod -R o+rw bootstrap/cache');
         shell_exec('cd .. && sudo chmod -R o+rw storage');
         shell_exec('cd .. && sudo chmod -R 777 storage');

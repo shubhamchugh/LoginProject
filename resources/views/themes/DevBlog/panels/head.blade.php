@@ -12,7 +12,9 @@
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="{{ asset('themes/DevBlog/assets/css/theme-1.css') }}">
 
-    {{ $HeaderCode->value ?? "" }}
+
+
+
     @section('head')
     @show
 

@@ -9,7 +9,7 @@ class StaticPageController extends Controller
 {
     public function __invoke()
     {
-        $theme_path_staticpage = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.';
+        $theme_path_staticpage = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.';
         return view($theme_path_staticpage . request()->segment(2));
     }
 }

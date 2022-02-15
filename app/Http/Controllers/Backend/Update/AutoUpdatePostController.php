@@ -255,7 +255,7 @@ class AutoUpdatePostController extends Controller
 
         // hit to Bing Api
         try {
-            $api_url_bing = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data     = Http::retry(3, 60)->get($api_url_bing)->body();
 
             $bing_data = json_decode($api_data, true);
@@ -416,7 +416,7 @@ class AutoUpdatePostController extends Controller
         }
 
         try {
-            $api_url_google  = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data_google = Http::retry(3, 60)->get($api_url_google)->body();
 
             $google_data = json_decode($api_data_google, true);
@@ -744,7 +744,7 @@ class AutoUpdatePostController extends Controller
 
         // hit to Bing Api
         try {
-            $api_url_bing = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data     = Http::retry(3, 60)->get($api_url_bing)->body();
 
             $bing_data = json_decode($api_data, true);
@@ -905,7 +905,7 @@ class AutoUpdatePostController extends Controller
         }
 
         try {
-            $api_url_google  = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data_google = Http::retry(3, 60)->get($api_url_google)->body();
 
             $google_data = json_decode($api_data_google, true);
@@ -1247,7 +1247,7 @@ class AutoUpdatePostController extends Controller
 
                 // hit to Bing Api
                 try {
-                    $api_url_bing = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+                    $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
                     $api_data     = Http::retry(3, 60)->get($api_url_bing)->body();
 
                     $bing_data = json_decode($api_data, true);
@@ -1408,7 +1408,7 @@ class AutoUpdatePostController extends Controller
                 }
 
                 try {
-                    $api_url_google  = 'http://' . config('app.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+                    $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
                     $api_data_google = Http::retry(3, 60)->get($api_url_google)->body();
 
                     $google_data = json_decode($api_data_google, true);

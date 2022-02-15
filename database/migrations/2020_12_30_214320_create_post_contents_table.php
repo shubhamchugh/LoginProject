@@ -33,6 +33,9 @@ class CreatePostContentsTable extends Migration
             $table->longText('google_faq')->nullable();
             $table->longText('google_rich_snippet')->nullable();
             $table->longText('google_search_result')->nullable();
+            $table->longText('post_content_above')->nullable();
+            $table->longText('post_content_middle')->nullable();
+            $table->longText('post_content_after')->nullable();
 
         });
     }

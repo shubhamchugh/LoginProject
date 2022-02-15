@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function show(Page $page)
     {
-        $theme_path_page = 'themes.' . config('app.THEME_NAME') . '.content.page';
+        $theme_path_page = 'themes.' . config('constant.THEME_NAME') . '.content.page';
         return view($theme_path_page,
             [
                 'page' => $page,

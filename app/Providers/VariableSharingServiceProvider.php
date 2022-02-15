@@ -24,18 +24,18 @@ class VariableSharingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $theme_path_cid     = 'themes.' . config('app.THEME_NAME') . '.content.cid';
-        $theme_path_home    = 'themes.' . config('app.THEME_NAME') . '.content.home';
-        $theme_path_search  = 'themes.' . config('app.THEME_NAME') . '.content.search';
-        $theme_path_sitemap = 'themes.' . config('app.THEME_NAME') . '.content.sitemap';
-        $theme_path_home    = 'themes.' . config('app.THEME_NAME') . '.content.home';
-        $theme_path_sitemap = 'themes.' . config('app.THEME_NAME') . '.content.sitemap';
-        $theme_path_post    = 'themes.' . config('app.THEME_NAME') . '.content.post';
-        $theme_path_contact = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.contact';
-        $theme_path_terms   = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.terms';
-        $theme_path_privacy = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.privacy';
-        $theme_path_about   = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.about';
-        $theme_path_dmca    = 'themes.' . config('app.THEME_NAME') . '.content.staticpage.dmca';
+        $theme_path_cid     = 'themes.' . config('constant.THEME_NAME') . '.content.cid';
+        $theme_path_home    = 'themes.' . config('constant.THEME_NAME') . '.content.home';
+        $theme_path_search  = 'themes.' . config('constant.THEME_NAME') . '.content.search';
+        $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
+        $theme_path_home    = 'themes.' . config('constant.THEME_NAME') . '.content.home';
+        $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
+        $theme_path_post    = 'themes.' . config('constant.THEME_NAME') . '.content.post';
+        $theme_path_contact = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.contact';
+        $theme_path_terms   = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.terms';
+        $theme_path_privacy = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.privacy';
+        $theme_path_about   = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.about';
+        $theme_path_dmca    = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.dmca';
 
         // view()->composer('*',CmsSettingsView::class);
         view()->composer([
