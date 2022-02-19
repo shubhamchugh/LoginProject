@@ -39,7 +39,7 @@ class ScrapeSourceUrlsController extends Controller
             $document_xpath = new \DOMXPath($dom_document);
 
             //Get Url
-            $Urls = $document_xpath->query('//a[@class="question-hyperlink"]/@href');
+            $Urls = $document_xpath->query('//a[@class="s-link"]/@href');
             $i    = 1;
             foreach ($Urls as $url) {
                 $url_to_save = $domain . $url->nodeValue;
