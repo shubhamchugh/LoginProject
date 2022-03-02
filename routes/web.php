@@ -22,7 +22,7 @@ Route::get('clear', [CacheClearController::class, 'clear']);
 
 //sitemap
 Route::get('createsitemap', function () {
-
+    ini_set('memory_limit', '-1');
     // create new sitemap object
     $sitemap = App::make('sitemap');
 
@@ -39,7 +39,7 @@ Route::get('createsitemap', function () {
             // generate new sitemap file
             $sitemap->store('xml', 'sitemap-' . $sitemapCounter);
             // add the file to the sitemaps array
-            $sitemap->addSitemap(secure_url('sitemap-' . $sitemapCounter . '.xml'));
+            $sitemap->addSitemap(url('sitemap-' . $sitemapCounter . '.xml'));
             // reset items array (clear memory)
             $sitemap->model->resetItems();
             // reset the counter
@@ -48,10 +48,10 @@ Route::get('createsitemap', function () {
             $sitemapCounter++;
         }
 
-        $slug = (!empty(config('app.POST_SLUG'))) ? '/' . config('app.POST_SLUG') : config('app.POST_SLUG');
+        $slug = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
 
         // add product to items array
-        $sitemap->add(config('app.url') . $slug . '/' . $p->slug, $p->published_at, '1.0', 'Weekly');
+        $sitemap->add(url($slug . '/' . $p->slug), $p->published_at, '1.0', 'Weekly');
         // count number of elements
         $counter++;
     }
@@ -61,7 +61,7 @@ Route::get('createsitemap', function () {
         // generate sitemap with last items
         $sitemap->store('xml', 'sitemap-' . $sitemapCounter);
         // add sitemap to sitemaps array
-        $sitemap->addSitemap(secure_url('sitemap-' . $sitemapCounter . '.xml'));
+        $sitemap->addSitemap(url('sitemap-' . $sitemapCounter . '.xml'));
         // reset items array
         $sitemap->model->resetItems();
     }
