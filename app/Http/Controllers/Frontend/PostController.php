@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralSettings;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
 {
-    public function show(Post $post)
+    public function show(Post $post, GeneralSettings $settings)
     {
         $postContent = $post->content->toArray();
         //if Post Content not found then first get the post content and refresh the page
@@ -62,6 +63,7 @@ class PostController extends Controller
                 'indexedArray'            => $indexedArray,
                 'totalimages'             => $totalimages,
                 'totalvideos'             => $totalvideos,
+                'settings'                => $settings,
             ]);
 
     }

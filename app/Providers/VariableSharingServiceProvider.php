@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\View\Composers\SidebarView;
 use Illuminate\Support\ServiceProvider;
+use App\View\Composers\GeneralSettingsView;
 
 class VariableSharingServiceProvider extends ServiceProvider
 {
@@ -24,32 +25,14 @@ class VariableSharingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $theme_path_cid     = 'themes.' . config('constant.THEME_NAME') . '.content.cid';
-        $theme_path_home    = 'themes.' . config('constant.THEME_NAME') . '.content.home';
-        $theme_path_search  = 'themes.' . config('constant.THEME_NAME') . '.content.search';
-        $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
-        $theme_path_home    = 'themes.' . config('constant.THEME_NAME') . '.content.home';
-        $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
-        $theme_path_post    = 'themes.' . config('constant.THEME_NAME') . '.content.post';
-        $theme_path_contact = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.contact';
-        $theme_path_terms   = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.terms';
-        $theme_path_privacy = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.privacy';
-        $theme_path_about   = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.about';
-        $theme_path_dmca    = 'themes.' . config('constant.THEME_NAME') . '.content.staticpage.dmca';
+        $theme_path = 'themes.' . config('constant.THEME_NAME') . '.content.*';
 
-        // view()->composer('*',CmsSettingsView::class);
         view()->composer([
-            $theme_path_cid,
-            $theme_path_search,
-            $theme_path_sitemap,
-            $theme_path_home,
-            $theme_path_post,
-            $theme_path_contact,
-            $theme_path_terms,
-            $theme_path_privacy,
-            $theme_path_about,
-            $theme_path_dmca,
+            $theme_path,
         ], SidebarView::class);
-        // view()->composer('*',SitemapView::class);
+
+        view()->composer([
+            $theme_path,
+        ], GeneralSettingsView::class);
     }
 }
