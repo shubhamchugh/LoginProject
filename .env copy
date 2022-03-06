@@ -10,9 +10,9 @@ LOG_LEVEL=debug
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=SERP_Project
+DB_DATABASE=FAQ
 DB_USERNAME=root
-DB_PASSWORD=unknown24
+DB_PASSWORD=root
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
@@ -69,13 +69,35 @@ POST_UPDATE_DURATION=15
 SIDEBAR_POST_COUNT=10
 WASABI_BUCKET_NAME=loginproject
 HOMEPAGE_POST_COUNT=500
-HOMEPAGE_POST_PAGINATION=5
+HOMEPAGE_POST_PAGINATION=10
 GOOGLE_SEARCH=https://cse.google.com/cse.js?cx=18bf839411a945950
 SEARCH_INPUT_TEXT='Search Millions of Login Pages at Single Click'
 DEFAULT_IMAGE='default.jpg'
-
 
 CID_STATUS=true
 CID=testcid
 
 NODE_SCRAPER_IP=localhost
+
+Google_Analytics='UA-122475787-1'
+Google_Search_console='A4feDaNow1ajnzH3BP2fd4JJ-l0-1Ap8rj82obg4QvE'
+
+bing_image_first=true
+bing_images_second=true
+bing_rich_snippet_text=true
+google_rich_snippet=true
+bing_rich_snippet_link=true
+bing_videos_first=true
+bing_related_keywords=true
+post_content_above=true
+post_content_middle=true
+post_content_after=true
+bing_paa=true
+google_faq=true
+bing_videos_second=true
+bing_slider_faq=true
+google_related_keywords=true
+pop_questions=true
+bing_tab_faq=true
+popular_post=true
+

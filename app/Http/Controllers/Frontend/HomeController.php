@@ -12,7 +12,6 @@ class HomeController extends Controller
 
     public function homeList()
     {
-
         $last_id = Post::orderBy('id', 'DESC')->published()->first();
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
