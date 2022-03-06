@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\View\Composers\SidebarView;
 use Illuminate\Support\ServiceProvider;
-use App\View\Composers\GeneralSettingsView;
 
 class VariableSharingServiceProvider extends ServiceProvider
 {
@@ -30,9 +29,5 @@ class VariableSharingServiceProvider extends ServiceProvider
         view()->composer([
             $theme_path,
         ], SidebarView::class);
-
-        view()->composer([
-            $theme_path,
-        ], GeneralSettingsView::class);
     }
 }

@@ -8,8 +8,9 @@
 <br>
 <section class="cta-section theme-bg-light py-5">
     <div class="container text-center single-col-max-width">
-        <h2 class="heading">{{ $settings->home_heading }}</h2>
-        <div class="intro">{{ $settings->home_description }}</div>
+        <h2 class="heading">Frequently Asked Questions & Answers Related to Attorney</h2>
+        <div class="intro">Attorneyfaq.com is a crowdsourced law website dedicated to providing legal information and
+            resources for all types of law-related topics..</div>
         <div class="single-form-max-width pt-3 mx-auto">
 
 
@@ -19,7 +20,7 @@
                     <?php if (isset($_GET['q'])) { ?>
                     <div class="col-12 col-md-9">
                         <input id="txtGoogleSearch" name="q" class="form-control me-md-1 semail" type="text"
-                            placeholder="{{ $settings->search_bar_text }}" aria-haspopup="true"
+                            placeholder="{{  config('constant.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
                             aria-controls="prova-menu" value="<?php echo $_GET['q']  ?>">
                     </div>
                     <div class="dropdown-menu" id="prova-menu" role="menu">
@@ -31,7 +32,8 @@
 
                 <div class="col-12 col-md-9">
                     <input id="txtGoogleSearch" name="q" class="form-control me-md-1 semail" type="text"
-                        placeholder="{{ $settings->search_bar_text }}" aria-haspopup="true" aria-controls="prova-menu">
+                        placeholder="{{  config('constant.SEARCH_INPUT_TEXT') }}" aria-haspopup="true"
+                        aria-controls="prova-menu">
                 </div>
 
                 <?php } ?>
@@ -108,6 +110,5 @@
 
 
 @section('head')
-{!! $settings->header_code ?? "Default Message" !!}
-<title>{{ $settings->home_title ?? "Default Message" }}</title>
+<title>{{ 'Default Message' }}</title>
 @endsection
