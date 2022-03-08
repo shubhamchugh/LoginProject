@@ -29,6 +29,11 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->runInBackground()
             ->withoutOverlapping();
+
+        $schedule->command('cache:truncate')
+            ->daily()
+            ->runInBackground()
+            ->withoutOverlapping();
     }
 
     /**
