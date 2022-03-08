@@ -37,5 +37,5 @@ return [
     'bing_tab_faq'             => env('bing_tab_faq'),
     'popular_post'             => env('popular_post'),
     'post_content_after'       => env('post_content_after'),
-
+    'Adsense_pub_id'           => env('Adsense_pub_id'),
 ];

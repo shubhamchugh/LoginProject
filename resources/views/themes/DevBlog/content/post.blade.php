@@ -24,10 +24,12 @@
                         ]) ?? "" }}">Update Post</a>
                 </span>
                 @endif
-
-
             </div>
         </header>
+
+        <div align="center">
+            {{-- Adsense Code --}}
+        </div>
 
         <div class="blog-post-body">
 

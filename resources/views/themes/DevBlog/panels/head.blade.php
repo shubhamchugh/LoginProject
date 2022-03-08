@@ -24,5 +24,6 @@
          gtag('config', {{ config('constant.Google_Analytics') }});
     </script>
     <meta name="google-site-verification" content="{{ config('constant.Google_Search_console')  }}" />
-
+    <script data-ad-client="{{ config('constant.Adsense_pub_id')  }}" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
