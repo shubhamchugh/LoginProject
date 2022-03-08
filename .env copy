@@ -2,7 +2,7 @@ APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:5IfnSEV05S9suixzUpVlStze4sMck2SPTe6iMIMmBeE=
 APP_DEBUG=true
-APP_URL=http://loginproject.lo
+APP_URL=http://loginproject.test
 
 LOG_CHANNEL=stack
 LOG_LEVEL=debug
@@ -81,6 +81,7 @@ NODE_SCRAPER_IP=localhost
 
 Google_Analytics='UA-122475787-1'
 Google_Search_console='A4feDaNow1ajnzH3BP2fd4JJ-l0-1Ap8rj82obg4QvE'
+Adsense_pub_id='ca-pub-*****'
 
 bing_image_first=true
 bing_images_second=true
@@ -89,9 +90,9 @@ google_rich_snippet=true
 bing_rich_snippet_link=true
 bing_videos_first=true
 bing_related_keywords=true
-post_content_above=true
-post_content_middle=true
-post_content_after=true
+post_content_above=false
+post_content_middle=false 
+post_content_after=false
 bing_paa=true
 google_faq=true
 bing_videos_second=true
