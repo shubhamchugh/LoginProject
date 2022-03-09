@@ -14,10 +14,8 @@ use Illuminate\Support\Facades\Http;
 
 class FaqScrapeController extends Controller
 {
-
     public function FaqScrape(Request $request)
     {
-
         echo "<pre>";
         $count          = (!empty($request->count)) ? $request->count : 20;
         $start          = (!empty($request->start)) ? $request->start : 0;
@@ -90,11 +88,11 @@ class FaqScrapeController extends Controller
                         ]);
                         $keyword->update(['is_scraped' => 'bing_thumbnail_images_updated']);
                     } catch (\Throwable $th) {
-                        echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                        echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
                         $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
                     }
                 } catch (\Throwable $th) {
-                    echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
+                    echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
                     $keyword->update(['is_scraped' => 'bing_thumbnail_images_hit_fail']);
 
                 }
@@ -128,7 +126,7 @@ class FaqScrapeController extends Controller
                     }
                 } catch (\Throwable $th) {
 
-                    echo "Something bad With Bing images Please check: $imageUrl <br>";
+                    echo "Something bad With Bing images Please check: $Bing_image_url <br>";
                     $keyword->update(['is_scraped' => 'bing_images_hit_fail']);
                 }
 

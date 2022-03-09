@@ -42,11 +42,11 @@ class AutoUpdatePostController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
-                echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
 
             }
         } catch (\Throwable $th) {
-            echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
+            echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
 
@@ -76,7 +76,7 @@ class AutoUpdatePostController extends Controller
             }
         } catch (\Throwable $th) {
 
-            echo "Something bad With Bing images Please check: $imageUrl <br>";
+            echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
         }
 
@@ -126,7 +126,7 @@ class AutoUpdatePostController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
-                echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
+                echo "Fail to store Bing Video in Database please check: $videoUrl<br>";
 
             }
         } catch (\Throwable $th) {
@@ -414,12 +414,12 @@ class AutoUpdatePostController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
-                echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
 
             }
         } catch (\Throwable $th) {
 
-            echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
+            echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
 
@@ -449,7 +449,7 @@ class AutoUpdatePostController extends Controller
             }
         } catch (\Throwable $th) {
 
-            echo "Something bad With Bing images Please check: $imageUrl <br>";
+            echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
         }
 
@@ -799,12 +799,12 @@ class AutoUpdatePostController extends Controller
                         ]);
 
                     } catch (\Throwable $th) {
-                        echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                        echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
 
                     }
                 } catch (\Throwable $th) {
 
-                    echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
+                    echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
                 }
 
@@ -834,7 +834,7 @@ class AutoUpdatePostController extends Controller
                     }
                 } catch (\Throwable $th) {
 
-                    echo "Something bad With Bing images Please check: $imageUrl <br>";
+                    echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
                 }
 
