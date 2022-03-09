@@ -9,7 +9,6 @@ use App\Models\SourceUrl;
 use App\Models\PostContent;
 use Illuminate\Http\Request;
 use App\Models\ScrapingFailed;
-use Spatie\Browsershot\Browsershot;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -75,72 +74,24 @@ class FaqScrapeController extends Controller
 
                 // try to save thumbnail_images in database
                 try {
-                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&form=IRFLTR&first=1&tsc=ImageBasicHover';
+                    $Bing_image = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
 
-                    $imageHtml = Browsershot::url($imageUrl)
-                        ->noSandbox()
-                        ->ignoreHttpsErrors()
-                        ->preventUnsuccessfulResponse()
-                        ->setOption('args', [
-                            '--disable-setuid-sandbox',
-                            '--disable-dev-shm-usage',
-                            '--disable-accelerated-2d-canvas',
-                            '--no-first-run',
-                            '--no-zygote',
-                            '--single-process', // <- this one doesn't works in Windows
-                            '--disable-gpu',
-                        ])
-                        ->windowSize(1000, 1000)
-                        ->waitUntilNetworkIdle()
-                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
-                        ->bodyHtml();
+                    $thumbnail = Http::get($Bing_image)->body();
 
-                    $dom_document_news = new \DOMDocument();
-                    libxml_use_internal_errors(true); //disable libxml errors
+                    $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
-                    $dom_document_news->loadHTML($imageHtml);
-                    libxml_clear_errors(); //remove errors for yucky html
+                    echo "<br>Thumbnail: <br>";
+                    echo "$thumbnail<br>";
 
-                    $dom_document_news->preserveWhiteSpace = false;
-                    $dom_document_news->saveHTML();
-
-                    $document_xpath_news = new \DOMXPath($dom_document_news);
-
-                    //News Xpath to get Data
-                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
-
-                    $keyword->update(['is_scraped' => 'bing_image_search_hit_success']);
-
-                    if (!empty($imageHtml) && (1 <= $images->length)) {
-
-                        foreach ($images as $image) {
-                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
-                        }
-
-                        if (!empty($images_j['images'][0])) {
-
-                            $images = (!empty($images_j)) ? serialize($images_j) : null;
-                        } else {
-                            $images = (!empty($news)) ? serialize($news) : null;
-                        }
-
-                        $thumbnail = json_decode($images_j['images'][0], true);
-
-                        echo "thumbnail<br>";
-                        print_r($thumbnail);
-
-                        //Updating thumbnail_images in database
-                        try {
-                            $post_content->update([
-                                'post_thumbnail' => $thumbnail['murl'],
-                            ]);
-                            $keyword->update(['is_scraped' => 'bing_thumbnail_images_updated']);
-                        } catch (\Throwable $th) {
-                            echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
-                            $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
-                        }
-                    } else {
-                        $keyword->update(['is_scraped' => 'thumbnail_images_update_fail_no_data_found']);
+                    //Updating thumbnail_images in database
+                    try {
+                        $post_content->update([
+                            'post_thumbnail' => $thumbnail,
+                        ]);
+                        $keyword->update(['is_scraped' => 'bing_thumbnail_images_updated']);
+                    } catch (\Throwable $th) {
+                        echo "Fail to store Bing thumbnail In database check: $imageUrl<br>";
+                        $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
                     }
                 } catch (\Throwable $th) {
                     echo "Something bad With thumbnail_images Please check: $imageUrl <br>";
@@ -150,72 +101,30 @@ class FaqScrapeController extends Controller
 
                 // try to save images for bing_images
                 try {
-                    $imageUrl = 'https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&form=IRFLTR&first=1&tsc=ImageBasicHover';
+                    $Bing_image_url = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $Bing_image     = Http::get($Bing_image_url)->body();
+                    $Bing_image     = json_decode($Bing_image, true);
 
-                    $imageHtml = Browsershot::url($imageUrl)
-                        ->noSandbox()
-                        ->ignoreHttpsErrors()
-                        ->preventUnsuccessfulResponse()
-                        ->setOption('args', [
-                            '--disable-setuid-sandbox',
-                            '--disable-dev-shm-usage',
-                            '--disable-accelerated-2d-canvas',
-                            '--no-first-run',
-                            '--no-zygote',
-                            '--single-process', // <- this one doesn't works in Windows
-                            '--disable-gpu',
-                        ])
-                        ->windowSize(1000, 1000)
-                        ->waitUntilNetworkIdle()
-                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
-                        ->bodyHtml();
-
-                    $dom_document_news = new \DOMDocument();
-                    libxml_use_internal_errors(true); //disable libxml errors
-
-                    $dom_document_news->loadHTML($imageHtml);
-                    libxml_clear_errors(); //remove errors for yucky html
-
-                    $dom_document_news->preserveWhiteSpace = false;
-                    $dom_document_news->saveHTML();
-
-                    $document_xpath_news = new \DOMXPath($dom_document_news);
-
-                    //News Xpath to get Data
-                    $images = $document_xpath_news->query('//a[@class="iusc"]/@m');
-
-                    $keyword->update(['is_scraped' => 'bing_image_search_hit_success']);
-
-                    if (!empty($imageHtml) && (1 <= $images->length)) {
-
-                        foreach ($images as $image) {
-                            $images_j['images'][] = (!empty($image->nodeValue)) ? $image->nodeValue : null;
-                        }
-
-                        if (!empty($images_j['images'][0])) {
-
-                            $images = (!empty($images_j)) ? serialize($images_j) : null;
-                        } else {
-                            $images = (!empty($news)) ? serialize($news) : null;
-                        }
-
-                        echo "Images: <br>";
-                        print_r($images);
-
-                        //Updating images in database
-                        try {
-                            $post_content->update([
-                                'bing_images' => $images,
-                            ]);
-                            $keyword->update(['is_scraped' => 'bing_images_updated']);
-                        } catch (\Throwable $th) {
-
-                            echo "Fail to store Bing images In database check:$imageUrl<br>";
-                            $keyword->update(['is_scraped' => 'bing_images_update_fail']);
-                        }
+                    if (!empty($Bing_image['images'][0])) {
+                        $images = (!empty($Bing_image)) ? serialize($Bing_image) : null;
                     } else {
-                        echo "images_update_fail_no_data_found check:$imageUrl<br>";
-                        $keyword->update(['is_scraped' => 'images_update_fail_no_data_found']);
+                        $images = (!empty($Bing_image)) ? serialize($Bing_image) : null;
+                    }
+
+                    echo "<br>Images: <br>";
+                    print_r($images);
+
+                    //Updating images in database
+                    try {
+                        $post_content->update([
+                            'bing_images' => $images,
+                        ]);
+
+                        $keyword->update(['is_scraped' => 'bing_images_updated']);
+                    } catch (\Throwable $th) {
+
+                        echo "Fail to store Bing images In database check:$Bing_image_url<br>";
+                        $keyword->update(['is_scraped' => 'bing_images_update_fail']);
                     }
                 } catch (\Throwable $th) {
 
@@ -225,81 +134,24 @@ class FaqScrapeController extends Controller
 
                 // try to update New From bing News search
                 try {
-                    $newsUrl = 'https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $newsUrl   = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $bing_news = Http::get($newsUrl)->body();
+                    $bing_news = json_decode($bing_news, true);
 
-                    $newsHtml = Browsershot::url($newsUrl)
-                        ->noSandbox()
-                        ->ignoreHttpsErrors()
-                        ->preventUnsuccessfulResponse()
-                        ->setOption('args', [
-                            '--disable-setuid-sandbox',
-                            '--disable-dev-shm-usage',
-                            '--disable-accelerated-2d-canvas',
-                            '--no-first-run',
-                            '--no-zygote',
-                            '--single-process', // <- this one doesn't works in Windows
-                            '--disable-gpu',
-                        ])
-                        ->windowSize(1000, 1000)
-                        ->waitUntilNetworkIdle()
-                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
-                        ->bodyHtml();
+                    echo "<br>bing news<br>";
+                    print_r($bing_news);
 
-                    $dom_document_news = new \DOMDocument();
-                    libxml_use_internal_errors(true); //disable libxml errors
+                    $bing_news = (!empty($bing_news)) ? serialize($bing_news) : null;
 
-                    $dom_document_news->loadHTML($newsHtml);
-                    libxml_clear_errors(); //remove errors for yucky html
-
-                    $dom_document_news->preserveWhiteSpace = false;
-                    $dom_document_news->saveHTML();
-
-                    $document_xpath_news = new \DOMXPath($dom_document_news);
-
-                    //News Xpath to get Data
-                    $news_titles       = $document_xpath_news->query('//a[@class="title"]');
-                    $news_descriptions = $document_xpath_news->query('//div[@class="snippet"]');
-
-                    $keyword->update(['is_scraped' => 'bing_news_hit_success']);
-
-                    if (!empty($newsHtml) && (1 <= $news_titles->length)) {
-
-                        foreach ($news_titles as $news_title) {
-                            $news_t['title'][] = (!empty($news_title->nodeValue)) ? $news_title->nodeValue : null;
-                        }
-
-                        foreach ($news_descriptions as $news_description) {
-                            $news_d['description'][] = (!empty($news_description->nodeValue)) ? $news_description->nodeValue : null;
-                        }
-
-                        $post_description = (!empty($news_d['description'][0])) ? $news_d['description'][0] : null;
-
-                        if (!empty($news_t) && !empty($news_d)) {
-                            $news = array_merge($news_t, $news_d);
-                            // echo "news";
-                            // print_r($news);
-                            $news = (!empty($news)) ? serialize($news) : null;
-                        } else {
-                            $news = (!empty($news)) ? serialize($news) : null;
-                        }
-
-                        echo "news<br>";
-                        print_r($news);
-
-                        //Updating news in database
-                        try {
-                            $post_content->update([
-                                'bing_news'        => $news,
-                                'post_description' => $post_description,
-                            ]);
-                            $keyword->update(['is_scraped' => 'bing_news_updated']);
-                        } catch (\Throwable $th) {
-                            echo "Fail to store Bing News In database check: $newsUrl<br>";
-                            $keyword->update(['is_scraped' => 'bing_news_update_fail']);
-                        }
-                    } else {
-                        $keyword->update(['is_scraped' => 'news_update_fail_no_data_found']);
-                        echo "news not found please check  $newsUrl <br>";
+                    //Updating news in database
+                    try {
+                        $post_content->update([
+                            'bing_news' => $bing_news,
+                        ]);
+                        $keyword->update(['is_scraped' => 'bing_news_updated']);
+                    } catch (\Throwable $th) {
+                        echo "Fail to store Bing News In database check: $newsUrl<br>";
+                        $keyword->update(['is_scraped' => 'bing_news_update_fail']);
                     }
 
                 } catch (\Throwable $th) {
@@ -309,61 +161,25 @@ class FaqScrapeController extends Controller
 
                 //try to update video from bing search
                 try {
-                    $videoUrl  = 'https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui%3amsite-youtube.com';
-                    $videoHtml = Browsershot::url($videoUrl)
-                        ->noSandbox()
-                        ->ignoreHttpsErrors()
-                        ->preventUnsuccessfulResponse()
-                        ->setOption('args', [
-                            '--disable-setuid-sandbox',
-                            '--disable-dev-shm-usage',
-                            '--disable-accelerated-2d-canvas',
-                            '--no-first-run',
-                            '--no-zygote',
-                            '--single-process', // <- this one doesn't works in Windows
-                            '--disable-gpu',
-                        ])
-                        ->windowSize(1000, 1000)
-                        ->waitUntilNetworkIdle()
-                        ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')
-                        ->bodyHtml();
-                    $keyword->update(['is_scraped' => 'bing_video_search_hit_success']);
-                    $dom_document_video = new \DOMDocument();
-                    libxml_use_internal_errors(true); //disable libxml errors
 
-                    $dom_document_video->loadHTML($videoHtml);
-                    libxml_clear_errors(); //remove errors for yucky html
+                    $videoUrl    = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:msite-youtube.com';
+                    $bing_videos = Http::get($videoUrl)->body();
+                    $bing_videos = json_decode($bing_videos, true);
 
-                    $dom_document_video->preserveWhiteSpace = false;
-                    $dom_document_video->saveHTML();
+                    echo "<br>Bing videos<br>";
+                    print_r($bing_videos);
 
-                    $document_xpath_video = new \DOMXPath($dom_document_video);
+                    $bing_videos = (!empty($bing_videos)) ? serialize($bing_videos) : null;
 
-                    //News Xpath to get Data
-                    $videos_json = $document_xpath_video->query('//div[@class="vrhdata"]/@vrhm');
-
-                    if (!empty($videoHtml) && (1 <= $videos_json->length)) {
-                        foreach ($videos_json as $video_json) {
-                            $video_j[] = (!empty($video_json->nodeValue)) ? $video_json->nodeValue : null;
-                        }
-                        echo "videos: ";
-
-                        print_r($video_j);
-
-                        $video_j = (!empty($video_j)) ? serialize($video_j) : null;
-
-                        try {
-                            $post_content->update([
-                                'bing_videos' => $video_j,
-                            ]);
-                            $keyword->update(['is_scraped' => 'bing_video_updated']);
-                        } catch (\Throwable $th) {
-                            echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
-                            $keyword->update(['is_scraped' => 'bing_video_update_fail']);
-                        }
-                    } else {
-                        $keyword->update(['is_scraped' => 'bing_update_fail_data_not_found']);
-                        echo "videos not found please check: $videoUrl <br>";
+                    //Updating Videos in database
+                    try {
+                        $post_content->update([
+                            'bing_videos' => $bing_videos,
+                        ]);
+                        $keyword->update(['is_scraped' => 'bing_video_updated']);
+                    } catch (\Throwable $th) {
+                        echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
+                        $keyword->update(['is_scraped' => 'bing_video_update_fail']);
                     }
                 } catch (\Throwable $th) {
                     echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
@@ -373,7 +189,8 @@ class FaqScrapeController extends Controller
                 // hit to Bing Api
                 try {
                     $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword->value);
-                    $api_data     = Http::retry(3, 60)->get($api_url_bing)->body();
+                    echo "Bing Api Url: $api_url_bing<br>";
+                    $api_data = Http::get($api_url_bing)->body();
 
                     $bing_data = json_decode($api_data, true);
 
@@ -409,10 +226,13 @@ class FaqScrapeController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
                 }
 
+                $post_description = (!empty($result_description['result_description'][0][0])) ? $result_description['result_description'][0][0] : null;
+
                 // updating bing_search_result in PostContent
                 try {
                     $post_content->update([
                         'bing_search_result' => $bing_search_result,
+                        'post_description'   => $post_description,
                     ]);
                     $keyword->update(['is_scraped' => 'bing_search_result_updated']);
                 } catch (\Throwable $th) {
@@ -535,9 +355,11 @@ class FaqScrapeController extends Controller
                     $keyword->update(['is_scraped' => 'bing_tab_faq_update_fail']);
                 }
 
+                //hit to google api
                 try {
-                    $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
-                    $api_data_google = Http::retry(3, 60)->get($api_url_google)->body();
+                    $api_url_google = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
+                    echo "Google APi Url: $api_url_google<br>";
+                    $api_data_google = Http::get($api_url_google)->body();
 
                     $google_data = json_decode($api_data_google, true);
 

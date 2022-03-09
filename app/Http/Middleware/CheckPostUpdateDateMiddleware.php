@@ -28,6 +28,7 @@ class CheckPostUpdateDateMiddleware
             $post_content = $request->route('post')->content[mt_rand(0, (count($request->route('post')->content) - 1))];
             if (empty($post_content->bing_search_result)) {
                 PostContent::where('id', $post_content->id)->delete();
+                return redirect()->route('post.show', $request->route('post')->slug);
             }
         }
 
@@ -40,7 +41,7 @@ class CheckPostUpdateDateMiddleware
                 Post::Where('id', $request->route('post')->id)->update([
                     'updated_at' => Carbon::now(),
                 ]);
-
+                return redirect()->route('post.show', $request->route('post')->slug);
             } catch (\Throwable $th) {
 
                 Post::Where('id', $request->route('post')->id)->update([
@@ -48,6 +49,7 @@ class CheckPostUpdateDateMiddleware
                 ]);
 
                 return $next($request);
+
             }
         }
         return $next($request);

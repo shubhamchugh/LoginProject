@@ -17,8 +17,8 @@ class CreatePostContentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('post_id')->unsigned();
             $table->bigInteger('fake_user_id')->unsigned()->nullable();
-            $table->string('post_description')->nullable();
-            $table->string('post_thumbnail')->nullable();
+            $table->text('post_description')->nullable();
+            $table->text('post_thumbnail')->nullable();
             $table->longText('bing_related_keywords')->nullable();
             $table->longText('google_related_keywords')->nullable();
             $table->longText('bing_news')->nullable();
