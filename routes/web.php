@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CacheClearController;
+use App\Http\Controllers\SearchIndexingController;
 use App\Http\Controllers\Frontend\StaticPageController;
 
 /*
@@ -19,6 +20,8 @@ use App\Http\Controllers\Frontend\StaticPageController;
 
 //cache clear
 Route::get('clear', [CacheClearController::class, 'clear']);
+
+Route::get('search-index', [SearchIndexingController::class, 'indexing']);
 
 //sitemap
 Route::get('createsitemap', function () {
