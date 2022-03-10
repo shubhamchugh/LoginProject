@@ -39,4 +39,6 @@ return [
     'post_content_after'       => env('post_content_after'),
     'Adsense_pub_id'           => env('Adsense_pub_id'),
     'Bing_API_Key'             => env('Bing_API_Key'),
+    'Bing_SERP'                => env('Bing_SERP'),
+    'Bing_news'                => env('Bing_news'),
 ];

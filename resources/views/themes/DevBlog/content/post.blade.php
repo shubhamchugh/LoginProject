@@ -1,7 +1,9 @@
 @extends('themes.DevBlog.layouts.master')
 
 @section('content')
-
+<?php 
+$indexedArray = array("new", "trend", "hot", "top","best","tip","great","recommended","suggest","worst","excellent","fabulous");
+?>
 <article class="blog-post px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         <header class="blog-post-header">
@@ -281,9 +283,63 @@
                                     @endif
                                 </div>
                                 {{-- Bing Slider Questions end--}}
+
+
+
+
+
+
+
         </div>
     </div>
-    <!--//container-->
+
+
+    {{-- bing_search_result start --}}
+    @if (0 < count($bing_search_result['result_url'][0]) && config('constant.Bing_SERP')==true ) @for ($i=0; $i <
+        count($bing_search_result['result_url'][0]); $i++) <div class="post-box mt-2">
+        <h3 class="text-primary cursorp">{{ $i+1 }}.{{
+            $bing_search_result['result_title'][0][$i]
+            }}</h3>
+        <p><strong>Url:</strong>{{ $bing_search_result['result_url'][0][$i] }}</p>
+        <p>
+            <span class="badge bg-success">{{rand(1,36)}} hours ago</span>
+            {!! $bing_search_result['result_description'][0][$i] !!}
+        <div class="d-lg-flex align-items-center justify-content-between">
+            <div class="text-end">
+                <span class="float-right">
+                    <a href="{{ $bing_search_result['result_url'][0][$i] }}" rel="nofollow" target="_blank"
+                        class="btn btn-primary btn-sm">Show
+                        details <i class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+        </div>
+        @endfor
+        @endif
+        {{-- bing_search_result end--}}
+
+
+        {{-- bing_news start--}}
+        @if (0 < count($bing_news['title']) && config('constant.Bing_news')==true ) @for ($i=0; $i <
+            count($bing_news['title']); $i++) <div class="post-box mt-2 bg-warning bg-gradient bg-opacity-70">
+            <h3 class="text-primary cursorp">{{ $i+1 }}. {{ $bing_news['title'][$i]}}</h3>
+            <p>
+                <span class="badge bg-success">{{rand(1,36)}} hours ago</span>
+                {{ $bing_news['description'][$i] }}
+
+            <div class="d-lg-flex align-items-center justify-content-between">
+                <span class="badge rounded-pill bg-info text-dark">{{ $indexedArray[array_rand($indexedArray)]
+                    }}</span>
+                <div>
+                    <strong>{{rand(1,360000)}} People Read</strong>
+                </div>
+            </div>
+            </div>
+            @endfor
+            @endif
+            {{-- bing_news end--}}
+
+
+            <!--//container-->
 </article>
 @endsection
 

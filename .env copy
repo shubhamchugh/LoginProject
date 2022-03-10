@@ -101,4 +101,8 @@ google_related_keywords=true
 pop_questions=true
 bing_tab_faq=true
 popular_post=true
+Bing_SERP=false
+Bing_news=false
 
+
+Bing_API_Key=1481d57e760144d9a09ad415ff244154
