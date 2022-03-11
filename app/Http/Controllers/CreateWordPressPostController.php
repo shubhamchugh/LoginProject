@@ -75,7 +75,7 @@ class CreateWordPressPostController extends Controller
                     'post_excerpt'          => '',
                     'post_status'           => 'publish',
                     'comment_status'        => 'open',
-                    'ping_status'           => 'ping_status',
+                    'ping_status'           => 'open',
                     'post_password'         => '',
                     'to_ping'               => '',
                     'pinged'                => '',
@@ -87,7 +87,7 @@ class CreateWordPressPostController extends Controller
                     'menu_order'            => 0,
                     'post_type'             => 'post',
                     'post_mime_type'        => '',
-                    'comment_count'         => 1,
+                    'comment_count'         => 0,
                 ]);
 
             $msg = (true == $data) ? "Transfer Successfully to wordpress post." : "Some error found while transferring post to wordpress";
