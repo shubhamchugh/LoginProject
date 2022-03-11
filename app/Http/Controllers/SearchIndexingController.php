@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Google;
-use Carbon\Carbon;
-use App\Models\Post;
 use App\Models\IndexResult;
+use App\Models\Post;
+use Carbon\Carbon;
+use Google;
 use Google_Service_Indexing;
+use Google_Service_Indexing_UrlNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Google_Service_Indexing_UrlNotification;
 
 class SearchIndexingController extends Controller
 {

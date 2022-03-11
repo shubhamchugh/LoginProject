@@ -1,9 +1,6 @@
 @extends('themes.DevBlog.layouts.master')
 
 @section('content')
-<?php 
-$indexedArray = array("new", "trend", "hot", "top","best","tip","great","recommended","suggest","worst","excellent","fabulous");
-?>
 <article class="blog-post px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         <header class="blog-post-header">

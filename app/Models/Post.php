@@ -32,6 +32,9 @@ class Post extends Model
         'created_at',
         'updated_at',
         'published_at',
+        'google_index',
+        'bing_index',
+        'wordpress_transfer',
 
     ];
 
