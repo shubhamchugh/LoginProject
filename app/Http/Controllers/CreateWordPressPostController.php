@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Post;
+use App\Models\WP_Posts;
 use App\Models\PostContent;
-use Illuminate\Support\Facades\DB;
+use App\Models\WP_Term_Relationships;
 
 class CreateWordPressPostController extends Controller
 {
@@ -63,35 +64,37 @@ class CreateWordPressPostController extends Controller
                     'totalvideos'             => $totalvideos,
                 ])->render();
             echo $post_content;
-            $data = DB::connection('wordpress_mysql')
-                ->table('wp_posts')
-                ->insert([
-                    'post_title'            => $post->post_title,
-                    'post_name'             => $post->slug,
-                    'post_author'           => 1,
-                    'post_date'             => Carbon::now(),
-                    'post_date_gmt'         => Carbon::now(),
-                    'post_content'          => $post_content,
-                    'post_excerpt'          => '',
-                    'post_status'           => 'publish',
-                    'comment_status'        => 'open',
-                    'ping_status'           => 'open',
-                    'post_password'         => '',
-                    'to_ping'               => '',
-                    'pinged'                => '',
-                    'post_modified'         => Carbon::now(),
-                    'post_modified_gmt'     => Carbon::now(),
-                    'post_content_filtered' => '',
-                    'post_parent'           => 0,
-                    'guid'                  => $post->slug,
-                    'menu_order'            => 0,
-                    'post_type'             => 'post',
-                    'post_mime_type'        => '',
-                    'comment_count'         => 0,
-                ]);
 
-            $msg = (true == $data) ? "Transfer Successfully to wordpress post." : "Some error found while transferring post to wordpress";
-            dd($msg);
+            $data = WP_Posts::create([
+                'post_title'            => $post->post_title,
+                'post_name'             => $post->slug,
+                'post_author'           => 1,
+                'post_date'             => Carbon::now(),
+                'post_date_gmt'         => Carbon::now(),
+                'post_content'          => $post_content,
+                'post_excerpt'          => '',
+                'post_status'           => 'publish',
+                'comment_status'        => 'open',
+                'ping_status'           => 'open',
+                'post_password'         => '',
+                'to_ping'               => '',
+                'pinged'                => '',
+                'post_modified'         => Carbon::now(),
+                'post_modified_gmt'     => Carbon::now(),
+                'post_content_filtered' => '',
+                'post_parent'           => 0,
+                'guid'                  => $post->slug,
+                'menu_order'            => 0,
+                'post_type'             => 'post',
+                'post_mime_type'        => '',
+                'comment_count'         => 0,
+            ]);
+
+            WP_Term_Relationships::create([
+                'object_id'        => $data->id,
+                'term_taxonomy_id' => 3, // Please Insert wp-admin/term.php?taxonomy=category&tag_ID=3 (Id) from Edit Category Page
+            ]);
+            dd("Post Transfer to wordpress Successfully");
         } else {
             echo "No post fround for transfer to wordpress";
             dd();
