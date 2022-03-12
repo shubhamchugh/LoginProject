@@ -92,7 +92,7 @@ class CreateWordPressPostController extends Controller
 
             WP_Term_Relationships::create([
                 'object_id'        => $data->id,
-                'term_taxonomy_id' => 3, // Please Insert wp-admin/term.php?taxonomy=category&tag_ID=3 (Id) from Edit Category Page
+                'term_taxonomy_id' => config('constant.WORDPRESS_DB_CAT_ID'), // Please Insert wp-admin/term.php?taxonomy=category&tag_ID=3 (Id) from Edit Category Page
             ]);
             dd("Post Transfer to wordpress Successfully");
         } else {

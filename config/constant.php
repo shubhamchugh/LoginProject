@@ -41,4 +41,5 @@ return [
     'Bing_API_Key'             => env('Bing_API_Key'),
     'Bing_SERP'                => env('Bing_SERP'),
     'Bing_news'                => env('Bing_news'),
+    'WORDPRESS_DB_CAT_ID'      => env('WORDPRESS_DB_CAT_ID'),
 ];
