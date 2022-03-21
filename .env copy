@@ -86,7 +86,7 @@ DEFAULT_IMAGE='default.jpg'
 CID_STATUS=true
 CID=testcid
 
-NODE_SCRAPER_IP=localhost
+NODE_SCRAPER_IP=157.245.84.197
 
 Google_Analytics='UA-122475787-1'
 Google_Search_console='A4feDaNow1ajnzH3BP2fd4JJ-l0-1Ap8rj82obg4QvE'
@@ -112,6 +112,6 @@ bing_tab_faq=true
 popular_post=true
 Bing_SERP=false
 Bing_news=false
-
+Bing_search_result_check=false
 
 Bing_API_Key=1481d57e760144d9a09ad415ff244154

@@ -292,7 +292,7 @@
 
 
     {{-- bing_search_result start --}}
-    @if (0 < count($bing_search_result['result_url'][0]) && config('constant.Bing_SERP')==true ) @for ($i=0; $i <
+    @if (config('constant.Bing_SERP') == true && 0 < count($bing_search_result['result_url'][0]) ) @for ($i=0; $i <
         count($bing_search_result['result_url'][0]); $i++) <div class="post-box mt-2">
         <h3 class="text-primary cursorp">{{ $i+1 }}.{{
             $bing_search_result['result_title'][0][$i]

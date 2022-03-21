@@ -26,7 +26,7 @@ class CheckPostUpdateDateMiddleware
 
         if (count($request->route('post')->content) > 0) {
             $post_content = $request->route('post')->content[mt_rand(0, (count($request->route('post')->content) - 1))];
-            if (empty($post_content->bing_search_result)) {
+            if (empty($post_content->bing_search_result) && config('constant.Bing_search_result_check')) {
                 PostContent::where('id', $post_content->id)->delete();
                 return redirect()->route('post.show', $request->route('post')->slug);
             }
