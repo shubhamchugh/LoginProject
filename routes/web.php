@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CacheClearController;
+use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
@@ -25,6 +27,11 @@ Route::get('clear', [CacheClearController::class, 'clear']);
 Route::get('search-index', [SearchIndexingController::class, 'indexing']);
 
 Route::get('wordpress-post-create', [CreateWordPressPostController::class, 'create']);
+
+Route::get('settings', [SettingsController::class, 'show'])->name('settings.show');
+Route::post('settings/update', [SettingsController::class, 'update'])->name('settings.update');
+
+Route::get('sql-update', [SqlDataUpdateController::class, 'updateSql']);
 
 //sitemap
 Route::get('createsitemap', function () {
@@ -218,6 +225,3 @@ Route::get('related-keyword/{keyword}', [
     'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
     'as'   => 'scrape.keyword.update',
 ]);
-
-// Settings //
-Route::resource('settings', 'App\Http\Controllers\Backend\Settings\BasicConfiguration');

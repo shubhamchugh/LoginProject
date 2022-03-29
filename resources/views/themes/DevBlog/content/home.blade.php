@@ -8,11 +8,9 @@
 <br>
 <section class="cta-section theme-bg-light py-5">
     <div class="container text-center single-col-max-width">
-        <h2 class="heading">Frequently Asked Questions & Answers Related to Attorney</h2>
-        <div class="intro">Attorneyfaq.com is a crowdsourced law website dedicated to providing legal information and
-            resources for all types of law-related topics..</div>
+        <h1 class="heading">{{ $settings->home_h1_title }}</h1>
+        <div class="intro">{{ $settings->home_page_description }}</div>
         <div class="single-form-max-width pt-3 mx-auto">
-
 
 
             <form action="{{ route('search.show') }}" class="signup-form row g-2 g-lg-2 align-items-center">
@@ -110,5 +108,5 @@
 
 
 @section('head')
-<title>{{ 'Default Message' }}</title>
+<title>{{ $settings->home_title ?? "Home Page" }}</title>
 @endsection

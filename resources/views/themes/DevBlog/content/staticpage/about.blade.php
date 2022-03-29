@@ -21,10 +21,10 @@
 
                 </div>
                 <p> We are web devlopment agency who is working from last 10 years in the industry.</p>
-                <p>We as a {{ config('app.name') }} trying to help all internet users by providing the list of trusted
+                <p>We as a {{$settings->site_name }} trying to help all internet users by providing the list of trusted
                     pages as per
                     their query. </p>
-                <p>With our site {{ config('app.name') }}, you can easily find desired website and pages easily. Just
+                <p>With our site {{$settings->site_name }}, you can easily find desired website and pages easily. Just
                     search and
                     navigate to the listed pages.
                     If you find any issue you can fill our contact us page we will try to help you.</p>

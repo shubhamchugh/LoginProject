@@ -35,7 +35,8 @@
                                                 the DMCA and other applicable laws. As part of our response, we may
                                                 remove or disable access to
                                                 material
-                                                residing on site that is controlled or operated by {{ config('app.name')
+                                                residing on site that is controlled or operated by {{
+                                                $settings->site_name
                                                 }} that is claimed to
                                                 be
                                                 infringing, in

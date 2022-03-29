@@ -10,20 +10,12 @@
     <!-- FontAwesome JS-->
     <script defer src="{{ asset('themes/DevBlog/assets/fontawesome/js/all.min.js') }}"></script>
     <!-- Theme CSS -->
-    <link id="theme-style" rel="stylesheet" href="{{ asset('themes/DevBlog/assets/css/theme-1.css') }}">
+    <?php $color_code = (!empty($settings->theme_color)) ? $settings->theme_color : 1;
+    $css_path  = "themes/DevBlog/assets/css/theme-$color_code.css";
+    ?>
+    <link id="theme-style" rel="stylesheet" href="{{ asset($css_path) }}">
 
     @section('head')
     @show
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('constant.Google_Analytics')  }}">
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-         function gtag(){dataLayer.push(arguments);}
-         gtag('js', new Date());
-         gtag('config', {{ config('constant.Google_Analytics') }});
-    </script>
-    <meta name="google-site-verification" content="{{ config('constant.Google_Search_console')  }}" />
-    <script data-ad-client="{{ config('constant.Adsense_pub_id')  }}" async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {!! $settings->header_code !!}
 </head>
