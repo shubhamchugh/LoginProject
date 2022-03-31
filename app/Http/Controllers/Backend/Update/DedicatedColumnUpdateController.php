@@ -15,10 +15,11 @@ class DedicatedColumnUpdateController extends Controller
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_results");
         }
+
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
+        echo "<a href='$url' target='_blank'>$url</a>";
         $post_content->update([
             'is_bing_results' => 1,
         ]);
