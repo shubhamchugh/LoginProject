@@ -15,8 +15,10 @@ class SqlDataUpdateController extends Controller
             'google_forms_contact'  => json_encode('http://google.com/form'),
             'home_h1_title'         => json_encode('Frequently Asked Questions & Answers Related to Attorney'),
             'home_page_description' => json_encode('example.com is a crowd sourced law website dedicated to providing legal information and resources for all types of law-related topics.'),
-            'header_code'           => json_encode(""),
+            'header_code'           => json_encode(''),
             'theme_color'           => json_encode("1"),
+            'author_name'           => json_encode('AuthorName'),
+            'bellow_title_ads'      => json_encode(''),
         ];
 
         foreach ($data as $name => $payload) {

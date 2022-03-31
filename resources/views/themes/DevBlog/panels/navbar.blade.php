@@ -10,7 +10,8 @@
             <img class="profile-image mb-3 rounded-circle mx-auto"
                 src="{{ asset('themes/DevBlog/assets/images/profile.png') }}" alt="image">
 
-            <div class="bio mb-3">Hi, my name is {{ config('app.name') }}. Briefly introduce yourself here. You can also
+            <div class="bio mb-3">Hi, my name is {{ $settings->author_name }}. Briefly introduce yourself here. You can
+                also
                 provide a link to the about page.<br>
                 {{-- <a href="about.html">Find out more about me</a> --}}
             </div>
@@ -39,12 +40,12 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('docs',['dmca']) }}"><i
-                        class="fas fa-bookmark fa-fw me-2"></i>DMCA</a>
+                        class="fas fa-bookmark fa-fw me-2"></i>Disclaimer</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('docs',['privacy']) }}"><i
-                        class="fas fa-bookmark fa-fw me-2"></i>Privacy</a>
+                        class="fas fa-user-secret fa-fw me-2"></i>Privacy</a>
             </li>
         </ul>
 

@@ -9,17 +9,15 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    private $limit = 50;
 
     public function homeList(GeneralSettings $settings)
     {
-        $last_id = Post::orderBy('id', 'DESC')->published()->first();
+        $last_id = Post::latest()->first('id');
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
-            $posts = Post::wherein('id', (getRandomNumberArray(1, $last_id->id, config('constant.HOMEPAGE_POST_COUNT'))))
-                ->published()
-                ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'));
+            $posts = Post::with('content')->inRandomOrder()->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
+                ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 
             return view($theme_path_home, [
                 'posts'    => $posts,
@@ -36,7 +34,7 @@ class HomeController extends Controller
 
         $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
-        $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate($this->limit);
+        $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
         return view($theme_path_sitemap, [
             'sitemap'  => $sitemap,

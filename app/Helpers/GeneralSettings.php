@@ -12,7 +12,9 @@ class GeneralSettings extends Settings
     $home_h1_title,
     $home_page_description,
     $header_code,
-        $theme_color;
+    $theme_color,
+    $author_name,
+        $bellow_title_ads;
 
     public static function group(): string
     {

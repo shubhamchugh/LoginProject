@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
+use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +32,16 @@ Route::get('wordpress-post-create', [CreateWordPressPostController::class, 'crea
 
 Route::get('settings', [SettingsController::class, 'show'])->name('settings.show');
 Route::post('settings/update', [SettingsController::class, 'update'])->name('settings.update');
+Route::post('settings/image/update', [SettingsController::class, 'imageUpdate'])->name('settings.image.update');
 
 Route::get('sql-update', [SqlDataUpdateController::class, 'updateSql']);
+
+Route::get('is_bing_results', [DedicatedColumnUpdateController::class, 'is_bing_results'])->name('is_bing_results.update');
+Route::get('is_thumbnail_images', [DedicatedColumnUpdateController::class, 'is_thumbnail_images'])->name('is_thumbnail_images.update');
+Route::get('is_bing_images', [DedicatedColumnUpdateController::class, 'is_bing_images'])->name('is_bing_images.update');
+Route::get('is_bing_news', [DedicatedColumnUpdateController::class, 'is_bing_news'])->name('is_bing_news.update');
+Route::get('is_bing_video', [DedicatedColumnUpdateController::class, 'is_bing_video'])->name('is_bing_video.update');
+Route::get('is_google_results', [DedicatedColumnUpdateController::class, 'is_google_results'])->name('is_google_results.update');
 
 //sitemap
 Route::get('createsitemap', function () {
@@ -221,7 +231,7 @@ Route::get('scrape/faq', [
     'as'   => 'scrape.faq',
 ]);
 
-Route::get('related-keyword/{keyword}', [
+Route::get('related/{keyword}', [
     'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
     'as'   => 'scrape.keyword.update',
 ]);

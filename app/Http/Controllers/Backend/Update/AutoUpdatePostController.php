@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Update;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\FakeUser;
+use App\Models\IpRecord;
 use App\Models\PostContent;
 use App\Models\ScrapingFailed;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,10 @@ class AutoUpdatePostController extends Controller
 
     public static function update_existing($post_content_id, $keyword)
     {
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+        if (empty($ip->ip_address)) {
+            die("Please Add New ip in DataBase to Scrape");
+        }
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
         echo "We are updating post For better experience Please Refresh Page<br>";
@@ -27,7 +32,7 @@ class AutoUpdatePostController extends Controller
 
         // try to save thumbnail_images in database
         try {
-            $Bing_image = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+            $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
             $thumbnail  = Http::get($Bing_image)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
@@ -52,7 +57,7 @@ class AutoUpdatePostController extends Controller
 
         // try to save images for bing_images
         try {
-            $Bing_image_url = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+            $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
             $Bing_image     = Http::get($Bing_image_url)->body();
             $Bing_image     = json_decode($Bing_image, true);
 
@@ -82,7 +87,7 @@ class AutoUpdatePostController extends Controller
 
         // try to update New From bing News search
         try {
-            $newsUrl   = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+            $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
             $bing_news = Http::get($newsUrl)->body();
             $bing_news = json_decode($bing_news, true);
 
@@ -110,7 +115,7 @@ class AutoUpdatePostController extends Controller
         //try to update video from bing search
         try {
 
-            $videoUrl    = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+            $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
             $bing_videos = Http::get($videoUrl)->body();
             $bing_videos = json_decode($bing_videos, true);
 
@@ -136,7 +141,7 @@ class AutoUpdatePostController extends Controller
 
         // hit to Bing Api
         try {
-            $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data     = Http::get($api_url_bing)->body();
 
             $bing_data = json_decode($api_data, true);
@@ -296,9 +301,9 @@ class AutoUpdatePostController extends Controller
             echo "Something bad with People Also Ask<br>";
 
         }
-
+        // hit to google api and get data for google faq,rich_snippet,search results
         try {
-            $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data_google = Http::get($api_url_google)->body();
 
             $google_data = json_decode($api_data_google, true);
@@ -388,6 +393,10 @@ class AutoUpdatePostController extends Controller
 
     public static function update_and_create($post_id, $keyword)
     {
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+        if (empty($ip->ip_address)) {
+            die("Please Add New ip in DataBase to Scrape");
+        }
 
         echo "We are updating post For better experience Please Refresh Page";
 
@@ -399,7 +408,7 @@ class AutoUpdatePostController extends Controller
 
         // try to save thumbnail_images in database
         try {
-            $Bing_image = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
+            $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
             $thumbnail  = Http::get($Bing_image)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
@@ -425,7 +434,7 @@ class AutoUpdatePostController extends Controller
 
         // try to save images for bing_images
         try {
-            $Bing_image_url = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+            $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
             $Bing_image     = Http::get($Bing_image_url)->body();
             $Bing_image     = json_decode($Bing_image, true);
 
@@ -455,7 +464,7 @@ class AutoUpdatePostController extends Controller
 
         // try to update New From bing News search
         try {
-            $newsUrl   = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+            $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
             $bing_news = Http::get($newsUrl)->body();
             $bing_news = json_decode($bing_news, true);
 
@@ -483,7 +492,7 @@ class AutoUpdatePostController extends Controller
         //try to update video from bing search
         try {
 
-            $videoUrl    = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+            $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
             $bing_videos = Http::get($videoUrl)->body();
             $bing_videos = json_decode($bing_videos, true);
 
@@ -509,7 +518,7 @@ class AutoUpdatePostController extends Controller
 
         // hit to Bing Api
         try {
-            $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data     = Http::get($api_url_bing)->body();
 
             $bing_data = json_decode($api_data, true);
@@ -671,7 +680,7 @@ class AutoUpdatePostController extends Controller
         }
 
         try {
-            $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
             $api_data_google = Http::get($api_url_google)->body();
 
             $google_data = json_decode($api_data_google, true);
@@ -784,7 +793,7 @@ class AutoUpdatePostController extends Controller
 
                 // try to save thumbnail_images in database
                 try {
-                    $Bing_image = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
+                    $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
                     $thumbnail  = Http::get($Bing_image)->body();
 
                     $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
@@ -810,7 +819,7 @@ class AutoUpdatePostController extends Controller
 
                 // try to save images for bing_images
                 try {
-                    $Bing_image_url = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+                    $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
                     $Bing_image     = Http::get($Bing_image_url)->body();
                     $Bing_image     = json_decode($Bing_image, true);
 
@@ -840,7 +849,7 @@ class AutoUpdatePostController extends Controller
 
                 // try to update New From bing News search
                 try {
-                    $newsUrl   = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+                    $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
                     $bing_news = Http::get($newsUrl)->body();
                     $bing_news = json_decode($bing_news, true);
 
@@ -868,7 +877,7 @@ class AutoUpdatePostController extends Controller
                 //try to update video from bing search
                 try {
 
-                    $videoUrl    = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+                    $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
                     $bing_videos = Http::get($videoUrl)->body();
                     $bing_videos = json_decode($bing_videos, true);
 
@@ -894,7 +903,7 @@ class AutoUpdatePostController extends Controller
 
                 // hit to Bing Api
                 try {
-                    $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+                    $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
                     $api_data     = Http::get($api_url_bing)->body();
 
                     $bing_data = json_decode($api_data, true);
@@ -1056,7 +1065,7 @@ class AutoUpdatePostController extends Controller
                 }
 
                 try {
-                    $api_url_google  = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+                    $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
                     $api_data_google = Http::get($api_url_google)->body();
 
                     $google_data = json_decode($api_data_google, true);

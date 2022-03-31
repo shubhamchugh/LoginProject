@@ -13,6 +13,8 @@ class CacheClearController extends Controller
         echo shell_exec('cd .. && sudo chmod -R o+rw storage');
         echo shell_exec('cd .. && sudo chmod -R 777 storage');
         echo shell_exec('cd .. && sudo chmod -R 777 bootstrap/cache');
+        echo shell_exec('cd .. && sudo chmod -R 777 public');
+        echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
         Artisan::call('cache:clear');
         print_r(Artisan::output());

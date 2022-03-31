@@ -27,7 +27,7 @@
         </header>
 
         <div align="center">
-            {{-- Adsense Code --}}
+            {!! $settings->bellow_title_ads !!}
         </div>
 
         <div class="blog-post-body">

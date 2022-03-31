@@ -2,13 +2,13 @@
 
 return [
 
-    'POST_SLUG'                => env('POST_SLUG'),
-    'SIDEBAR_POST_COUNT'       => env('SIDEBAR_POST_COUNT'),
+    'POST_SLUG'                => env('POST_SLUG', 'post'),
+    'SIDEBAR_POST_COUNT'       => env('SIDEBAR_POST_COUNT', 20),
     'WASABI_BUCKET_NAME'       => env('WASABI_BUCKET_NAME'),
-    'HOMEPAGE_POST_COUNT'      => env('HOMEPAGE_POST_COUNT'),
+    'HOMEPAGE_POST_COUNT'      => env('HOMEPAGE_POST_COUNT', 10),
     'RANDOM_POST_START_COUNT'  => env('RANDOM_POST_START_COUNT'),
     'RANDOM_POST_END_COUNT'    => env('RANDOM_POST_END_COUNT'),
-    'HOMEPAGE_POST_PAGINATION' => env('HOMEPAGE_POST_PAGINATION'),
+    'HOMEPAGE_POST_PAGINATION' => env('HOMEPAGE_POST_PAGINATION', 10),
     'THEME_NAME'               => env('THEME_NAME'),
     'GOOGLE_SEARCH'            => env('GOOGLE_SEARCH'),
     'SEARCH_INPUT_TEXT'        => env('SEARCH_INPUT_TEXT'),
@@ -43,4 +43,5 @@ return [
     'Bing_news'                => env('Bing_news'),
     'WORDPRESS_DB_CAT_ID'      => env('WORDPRESS_DB_CAT_ID'),
     'Bing_search_result_check' => env('Bing_search_result_check'),
+    'SITEMAP_PAGE_PAGINATION'  => env('SITEMAP_PAGE_PAGINATION', 50),
 ];

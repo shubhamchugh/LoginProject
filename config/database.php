@@ -35,7 +35,7 @@ return [
 
     'connections' => [
 
-        'sqlite'          => [
+        'sqlite'                        => [
             'driver'                  => 'sqlite',
             'url'                     => env('DATABASE_URL'),
             'database'                => env('DB_DATABASE', database_path('database.sqlite')),
@@ -43,7 +43,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mysql'           => [
+        'mysql'                         => [
             'driver'         => 'mysql',
             'url'            => env('DATABASE_URL'),
             'host'           => env('DB_HOST', '127.0.0.1'),
@@ -63,7 +63,7 @@ return [
             ]) : [],
         ],
 
-        'wordpress_mysql' => [
+        'wordpress_mysql'               => [
             'driver'         => 'mysql',
             'url'            => env('WORDPRESS_DATABASE_URL'),
             'host'           => env('WORDPRESS_DB_HOST', '127.0.0.1'),
@@ -83,7 +83,27 @@ return [
             ]) : [],
         ],
 
-        'pgsql'           => [
+        'NODE_SCRAPER_IP_MANAGER_MYSQL' => [
+            'driver'         => 'mysql',
+            'url'            => env('WORDPRESS_DATABASE_URL'),
+            'host'           => env('NODE_SCRAPER_IP_MANAGER_DB_HOST', '127.0.0.1'),
+            'port'           => env('NODE_SCRAPER_IP_MANAGER_DB_PORT', '3306'),
+            'database'       => env('NODE_SCRAPER_IP_MANAGER_DB_DATABASE', 'forge'),
+            'username'       => env('NODE_SCRAPER_IP_MANAGER_DB_USERNAME', 'forge'),
+            'password'       => env('NODE_SCRAPER_IP_MANAGER_DB_PASSWORD', ''),
+            'unix_socket'    => env('WORDPRESS_DB_SOCKET', ''),
+            'charset'        => 'utf8mb4',
+            'collation'      => 'utf8mb4_unicode_ci',
+            'prefix'         => '',
+            'prefix_indexes' => true,
+            'strict'         => true,
+            'engine'         => null,
+            'options'        => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'pgsql'                         => [
             'driver'         => 'pgsql',
             'url'            => env('DATABASE_URL'),
             'host'           => env('DB_HOST', '127.0.0.1'),
@@ -98,7 +118,7 @@ return [
             'sslmode'        => 'prefer',
         ],
 
-        'sqlsrv'          => [
+        'sqlsrv'                        => [
             'driver'         => 'sqlsrv',
             'url'            => env('DATABASE_URL'),
             'host'           => env('DB_HOST', 'localhost'),

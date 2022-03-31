@@ -23,9 +23,11 @@ class SettingsController extends Controller
         $settings->home_page_description = $request->input('home_page_description');
         $settings->header_code           = $request->input('header_code');
         $settings->theme_color           = $request->input('theme_color');
+        $settings->author_name           = $request->input('author_name');
+        $settings->bellow_title_ads      = $request->input('bellow_title_ads');
         $settings->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'settings saved');
     }
 
     public function show(GeneralSettings $settings)
@@ -40,7 +42,20 @@ class SettingsController extends Controller
             'home_page_description' => $settings->home_page_description,
             'header_code'           => $settings->header_code,
             'theme_color'           => $settings->theme_color,
+            'author_name'           => $settings->author_name,
+            'bellow_title_ads'      => $settings->bellow_title_ads,
 
         ]);
+    }
+
+    public function imageUpdate(Request $request)
+    {
+        if (empty($request->file('author_Image'))) {
+            return redirect()->back()->with('message', 'something went wrong with file upload');
+        }
+        $file = request()->file('author_Image');
+        $file->move(public_path('/themes/DevBlog/assets/images/'), 'profile.png');
+        return redirect()->back()->with('message', 'Image uploaded');
+
     }
 }

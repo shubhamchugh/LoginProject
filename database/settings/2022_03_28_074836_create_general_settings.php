@@ -14,6 +14,8 @@ class CreateGeneralSettings extends SettingsMigration
         $this->migrator->add('general.home_page_description', 'example.com is a crowd sourced law website dedicated to providing legal information and resources for all types of law-related topics.');
         $this->migrator->add('general.header_code', '');
         $this->migrator->add('general.theme_color', '1');
+        $this->migrator->add('general.author_name', 'AuthorName');
+        $this->migrator->add('general.bellow_title_ads', '');
     }
 
     public function down()

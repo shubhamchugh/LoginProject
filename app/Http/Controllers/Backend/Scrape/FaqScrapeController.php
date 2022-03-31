@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Scrape;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\FakeUser;
+use App\Models\IpRecord;
 use App\Models\SourceUrl;
 use App\Models\PostContent;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ class FaqScrapeController extends Controller
 {
     public function FaqScrape(Request $request)
     {
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+        if (empty($ip->ip_address)) {
+            die("Please Add New ip in DataBase to Scrape");
+        }
+
         echo "<pre>";
         $count          = (!empty($request->count)) ? $request->count : 20;
         $start          = (!empty($request->start)) ? $request->start : 0;
@@ -72,7 +78,7 @@ class FaqScrapeController extends Controller
 
                 // try to save thumbnail_images in database
                 try {
-                    $Bing_image = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+                    $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
 
                     $thumbnail = Http::get($Bing_image)->body();
 
@@ -99,7 +105,7 @@ class FaqScrapeController extends Controller
 
                 // try to save images for bing_images
                 try {
-                    $Bing_image_url = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value);
                     $Bing_image     = Http::get($Bing_image_url)->body();
                     $Bing_image     = json_decode($Bing_image, true);
 
@@ -132,7 +138,7 @@ class FaqScrapeController extends Controller
 
                 // try to update New From bing News search
                 try {
-                    $newsUrl   = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
                     $bing_news = Http::get($newsUrl)->body();
                     $bing_news = json_decode($bing_news, true);
 
@@ -160,7 +166,7 @@ class FaqScrapeController extends Controller
                 //try to update video from bing search
                 try {
 
-                    $videoUrl    = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:msite-youtube.com';
+                    $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:msite-youtube.com';
                     $bing_videos = Http::get($videoUrl)->body();
                     $bing_videos = json_decode($bing_videos, true);
 
@@ -186,7 +192,7 @@ class FaqScrapeController extends Controller
 
                 // hit to Bing Api
                 try {
-                    $api_url_bing = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword->value);
                     echo "Bing Api Url: $api_url_bing<br>";
                     $api_data = Http::get($api_url_bing)->body();
 
@@ -200,6 +206,10 @@ class FaqScrapeController extends Controller
                 } catch (\Throwable $th) {
                     echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
                     $keyword->update(['is_scraped' => 'bing_api_hit_fail']);
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                    ]);
+                    echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }
 
                 //updating Related Keywords
@@ -222,6 +232,10 @@ class FaqScrapeController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
                 } else {
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                    ]);
+                    echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }
 
                 $post_description = (!empty($result_description['result_description'][0][0])) ? $result_description['result_description'][0][0] : null;
@@ -355,7 +369,7 @@ class FaqScrapeController extends Controller
 
                 //hit to google api
                 try {
-                    $api_url_google = 'http://' . config('constant.NODE_SCRAPER_IP') . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
                     echo "Google APi Url: $api_url_google<br>";
                     $api_data_google = Http::get($api_url_google)->body();
 

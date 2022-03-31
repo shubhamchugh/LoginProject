@@ -34,6 +34,24 @@
 
     </div>
     <!--//container-->
+
+
+    {{-- Popular Posts start--}}
+    @if (config('constant.popular_post') ==
+    true)
+    <div class="mt-5 mb-3">
+        <h2 class="title">Popular Posts:</h2>
+        @foreach ($sidebar as $item)
+        <li class="list-group-item">
+            {{ $loop->iteration }}. <a href="{{ route('post.show',$item->slug) }}" title="{{ $item->post_title }}"> {{
+                $item->post_title }}
+                <sup><i class="fa fa-external-link" aria-hidden="true"></i></sup></a>
+        </li>
+        @endforeach
+        @endif
+    </div>
+    {{-- Bing Slider Questions end--}}
+
 </article>
 
 @endsection

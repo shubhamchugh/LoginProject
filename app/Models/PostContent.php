@@ -32,6 +32,12 @@ class PostContent extends Model
         'google_faq',
         'google_rich_snippet',
         'google_search_result',
+        'is_bing_results',
+        'is_thumbnail_images',
+        'is_bing_images',
+        'is_bing_news',
+        'is_google_results',
+
     ];
 
     public function post()

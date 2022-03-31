@@ -13,6 +13,7 @@ class PostController extends Controller
     public function show(Post $post, GeneralSettings $settings)
     {
         $postContent = $post->content->toArray();
+
         //if Post Content not found then first get the post content and refresh the page
         if (empty($postContent)) {
             AutoUpdatePostController::update_and_create($post->id, $post->post_title);
