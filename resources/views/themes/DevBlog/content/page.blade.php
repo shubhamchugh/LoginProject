@@ -72,11 +72,3 @@
 </section>
 <!--end content-->
 @endsection
-
-
-@section('head')
-<<<<<<< HEAD <title>{{ $page->page_title ?? "Default Message"}}</title>
-    =======
-    <title>{{ $page->page_title ?? "Default Message"}}</title>
-    >>>>>>> 4941d17a9461a8dceace0a89d64833e627f85f79
-    @endsection

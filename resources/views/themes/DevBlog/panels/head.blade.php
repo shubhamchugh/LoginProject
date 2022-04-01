@@ -18,4 +18,7 @@
     @section('head')
     @show
     {!! $settings->header_code !!}
+    <!-- MINIFIED -->
+    {!! SEO::generate() !!}
+
 </head>

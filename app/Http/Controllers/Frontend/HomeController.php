@@ -5,19 +5,30 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomeController extends Controller
 {
 
     public function homeList(GeneralSettings $settings)
     {
+
         $last_id = Post::latest()->first('id');
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
             $posts = Post::with('content')->inRandomOrder()->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
                 ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
+
+            SEOTools::setTitle($settings->home_title);
+            SEOTools::setDescription($settings->home_page_description);
+            SEOTools::opengraph()->setUrl('http://current.url.com');
+            SEOTools::setCanonical(URL::current());
+            SEOTools::opengraph()->addProperty('type', 'articles');
+
+            SEOTools::jsonLd()->addImage(asset('themes/DevBlog/assets/images/profile.png'));
 
             return view($theme_path_home, [
                 'posts'    => $posts,

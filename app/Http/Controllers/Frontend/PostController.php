@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
@@ -41,6 +43,14 @@ class PostController extends Controller
         $totalvideos             = (!empty($bing_videos)) ? (count($bing_videos) - 1) : null;
 
         $theme_path_post = 'themes.' . config('constant.THEME_NAME') . '.content.post';
+        $SEO_dec         = (!empty($google_rich_snippet[0])) ? strip_tags($google_rich_snippet[0]) : $postContent['post_description'];
+        SEOTools::setTitle($post->post_title);
+        SEOTools::setDescription($SEO_dec);
+        SEOTools::opengraph()->setUrl(URL::current());
+        SEOTools::setCanonical(URL::current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+
+        SEOTools::jsonLd()->addImage(json_decode($bing_images['images'][mt_rand(0, $totalimages)], true)['murl']);
 
         return view($theme_path_post,
             [

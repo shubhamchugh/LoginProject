@@ -339,11 +339,3 @@
             <!--//container-->
 </article>
 @endsection
-
-
-
-
-
-@section('head')
-<title>{{ ucwords($post->post_title ?? "Default Message") }}</title>
-@endsection

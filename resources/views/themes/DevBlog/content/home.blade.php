@@ -106,8 +106,3 @@
 
 </section>
 @endsection
-
-
-@section('head')
-<title>{{ $settings->home_title ?? "Home Page" }}</title>
-@endsection
