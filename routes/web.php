@@ -159,10 +159,10 @@ Route::get('/', [
 ]);
 
 ///Frontend Home Page
-Route::get('/page/{page} ', [
-    'uses' => 'App\Http\Controllers\Frontend\PageController@show',
-    'as'   => 'page.show',
-]);
+// Route::get('/page/{page} ', [
+//     'uses' => 'App\Http\Controllers\Frontend\PageController@show',
+//     'as'   => 'page.show',
+// ]);
 
 Route::get('/sitemap/{sitemap}', [
     'uses' => 'App\Http\Controllers\Frontend\HomeController@sitemap',

@@ -143,6 +143,22 @@
             </div>
             {{-- bellow_title_ads end --}}
 
+
+            {{-- about_us start --}}
+            <div class="form-group {{ $errors->has('about_us') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">about_us</label>
+                <textarea style="width:635px; height:100px;" id="first-name-vertical" class="form-control"
+                    name="about_us" placeholder="about_us"
+                    value="{{ old('about_us', $about_us ?? null)}}">{{ $about_us }}</textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('about_us'))
+                <span class="help-block text-warning">{{ $errors->first('about_us') }}</span>
+                @endif
+            </div>
+            {{-- about_us end --}}
+
             <button type="submit" class="btn btn-primary mr-1">Update</button>
         </div>
 

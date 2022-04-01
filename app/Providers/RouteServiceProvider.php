@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -56,9 +55,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         //page route bind with slug
-        Route::bind('page', function ($slug) {
-            return Page::published()->where('page_slug', $slug)->first();
-        });
+        // Route::bind('page', function ($slug) {
+        //     return Page::published()->where('page_slug', $slug)->first();
+        // });
 
     }
 

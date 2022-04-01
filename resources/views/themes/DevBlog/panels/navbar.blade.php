@@ -10,9 +10,7 @@
             <img class="profile-image mb-3 rounded-circle mx-auto"
                 src="{{ asset('themes/DevBlog/assets/images/profile.png') }}" alt="image">
 
-            <div class="bio mb-3">Hi, my name is {{ $settings->author_name }}. Briefly introduce yourself here. You can
-                also
-                provide a link to the about page.<br>
+            <div class="bio mb-3">{{ $settings->author_name }}<br>
                 {{-- <a href="about.html">Find out more about me</a> --}}
             </div>
             <!--//bio-->

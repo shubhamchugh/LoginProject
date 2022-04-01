@@ -25,6 +25,7 @@ class SettingsController extends Controller
         $settings->theme_color           = $request->input('theme_color');
         $settings->author_name           = $request->input('author_name');
         $settings->bellow_title_ads      = $request->input('bellow_title_ads');
+        $settings->about_us              = $request->input('about_us');
         $settings->save();
 
         return redirect()->back()->with('message', 'settings saved');
@@ -44,6 +45,7 @@ class SettingsController extends Controller
             'theme_color'           => $settings->theme_color,
             'author_name'           => $settings->author_name,
             'bellow_title_ads'      => $settings->bellow_title_ads,
+            'about_us'              => $settings->about_us,
 
         ]);
     }

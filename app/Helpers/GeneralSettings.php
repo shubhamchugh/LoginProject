@@ -14,7 +14,8 @@ class GeneralSettings extends Settings
     $header_code,
     $theme_color,
     $author_name,
-        $bellow_title_ads;
+    $bellow_title_ads,
+        $about_us;
 
     public static function group(): string
     {
