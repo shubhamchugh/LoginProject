@@ -19,6 +19,6 @@
     @show
     {!! $settings->header_code !!}
     <!-- MINIFIED -->
-    {!! SEO::generate(true) !!}
+    {!! SEO::generate() !!}
 
 </head>

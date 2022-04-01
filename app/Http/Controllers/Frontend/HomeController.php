@@ -29,6 +29,7 @@ class HomeController extends Controller
             SEOTools::setCanonical(URL::current());
             SEOTools::opengraph()->addProperty('type', 'articles');
             SEOTools::jsonLd()->addImage(asset('themes/DevBlog/assets/images/profile.png'));
+
             //SEO FOR HOME PAGE END
 
             return view($theme_path_home, [
