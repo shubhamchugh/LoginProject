@@ -65,7 +65,7 @@
 <section class="blog-list px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         @foreach ($posts as $post)
-
+        test pass
         @if (count($post->content) > 0)
         <div class="item mb-5">
             <div class="row g-3 g-xl-0">
