@@ -22,13 +22,14 @@ class HomeController extends Controller
             $posts = Post::with('content')->inRandomOrder()->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
                 ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 
+            //SEO FOR HOME PAGE
             SEOTools::setTitle($settings->home_title);
             SEOTools::setDescription($settings->home_page_description);
             SEOTools::opengraph()->setUrl('http://current.url.com');
             SEOTools::setCanonical(URL::current());
             SEOTools::opengraph()->addProperty('type', 'articles');
-
             SEOTools::jsonLd()->addImage(asset('themes/DevBlog/assets/images/profile.png'));
+            //SEO FOR HOME PAGE END
 
             return view($theme_path_home, [
                 'posts'    => $posts,

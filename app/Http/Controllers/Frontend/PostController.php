@@ -43,7 +43,9 @@ class PostController extends Controller
         $totalvideos             = (!empty($bing_videos)) ? (count($bing_videos) - 1) : null;
 
         $theme_path_post = 'themes.' . config('constant.THEME_NAME') . '.content.post';
-        $SEO_dec         = (!empty($google_rich_snippet[0])) ? strip_tags($google_rich_snippet[0]) : $postContent['post_description'];
+
+        //SEO FOR POST PAGE
+        $SEO_dec = (!empty($google_rich_snippet[0])) ? strip_tags($google_rich_snippet[0]) : $postContent['post_description'];
         SEOTools::setTitle($post->post_title);
         SEOTools::setDescription($SEO_dec);
         SEOTools::opengraph()->setUrl(URL::current());
@@ -51,6 +53,7 @@ class PostController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
 
         SEOTools::jsonLd()->addImage(json_decode($bing_images['images'][mt_rand(0, $totalimages)], true)['murl']);
+        //SEO END FOR POST PAGE
 
         return view($theme_path_post,
             [
