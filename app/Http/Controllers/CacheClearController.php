@@ -40,15 +40,6 @@ class CacheClearController extends Controller
         Artisan::call('event:clear');
         print_r(Artisan::output());
 
-        Artisan::call('settings:clear-cache');
-        print_r(Artisan::output());
-
-        Artisan::call('settings:clear-discovered');
-        print_r(Artisan::output());
-
-        Artisan::call('settings:discover');
-        print_r(Artisan::output());
-
         print_r(shell_exec('cd .. && cd storage/logs && > laravel.log'));
         print_r(shell_exec('sudo chown -R runcloud:runcloud /home/runcloud/webapps/'));
         print_r(shell_exec('sudo chmod 755 -R /home/runcloud/webapps/'));
