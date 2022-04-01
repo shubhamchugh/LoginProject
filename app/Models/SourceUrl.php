@@ -9,6 +9,7 @@ class SourceUrl extends Model
 {
     use HasFactory;
 
+    public $timestamps  = false;
     protected $fillable = [
         'is_scraped',
         'value',

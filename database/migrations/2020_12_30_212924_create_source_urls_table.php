@@ -17,7 +17,6 @@ class CreateSourceUrlsTable extends Migration
             $table->bigIncrements('id');
             $table->string('is_scraped');
             $table->string('value');
-            $table->timestamps();
         });
     }
 
