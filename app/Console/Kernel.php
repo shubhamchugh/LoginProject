@@ -34,6 +34,11 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->runInBackground()
             ->withoutOverlapping();
+
+        $schedule->command('settings:update')
+            ->daily()
+            ->runInBackground()
+            ->withoutOverlapping();
     }
 
     /**
