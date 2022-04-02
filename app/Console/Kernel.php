@@ -47,14 +47,14 @@ class Kernel extends ConsoleKernel
         ;
 
         $schedule->command('ip:update')
-            ->everyMinute()
+            ->hourly()
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/ip-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('search:index')
-            ->everyMinute()
+            ->hourly()
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/search-index.log'))
             ->runInBackground()
