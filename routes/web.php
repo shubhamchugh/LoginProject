@@ -8,6 +8,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CacheClearController;
 use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
+use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
 use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
@@ -26,8 +27,8 @@ use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 //cache clear
 Route::get('clear', [CacheClearController::class, 'clear']);
 
-Route::get('search-index', [SearchIndexingController::class, 'indexing']);
-
+Route::get('google-index', [SearchIndexingController::class, 'google_indexing']);
+Route::get('bing-index', [SearchIndexingController::class, 'bing_indexing']);
 Route::get('wordpress-post-create', [CreateWordPressPostController::class, 'create']);
 
 Route::get('settings', [SettingsController::class, 'show'])->name('settings.show');
@@ -35,7 +36,7 @@ Route::post('settings/update', [SettingsController::class, 'update'])->name('set
 Route::post('settings/image/update', [SettingsController::class, 'imageUpdate'])->name('settings.image.update');
 
 Route::get('sql-update', [SqlDataUpdateController::class, 'updateSql']);
-
+Route::get('ip-update', [NotWorkingIpCheckController::class, 'check_ip']);
 Route::get('is_bing_results', [DedicatedColumnUpdateController::class, 'is_bing_results'])->name('is_bing_results.update');
 Route::get('is_thumbnail_images', [DedicatedColumnUpdateController::class, 'is_thumbnail_images'])->name('is_thumbnail_images.update');
 Route::get('is_bing_images', [DedicatedColumnUpdateController::class, 'is_bing_images'])->name('is_bing_images.update');

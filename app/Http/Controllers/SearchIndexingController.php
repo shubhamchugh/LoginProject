@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IndexResult;
-use App\Models\Post;
-use Carbon\Carbon;
 use Google;
+use Carbon\Carbon;
+use App\Models\Post;
+use App\Models\IndexResult;
 use Google_Service_Indexing;
-use Google_Service_Indexing_UrlNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Google_Service_Indexing_UrlNotification;
 
 class SearchIndexingController extends Controller
 {
 
-    public function indexing(Request $request)
+    public function google_indexing(Request $request)
     {
+        if (empty(file_get_contents(storage_path('Google_account_file.json')))) {
+            dd("Please Add Google Index Api to Google_account_file.json for Send Request to Google");
+        }
         $urls        = array();
         $batch_count = (!empty($request->batch)) ? $request->batch : 10;
 
@@ -78,7 +81,14 @@ class SearchIndexingController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
+    }
+
+    public function bing_indexing(Request $request)
+    {
         try {
+            if (empty(config('constant.Bing_API_Key'))) {
+                dd("Please Add Bing Index Api to Send Request to Bing");
+            }
             $batch_count = (!empty($request->batch)) ? $request->batch : 10;
 
             $bing_posts = Post::where('bing_index', '0')->orderBy('id', 'asc')->limit($batch_count)->get();
