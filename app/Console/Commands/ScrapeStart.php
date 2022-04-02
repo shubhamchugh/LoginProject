@@ -38,7 +38,7 @@ class ScrapeStart extends Command
      */
     public function handle()
     {
-        $scraping_url = url('scrape/faq?&where=pending');
+        $scraping_url = route('scrape.faq');
         Http::get($scraping_url)->getBody();
         $this->info('Successfully hit to Scraping Url:' . $scraping_url);
     }

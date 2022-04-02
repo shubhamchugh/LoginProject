@@ -38,7 +38,7 @@ class SqlUpdateCommand extends Command
      */
     public function handle()
     {
-        $sqlUpdate = url('sql-update');
+        $sqlUpdate = route('sql-update');
         Http::get($sqlUpdate)->getBody();
         $this->info('Successfully hit to SQL Update Url:' . $sqlUpdate);
     }

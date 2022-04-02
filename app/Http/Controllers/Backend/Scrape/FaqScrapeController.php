@@ -28,10 +28,7 @@ class FaqScrapeController extends Controller
         $end            = (!empty($request->end)) ? $request->end : 999999999999999999;
         $refKey         = (!empty($request->refKey)) ? $request->refKey : 'slave';
         $scrapingStatus = (!empty($request->ScrapingStatus)) ? $request->ScrapingStatus : false;
-
-        if (empty($request->where)) {
-            dd("Please Add &where=value");
-        }
+        $where_request  = (!empty($request->where)) ? $request->where : 'pending';
 
         if (!empty($scrapingStatus)) {
             $unique = SourceUrl::select('is_scraped')->distinct()->get();
@@ -53,7 +50,7 @@ class FaqScrapeController extends Controller
             dd("Please Get Some Fake Users before Scrape Post Please  Help: 'example.com/insert?userCount=Value'");
         }
 
-        $keyword = SourceUrl::where('is_scraped', $request->where)->whereBetween('id', [$start, $end])->orderBy('id', 'ASC')->first();
+        $keyword = SourceUrl::where('is_scraped', $where_request)->whereBetween('id', [$start, $end])->orderBy('id', 'ASC')->first();
 
         if (!empty($keyword->value)) {
             echo "keyword: $keyword->value<br>";

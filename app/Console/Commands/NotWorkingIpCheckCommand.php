@@ -38,7 +38,7 @@ class NotWorkingIpCheckCommand extends Command
      */
     public function handle()
     {
-        $sqlUpdate = url('ip-update');
+        $sqlUpdate = route('ip-update');
         Http::get($sqlUpdate)->getBody();
         $this->info('Successfully updated ip Database:' . $sqlUpdate);
     }

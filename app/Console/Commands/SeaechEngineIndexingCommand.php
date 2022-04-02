@@ -38,9 +38,9 @@ class SeaechEngineIndexingCommand extends Command
      */
     public function handle()
     {
-        $google_indexing = url('google-index');
+        $google_indexing = route('google-index');
         Http::get($google_indexing)->getBody();
-        $bing_indexing = url('bing-index');
+        $bing_indexing = route('bing-index');
         Http::get($google_indexing)->getBody();
         $this->info('Successfully Sent request to search Engine Via' . $google_indexing . ' and ' . $bing_indexing);
     }
