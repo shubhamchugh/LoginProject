@@ -7,7 +7,7 @@ current:
   patch: 0
   prerelease: null
   buildmetadata: null
-  commit: 5ba340
+  commit: 5ba34b
   timestamp:
     year: 2022
     month: 4
@@ -17,7 +17,7 @@ current:
     second: 53
     timezone: UTC
 commit:
-  mode: absorb
+  mode: git-local
   length: 6
   increment-by: 1
 git:
