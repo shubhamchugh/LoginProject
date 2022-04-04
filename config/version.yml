@@ -2,26 +2,22 @@ mode: increment
 blade-directive: version
 current:
   label: v
-  major: 1
-  minor: 2
+  major: 3
+  minor: 0
   patch: 0
-  git_absorb: git-local
   prerelease: null
   buildmetadata: null
-  commit: 100001
+  commit: 5ba340
   timestamp:
-    mode: absorb
-    year: null
-    month: null
-    day: null
-    hour: null
-    minute: null
-    second: null
-    timezone: null
+    year: 2022
+    month: 4
+    day: 4
+    hour: 10
+    minute: 47
+    second: 53
+    timezone: UTC
 commit:
-  mode: number
-  number: f477c8
-  git_absorb: git-local
+  mode: absorb
   length: 6
   increment-by: 1
 git:

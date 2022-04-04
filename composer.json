@@ -71,8 +71,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan version:refresh"
+            "@php artisan package:discover --ansi"
         ],
         "pre-autoload-dump": "Google\\Task\\Composer::cleanup",
         "post-root-package-install": [
