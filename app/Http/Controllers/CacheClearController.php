@@ -49,5 +49,7 @@ class CacheClearController extends Controller
 
         print_r(shell_exec('sudo chown -R runcloud:runcloud /home/runcloud/webapps/'));
         print_r(shell_exec('sudo chmod 755 -R /home/runcloud/webapps/'));
+
+        echo shell_exec('who -b');
     }
 }
