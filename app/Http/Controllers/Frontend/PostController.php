@@ -49,7 +49,7 @@ class PostController extends Controller
         $SEO_dec  = (!empty($google_rich_snippet[0])) ? strip_tags($google_rich_snippet[0]) : $postContent['post_description'];
         $keywords = (!empty($google_related_keywords)) ? implode(", ", $google_related_keywords) : implode(", ", $bing_related_keywords);
 
-        $seo_image = (!empty($bing_images['images'][mt_rand(0, $totalimages)])) ? json_encode(['murl' => base_path('themes/DevBlog/assets/images/profile.png')]) : $bing_images['images'][mt_rand(0, $totalimages)];
+        $seo_image = (!empty($bing_images['images'][mt_rand(0, $totalimages)])) ? $bing_images['images'][mt_rand(0, $totalimages)] : json_encode(['murl' => url('themes/DevBlog/assets/images/profile.png')]);
 
         SEOTools::setTitle($post->post_title);
         SEOTools::setDescription($SEO_dec);
