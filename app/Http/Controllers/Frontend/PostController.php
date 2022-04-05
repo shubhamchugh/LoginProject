@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
-use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
-use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class PostController extends Controller
 {
@@ -48,12 +48,15 @@ class PostController extends Controller
         //SEO FOR POST PAGE
         $SEO_dec  = (!empty($google_rich_snippet[0])) ? strip_tags($google_rich_snippet[0]) : $postContent['post_description'];
         $keywords = (!empty($google_related_keywords)) ? implode(", ", $google_related_keywords) : implode(", ", $bing_related_keywords);
+
+        $seo_image = (!empty($bing_images['images'][mt_rand(0, $totalimages)])) ? json_encode(['murl' => base_path('themes/DevBlog/assets/images/profile.png')]) : $bing_images['images'][mt_rand(0, $totalimages)];
+
         SEOTools::setTitle($post->post_title);
         SEOTools::setDescription($SEO_dec);
         SEOTools::opengraph()->setUrl(URL::current());
         SEOTools::setCanonical(URL::current());
         SEOTools::opengraph()->addProperty('type', 'articles');
-        SEOTools::jsonLd()->addImage(json_decode($bing_images['images'][mt_rand(0, $totalimages)], true)['murl']);
+        SEOTools::jsonLd()->addImage(json_decode($seo_image, true)['murl']);
         SEOMeta::setKeywords($keywords);
         //SEO END FOR POST PAGE
 
