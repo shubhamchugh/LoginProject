@@ -1,17 +1,18 @@
 <?php
 
-use App\Models\Post;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 use App\Http\Controllers\CacheClearController;
-use App\Http\Controllers\SqlDataUpdateController;
-use App\Http\Controllers\SearchIndexingController;
-use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
-use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
+use App\Http\Controllers\NotWorkingIpCheckController;
+use App\Http\Controllers\SearchIndexingController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SqlDataUpdateController;
+use App\Http\Controllers\UpgradeSoftwareController;
+use App\Models\Post;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
 
 //cache clear
 Route::get('clear', [CacheClearController::class, 'clear'])->name('clear');
