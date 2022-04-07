@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Helpers\GeneralSettings;
-use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use App\Helpers\GeneralSettings;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
 {
@@ -25,6 +26,7 @@ class PostController extends Controller
 
         $postContent             = $postContent[mt_rand(0, (count($postContent) - 1))];
         $author                  = $postContent['fake_user_id'];
+        $updated_at              = Carbon::parse($postContent['updated_at']);
         $bing_related_keywords   = (!empty($postContent['bing_related_keywords'])) ? unserialize($postContent['bing_related_keywords']) : array();
         $google_related_keywords = (!empty($postContent['bing_related_keywords'])) ? unserialize($postContent['google_related_keywords']) : array();
         $bing_news               = (!empty($postContent['bing_news'])) ? unserialize($postContent['bing_news']) : array();
@@ -51,9 +53,10 @@ class PostController extends Controller
 
         $seo_image = (!empty($bing_images['images'][mt_rand(0, $totalimages)])) ? $bing_images['images'][mt_rand(0, $totalimages)] : json_encode(['murl' => url('themes/DevBlog/assets/images/profile.png')]);
 
-        SEOTools::setTitle($post->post_title);
+        SEOTools::setTitle(ucfirst($post->post_title));
         SEOTools::setDescription($SEO_dec);
         SEOTools::opengraph()->setUrl(URL::current());
+        SEOMeta::addMeta('article:published_time', $updated_at->toW3CString(), 'property');
         SEOTools::setCanonical(URL::current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::jsonLd()->addImage(json_decode($seo_image, true)['murl']);
@@ -65,6 +68,7 @@ class PostController extends Controller
                 'post'                    => $post,
                 'postContent'             => $postContent,
                 'author'                  => $author,
+                'updated_at'              => $updated_at,
                 'bing_related_keywords'   => $bing_related_keywords,
                 'google_related_keywords' => $google_related_keywords,
                 'bing_news'               => $bing_news,

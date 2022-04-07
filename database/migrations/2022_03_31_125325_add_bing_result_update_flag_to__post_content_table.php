@@ -31,7 +31,15 @@ class AddBingResultUpdateFlagToPostContentTable extends Migration
     public function down()
     {
         Schema::table('post_contents', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'is_bing_results',
+                'is_thumbnail_images',
+                'is_bing_images',
+                'is_bing_images',
+                'is_bing_news',
+                'is_bing_video',
+                'is_google_results',
+            ]);
         });
     }
 }

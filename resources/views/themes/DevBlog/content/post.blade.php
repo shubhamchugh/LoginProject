@@ -13,7 +13,7 @@
                     Published {{ $post->published_at->diffforhumans() ?? "" }}
                 </span>
                 <span class="time">
-                    Updated {{ $post->updated_at->diffforhumans() ?? "" }}
+                    Updated {{ $updated_at->diffforhumans() ?? "" }}
                 </span>
                 @if (config('app.debug'))
                 <span class="comment">

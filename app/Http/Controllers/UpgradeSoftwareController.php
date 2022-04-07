@@ -28,6 +28,7 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && git reset --hard && git pull');
 
         echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
+        echo shell_exec('cd .. && php artisan migrate');
 
         Artisan::call('cache:clear');
         print_r(Artisan::output());

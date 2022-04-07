@@ -11,7 +11,7 @@ class PostContent extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $fillable = [
         'post_id',
@@ -37,7 +37,8 @@ class PostContent extends Model
         'is_bing_images',
         'is_bing_news',
         'is_google_results',
-
+        'created_at',
+        'updated_at',
     ];
 
     public function post()
