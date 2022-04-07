@@ -60,19 +60,19 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
         ;
 
-        $schedule->command('BingImage:update')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/BingImage-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('BingImage:update')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/BingImage-update.log'))
+        //     ->runInBackground()
+        // ;
 
-        $schedule->command('BingNews:update')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/BingNews-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('BingNews:update')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/BingNews-update.log'))
+        //     ->runInBackground()
+        // ;
 
         $schedule->command('BingResult:update')
             ->everyMinute()
@@ -81,26 +81,26 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
         ;
 
-        $schedule->command('BingVideo:update')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/BingVideo-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('BingVideo:update')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/BingVideo-update.log'))
+        //     ->runInBackground()
+        // ;
 
-        $schedule->command('GoogleResult:update')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/GoogleResult-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('GoogleResult:update')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/GoogleResult-update.log'))
+        //     ->runInBackground()
+        // ;
 
-        $schedule->command('BingThumbnail:update')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/BingThumbnail-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('BingThumbnail:update')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/BingThumbnail-update.log'))
+        //     ->runInBackground()
+        // ;
     }
 
     /**
