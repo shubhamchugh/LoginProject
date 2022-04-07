@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IpRecord;
 use App\Models\Post;
+use App\Models\IpRecord;
 use Illuminate\Support\Facades\Http;
 
 class NotWorkingIpCheckController extends Controller
@@ -14,6 +14,11 @@ class NotWorkingIpCheckController extends Controller
         if (empty($ip->ip_address)) {
             die("All ip are working fine");
         }
+
+        $ip->update([
+            'status' => 'CHECKING',
+        ]);
+
         $count = Post::count();
 
         $post = Post::wherein('id', (getRandomNumberArray(1, $count, 1)))->first('post_title');
