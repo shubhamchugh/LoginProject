@@ -27,35 +27,35 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('scrape:start')
             ->everyMinute()
-            ->withoutOverlapping()
+        // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/scrape-start.log'))
             ->runInBackground()
         ;
 
         $schedule->command('cache:truncate')
             ->daily()
-            ->withoutOverlapping()
+        // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/cache-truncate.log'))
             ->runInBackground()
         ;
 
         $schedule->command('settings:update')
             ->daily()
-            ->withoutOverlapping()
+        // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/settings-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('ip:update')
             ->hourly()
-            ->withoutOverlapping()
+        // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/ip-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('search:index')
             ->hourly()
-            ->withoutOverlapping()
+        // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/search-index.log'))
             ->runInBackground()
         ;
