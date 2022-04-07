@@ -61,42 +61,42 @@ class Kernel extends ConsoleKernel
         ;
 
         $schedule->command('BingImage:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingImage-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('BingNews:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingNews-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('BingResult:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingResult-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('BingVideo:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingVideo-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('GoogleResult:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/GoogleResult-update.log'))
             ->runInBackground()
         ;
 
         $schedule->command('BingThumbnail:update')
-            ->hourly()
+            ->everyMinute()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingThumbnail-update.log'))
             ->runInBackground()
