@@ -3,8 +3,8 @@ blade-directive: version
 current:
   label: v
   major: 3
-  minor: 1
-  patch: 2
+  minor: 2
+  patch: 0
   prerelease: null
   buildmetadata: null
   commit: 5ba34b

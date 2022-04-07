@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Scrape;
 
-use Carbon\Carbon;
-use App\Models\Post;
+use App\Http\Controllers\Controller;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
-use App\Models\SourceUrl;
+use App\Models\Post;
 use App\Models\PostContent;
-use Illuminate\Http\Request;
 use App\Models\ScrapingFailed;
-use App\Http\Controllers\Controller;
+use App\Models\SourceUrl;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class FaqScrapeController extends Controller
