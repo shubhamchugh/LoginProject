@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Scrape;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
-use App\Models\Post;
-use App\Models\PostContent;
-use App\Models\ScrapingFailed;
 use App\Models\SourceUrl;
-use Carbon\Carbon;
+use App\Models\PostContent;
 use Illuminate\Http\Request;
+use App\Models\ScrapingFailed;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class FaqScrapeController extends Controller
@@ -38,8 +38,9 @@ class FaqScrapeController extends Controller
         if (empty($ip->ip_address)) {
             dd("Please Add New ip in DataBase to Scrape");
         }
+
         $ip->update([
-            'status' => 'SCRAPING',
+            'status' => config('app.url'),
         ]);
 
         if (empty($refKey)) {

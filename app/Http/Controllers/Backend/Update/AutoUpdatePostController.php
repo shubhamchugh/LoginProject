@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
-use App\Models\Post;
 use App\Models\PostContent;
 use App\Models\ScrapingFailed;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class AutoUpdatePostController extends Controller
@@ -25,7 +25,7 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
         $ip->update([
-            'status' => 'SCRAPING',
+            'status' => config('app.url'),
         ]);
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
@@ -413,7 +413,7 @@ class AutoUpdatePostController extends Controller
         }
 
         $ip->update([
-            'status' => 'SCRAPING',
+            'status' => config('app.url'),
         ]);
 
         echo "We are updating post For better experience Please Refresh Page";
@@ -808,7 +808,7 @@ class AutoUpdatePostController extends Controller
         }
 
         $ip->update([
-            'status' => 'SCRAPING',
+            'status' => config('app.url'),
         ]);
         $keyword = str_replace('-', ' ', $slug);
 

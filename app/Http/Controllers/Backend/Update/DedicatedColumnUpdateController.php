@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
-use App\Http\Controllers\Controller;
 use App\Models\IpRecord;
 use App\Models\PostContent;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class DedicatedColumnUpdateController extends Controller
@@ -29,7 +29,7 @@ class DedicatedColumnUpdateController extends Controller
         }
 
         $ip->update([
-            'status' => 'SCRAPING',
+            'status' => config('app.url'),
         ]);
 
         $post_content->update([
