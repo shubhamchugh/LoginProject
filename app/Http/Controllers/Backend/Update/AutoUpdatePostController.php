@@ -413,7 +413,7 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
-        $status = config('app.url') . 'update_and_create';
+        $status = config('app.url') . $post_id . $keyword . 'update_and_create';
         $ip->update([
             'status' => $status,
         ]);
