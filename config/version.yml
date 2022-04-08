@@ -4,7 +4,7 @@ current:
   label: v
   major: 3
   minor: 3
-  patch: 14
+  patch: 15
   prerelease: null
   buildmetadata: null
   commit: 5ba34b
