@@ -17,11 +17,6 @@ class FaqScrapeController extends Controller
 {
     public function FaqScrape(Request $request)
     {
-        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
-        if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
-        }
-
         echo "<pre>";
         $count          = (!empty($request->count)) ? $request->count : 20;
         $start          = (!empty($request->start)) ? $request->start : 0;
@@ -37,6 +32,11 @@ class FaqScrapeController extends Controller
                 echo "$value->is_scraped : $count<br>";
             }
             dd();
+        }
+
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+        if (empty($ip->ip_address)) {
+            die("Please Add New ip in DataBase to Scrape");
         }
 
         if (empty($refKey)) {
