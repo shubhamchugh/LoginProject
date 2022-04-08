@@ -24,9 +24,8 @@ class AutoUpdatePostController extends Controller
         if (empty($ip->ip_address)) {
             die("Please Add New ip in DataBase to Scrape");
         }
-        $domainName = config('app.url');
         $ip->update([
-            'status' => $domainName,
+            'status' => 'SCRAPING',
         ]);
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
@@ -413,9 +412,8 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
-        $domainName = config('app.url');
         $ip->update([
-            'status' => $domainName,
+            'status' => 'SCRAPING',
         ]);
 
         echo "We are updating post For better experience Please Refresh Page";
@@ -809,9 +807,8 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
-        $domainName = config('app.url');
         $ip->update([
-            'status' => $domainName,
+            'status' => 'SCRAPING',
         ]);
         $keyword = str_replace('-', ' ', $slug);
 

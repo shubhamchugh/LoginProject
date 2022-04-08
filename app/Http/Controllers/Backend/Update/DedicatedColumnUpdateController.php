@@ -28,9 +28,8 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
-        $domainName = config('app.url');
         $ip->update([
-            'status' => $domainName,
+            'status' => 'SCRAPING',
         ]);
 
         $post_content->update([

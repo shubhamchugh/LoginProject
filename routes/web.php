@@ -151,10 +151,10 @@ Route::get(config('constant.CID') . '/{id}', [
 ]);
 
 //Update Existing Post Content
-Route::get('/update-post-content/{post_content_id}/{keyword}', [
-    'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
-    'as'   => 'post_content.update_existing',
-]);
+// Route::get('/update-post-content/{post_content_id}/{keyword}', [
+//     'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
+//     'as'   => 'post_content.update_existing',
+// ]);
 
 //Frontend Home Page
 Route::get('/', [
