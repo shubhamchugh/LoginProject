@@ -38,9 +38,8 @@ class FaqScrapeController extends Controller
         if (empty($ip->ip_address)) {
             dd("Please Add New ip in DataBase to Scrape");
         }
-        $status = config('app.url') . 'main';
         $ip->update([
-            'status' => $status,
+            'status' => 'SCRAPING',
         ]);
 
         if (empty($refKey)) {

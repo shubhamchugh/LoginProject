@@ -28,9 +28,8 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
-        $status = config('app.url') . 'is_bing_result';
         $ip->update([
-            'status' => $status,
+            'status' => 'SCRAPING',
         ]);
 
         $post_content->update([

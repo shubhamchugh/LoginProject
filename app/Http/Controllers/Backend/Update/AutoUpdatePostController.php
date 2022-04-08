@@ -24,9 +24,8 @@ class AutoUpdatePostController extends Controller
         if (empty($ip->ip_address)) {
             die("Please Add New ip in DataBase to Scrape");
         }
-        $status = config('app.url') . 'update_existing';
         $ip->update([
-            'status' => $status,
+            'status' => 'SCRAPING',
         ]);
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
@@ -410,14 +409,12 @@ class AutoUpdatePostController extends Controller
     {
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
+            dd("Please Add New ip in DataBase to Scrape");
         }
 
-        $status = config('app.url') . $post_id . $keyword . 'update_and_create';
         $ip->update([
-            'status' => $status,
+            'status' => 'SCRAPING',
         ]);
-
         echo "We are updating post For better experience Please Refresh Page";
 
         $totalFakeUser = FakeUser::count();
@@ -809,9 +806,8 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
-        $status = config('app.url') . 'addPost';
         $ip->update([
-            'status' => $status,
+            'status' => 'SCRAPING',
         ]);
         $keyword = str_replace('-', ' ', $slug);
 
