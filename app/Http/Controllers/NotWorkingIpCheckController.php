@@ -10,6 +10,22 @@ class NotWorkingIpCheckController extends Controller
 {
     public function check_ip()
     {
+
+        // $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'desc')->first();
+        // dd();
+        // $nowTime = Carbon::now();
+        // $minutes = $nowTime->diffInMinutes($ip_SCRAPING->updated_at);
+        // dd($minutes);
+        // if (empty($ip_SCRAPING->ip_address)) {
+        //     echo "All ip are working fine<br>";
+        // }
+        // die;
+        // if(){
+        //     $ip_SCRAPING->update([
+        //         'status' => 'NOT_WORKING',
+        //     ]);
+        // }
+
         $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
             die("All ip are working fine");
@@ -29,7 +45,7 @@ class NotWorkingIpCheckController extends Controller
         echo "Bing Api Url: $api_url_bing<br>";
 
         try {
-            $api_data = Http::timeout(200)->get($api_url_bing)->body();
+            $api_data = Http::timeout(20)->get($api_url_bing)->body();
 
             echo "<br>Bing APi Data :<br>";
             print_r($api_data);
@@ -58,5 +74,6 @@ class NotWorkingIpCheckController extends Controller
             echo "<br>Ip Not responding maybe timeout error<br>";
             throw $th;
         }
+
     }
 }

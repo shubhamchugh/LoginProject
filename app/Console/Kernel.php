@@ -25,12 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('scrape:start')
-            ->everyMinute()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/scrape-start.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('scrape:start')
+        //     ->everyMinute()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/scrape-start.log'))
+        //     ->runInBackground()
+        // ;
 
         $schedule->command('cache:truncate')
             ->daily()
@@ -39,12 +39,12 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
         ;
 
-        $schedule->command('settings:update')
-            ->daily()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/settings-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('settings:update')
+        //     ->daily()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/settings-update.log'))
+        //     ->runInBackground()
+        // ;
 
         // $schedule->command('ip:update')
         //     ->everyMinute()
@@ -75,7 +75,7 @@ class Kernel extends ConsoleKernel
         // ;
 
         $schedule->command('BingResult:update')
-            ->everyMinute()
+            ->everyFiveMinutes()
         // ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/BingResult-update.log'))
             ->runInBackground()

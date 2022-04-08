@@ -39,7 +39,7 @@ class isBingResultsCommand extends Command
     public function handle()
     {
         $scraping_url = route('is_bing_results.update');
-        Http::timeout(200)->get($scraping_url)->getBody();
+        Http::timeout(20)->get($scraping_url)->getBody();
         $this->info('Successfully hit to Bing Result Update Url:' . $scraping_url);
     }
 }
