@@ -74,12 +74,12 @@ class Kernel extends ConsoleKernel
         //     ->runInBackground()
         // ;
 
-        $schedule->command('BingResult:update')
-            ->everyFiveMinutes()
-        // ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/BingResult-update.log'))
-            ->runInBackground()
-        ;
+        // $schedule->command('BingResult:update')
+        //     ->everyFiveMinutes()
+        // // ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/BingResult-update.log'))
+        //     ->runInBackground()
+        // ;
 
         // $schedule->command('BingVideo:update')
         //     ->everyMinute()
