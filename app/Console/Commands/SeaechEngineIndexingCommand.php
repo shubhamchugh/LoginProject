@@ -39,9 +39,9 @@ class SeaechEngineIndexingCommand extends Command
     public function handle()
     {
         $google_indexing = route('google-index');
-        Http::get($google_indexing)->timeout(150)->connectTimeout(30)->getBody();
+        Http::get($google_indexing)->timeout(200)->getBody();
         $bing_indexing = route('bing-index');
-        Http::get($google_indexing)->timeout(150)->connectTimeout(30)->getBody();
+        Http::get($google_indexing)->timeout(200)->getBody();
         $this->info('Successfully Sent request to search Engine Via' . $google_indexing . ' and ' . $bing_indexing);
     }
 }

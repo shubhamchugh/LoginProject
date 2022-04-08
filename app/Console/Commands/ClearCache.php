@@ -39,7 +39,7 @@ class ClearCache extends Command
     public function handle()
     {
         $url = route('clear');
-        Http::get($url)->timeout(150)->connectTimeout(30)->getBody();
+        Http::get($url)->timeout(200)->getBody();
         $this->info('Successfully truncated all logs and cache You can use clear Manually using this URL:' . $url);
     }
 }

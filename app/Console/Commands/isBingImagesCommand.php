@@ -39,7 +39,7 @@ class isBingImagesCommand extends Command
     public function handle()
     {
         $scraping_url = route('is_bing_images.update');
-        Http::get($scraping_url)->timeout(150)->connectTimeout(30)->getBody();
+        Http::get($scraping_url)->timeout(200)->getBody();
         $this->info('Successfully hit to Bing Image Update Url:' . $scraping_url);
     }
 }

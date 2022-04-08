@@ -39,7 +39,7 @@ class SqlUpdateCommand extends Command
     public function handle()
     {
         $sqlUpdate = route('sql-update');
-        Http::get($sqlUpdate)->timeout(150)->connectTimeout(30)->getBody();
+        Http::get($sqlUpdate)->timeout(200)->getBody();
         $this->info('Successfully hit to SQL Update Url:' . $sqlUpdate);
     }
 }
