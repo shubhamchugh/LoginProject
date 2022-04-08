@@ -97,7 +97,7 @@ class SearchIndexingController extends Controller
 
                 foreach ($bing_posts as $bing_post) {
                     $bing         = 'https://www.bing.com/indexnow?url=' . url($slug . '/' . $bing_post->slug) . '&key=' . config('constant.Bing_API_Key');
-                    $bing_request = Http::get($bing)->timeout(150)->connectTimeout(30);
+                    $bing_request = Http::timeout(200)->get($bing);
 
                     Post::where('id', $bing_post->id)->update(['bing_index' => 1]);
 

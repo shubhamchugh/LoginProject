@@ -39,7 +39,7 @@ class NotWorkingIpCheckCommand extends Command
     public function handle()
     {
         $sqlUpdate = route('ip-update');
-        Http::get($sqlUpdate)->timeout(200)->getBody();
+        Http::timeout(200)->get($sqlUpdate)->getBody();
         $this->info('Successfully updated ip Database:' . $sqlUpdate);
     }
 }

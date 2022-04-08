@@ -77,7 +77,7 @@ class FaqScrapeController extends Controller
                 try {
                     $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
 
-                    $thumbnail = Http::get($Bing_image)->timeout(200)->body();
+                    $thumbnail = Http::timeout(200)->get($Bing_image)->body();
 
                     $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -103,7 +103,7 @@ class FaqScrapeController extends Controller
                 // try to save images for bing_images
                 try {
                     $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value);
-                    $Bing_image     = Http::get($Bing_image_url)->timeout(200)->body();
+                    $Bing_image     = Http::timeout(200)->get($Bing_image_url)->body();
                     $Bing_image     = json_decode($Bing_image, true);
 
                     if (!empty($Bing_image['images'][0])) {
@@ -136,7 +136,7 @@ class FaqScrapeController extends Controller
                 // try to update New From bing News search
                 try {
                     $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
-                    $bing_news = Http::get($newsUrl)->timeout(200)->body();
+                    $bing_news = Http::timeout(200)->get($newsUrl)->body();
                     $bing_news = json_decode($bing_news, true);
 
                     echo "<br>bing news<br>";
@@ -164,7 +164,7 @@ class FaqScrapeController extends Controller
                 try {
 
                     $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:msite-youtube.com';
-                    $bing_videos = Http::get($videoUrl)->timeout(200)->body();
+                    $bing_videos = Http::timeout(200)->get($videoUrl)->body();
                     $bing_videos = json_decode($bing_videos, true);
 
                     echo "<br>Bing videos<br>";
@@ -191,7 +191,7 @@ class FaqScrapeController extends Controller
                 try {
                     $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword->value);
                     echo "Bing Api Url: $api_url_bing<br>";
-                    $api_data = Http::get($api_url_bing)->timeout(200)->body();
+                    $api_data = Http::timeout(200)->get($api_url_bing)->body();
 
                     $bing_data = json_decode($api_data, true);
 
@@ -368,7 +368,7 @@ class FaqScrapeController extends Controller
                 try {
                     $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
                     echo "Google APi Url: $api_url_google<br>";
-                    $api_data_google = Http::get($api_url_google)->timeout(200)->body();
+                    $api_data_google = Http::timeout(200)->get($api_url_google)->body();
 
                     $google_data = json_decode($api_data_google, true);
 
