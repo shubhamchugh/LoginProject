@@ -24,7 +24,9 @@ class AutoUpdatePostController extends Controller
         if (empty($ip->ip_address)) {
             die("Please Add New ip in DataBase to Scrape");
         }
-
+        $ip->update([
+            'status' => 'SCRAPING',
+        ]);
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
         echo "We are updating post For better experience Please Refresh Page<br>";
@@ -148,8 +150,13 @@ class AutoUpdatePostController extends Controller
             $bing_data = json_decode($api_data, true);
 
             $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
-
+            $ip->update([
+                'status' => 'OK',
+            ]);
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+            ]);
             echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
         }
@@ -399,6 +406,10 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+        ]);
+
         echo "We are updating post For better experience Please Refresh Page";
 
         $totalFakeUser = FakeUser::count();
@@ -525,8 +536,15 @@ class AutoUpdatePostController extends Controller
             $bing_data = json_decode($api_data, true);
 
             $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
-
+            $ip->update([
+                'status' => 'OK',
+            ]);
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+            ]);
+
             echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
         }
@@ -777,6 +795,9 @@ class AutoUpdatePostController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+        ]);
         $keyword = str_replace('-', ' ', $slug);
 
         if (!empty($slug)) {
@@ -917,7 +938,16 @@ class AutoUpdatePostController extends Controller
 
                     $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
 
+                    $ip->update([
+                        'status' => 'OK',
+                    ]);
+
                 } catch (\Throwable $th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                    ]);
+
                     echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
                 }

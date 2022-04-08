@@ -28,6 +28,10 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+        ]);
+
         $post_content->update([
             'is_bing_results' => 1,
         ]);
@@ -40,8 +44,13 @@ class DedicatedColumnUpdateController extends Controller
             $bing_data = json_decode($api_data, true);
 
             $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
-
+            $ip->update([
+                'status' => 'OK',
+            ]);
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+            ]);
             echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
         }
@@ -303,6 +312,7 @@ class DedicatedColumnUpdateController extends Controller
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_news");
         }
+
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);

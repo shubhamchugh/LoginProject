@@ -39,6 +39,10 @@ class FaqScrapeController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+        ]);
+
         if (empty($refKey)) {
             dd("Please Enter '?&refKey=HereValue' <br>
             FullURL Example: http://domain.com/scrape/bing-serp?&refKey=loginspy&start=1&end=100");
@@ -94,6 +98,7 @@ class FaqScrapeController extends Controller
                         echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
                         $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
                     }
+
                 } catch (\Throwable $th) {
                     echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
                     $keyword->update(['is_scraped' => 'bing_thumbnail_images_hit_fail']);
@@ -200,6 +205,9 @@ class FaqScrapeController extends Controller
 
                     $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
                     $keyword->update(['is_scraped' => 'bing_api_hit_success']);
+                    $ip->update([
+                        'status' => 'OK',
+                    ]);
                 } catch (\Throwable $th) {
                     echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
                     $keyword->update(['is_scraped' => 'bing_api_hit_fail']);
