@@ -39,7 +39,7 @@ class isGoogleResultCommand extends Command
     public function handle()
     {
         $scraping_url = route('is_google_results.update');
-        Http::get($scraping_url)->getBody();
+        Http::get($scraping_url)->timeout(150)->connectTimeout(30)->getBody();
         $this->info('Successfully hit to Google Result Update Url:' . $scraping_url);
     }
 }

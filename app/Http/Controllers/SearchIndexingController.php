@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Google;
-use Carbon\Carbon;
-use App\Models\Post;
 use App\Models\IndexResult;
+use App\Models\Post;
+use Carbon\Carbon;
+use Google;
 use Google_Service_Indexing;
+use Google_Service_Indexing_UrlNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Google_Service_Indexing_UrlNotification;
 
 class SearchIndexingController extends Controller
 {
@@ -97,7 +97,7 @@ class SearchIndexingController extends Controller
 
                 foreach ($bing_posts as $bing_post) {
                     $bing         = 'https://www.bing.com/indexnow?url=' . url($slug . '/' . $bing_post->slug) . '&key=' . config('constant.Bing_API_Key');
-                    $bing_request = Http::get($bing);
+                    $bing_request = Http::get($bing)->timeout(150)->connectTimeout(30);
 
                     Post::where('id', $bing_post->id)->update(['bing_index' => 1]);
 

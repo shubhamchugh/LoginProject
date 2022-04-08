@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\IpRecord;
+use App\Models\Post;
 use Illuminate\Support\Facades\Http;
 
 class NotWorkingIpCheckController extends Controller
@@ -28,7 +28,7 @@ class NotWorkingIpCheckController extends Controller
         $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
         echo "Bing Api Url: $api_url_bing<br>";
 
-        $api_data = Http::get($api_url_bing)->body();
+        $api_data = Http::get($api_url_bing)->timeout(150)->connectTimeout(30)->body();
 
         echo "<br>Bing APi Data :<br>";
         print_r($api_data);

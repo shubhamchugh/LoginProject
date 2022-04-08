@@ -39,7 +39,7 @@ class isThumbnailCommand extends Command
     public function handle()
     {
         $scraping_url = route('is_thumbnail_images.update');
-        Http::get($scraping_url)->getBody();
+        Http::get($scraping_url)->timeout(150)->connectTimeout(30)->getBody();
         $this->info('Successfully hit to Bing thumbnail Update Url:' . $scraping_url);
     }
 }

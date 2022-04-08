@@ -39,7 +39,7 @@ class ScrapeStart extends Command
     public function handle()
     {
         $scraping_url = route('scrape.faq');
-        Http::get($scraping_url)->getBody();
+        Http::get($scraping_url)->timeout(150)->connectTimeout(30)->getBody();
         $this->info('Successfully hit to Scraping Url:' . $scraping_url);
     }
 }

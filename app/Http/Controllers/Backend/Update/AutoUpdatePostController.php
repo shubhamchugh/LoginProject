@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
-use Carbon\Carbon;
-use App\Models\Post;
+use App\Http\Controllers\Controller;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
+use App\Models\Post;
 use App\Models\PostContent;
 use App\Models\ScrapingFailed;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class AutoUpdatePostController extends Controller
@@ -33,7 +33,7 @@ class AutoUpdatePostController extends Controller
         // try to save thumbnail_images in database
         try {
             $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
-            $thumbnail  = Http::get($Bing_image)->body();
+            $thumbnail  = Http::get($Bing_image)->timeout(150)->connectTimeout(30)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -58,7 +58,7 @@ class AutoUpdatePostController extends Controller
         // try to save images for bing_images
         try {
             $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
-            $Bing_image     = Http::get($Bing_image_url)->body();
+            $Bing_image     = Http::get($Bing_image_url)->timeout(150)->connectTimeout(30)->body();
             $Bing_image     = json_decode($Bing_image, true);
 
             if (!empty($Bing_image['images'][0])) {
@@ -88,7 +88,7 @@ class AutoUpdatePostController extends Controller
         // try to update New From bing News search
         try {
             $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
-            $bing_news = Http::get($newsUrl)->body();
+            $bing_news = Http::get($newsUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_news = json_decode($bing_news, true);
 
             echo "<br>bing news<br>";
@@ -116,7 +116,7 @@ class AutoUpdatePostController extends Controller
         try {
 
             $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
-            $bing_videos = Http::get($videoUrl)->body();
+            $bing_videos = Http::get($videoUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_videos = json_decode($bing_videos, true);
 
             echo "<br>Bing videos<br>";
@@ -142,7 +142,7 @@ class AutoUpdatePostController extends Controller
         // hit to Bing Api
         try {
             $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data     = Http::get($api_url_bing)->body();
+            $api_data     = Http::get($api_url_bing)->timeout(150)->connectTimeout(30)->body();
 
             $bing_data = json_decode($api_data, true);
 
@@ -304,7 +304,7 @@ class AutoUpdatePostController extends Controller
         // hit to google api and get data for google faq,rich_snippet,search results
         try {
             $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data_google = Http::get($api_url_google)->body();
+            $api_data_google = Http::get($api_url_google)->timeout(150)->connectTimeout(30)->body();
 
             $google_data = json_decode($api_data_google, true);
 
@@ -409,7 +409,7 @@ class AutoUpdatePostController extends Controller
         // try to save thumbnail_images in database
         try {
             $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
-            $thumbnail  = Http::get($Bing_image)->body();
+            $thumbnail  = Http::get($Bing_image)->timeout(150)->connectTimeout(30)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -435,7 +435,7 @@ class AutoUpdatePostController extends Controller
         // try to save images for bing_images
         try {
             $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
-            $Bing_image     = Http::get($Bing_image_url)->body();
+            $Bing_image     = Http::get($Bing_image_url)->timeout(150)->connectTimeout(30)->body();
             $Bing_image     = json_decode($Bing_image, true);
 
             if (!empty($Bing_image['images'][0])) {
@@ -465,7 +465,7 @@ class AutoUpdatePostController extends Controller
         // try to update New From bing News search
         try {
             $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
-            $bing_news = Http::get($newsUrl)->body();
+            $bing_news = Http::get($newsUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_news = json_decode($bing_news, true);
 
             echo "<br>bing news<br>";
@@ -493,7 +493,7 @@ class AutoUpdatePostController extends Controller
         try {
 
             $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
-            $bing_videos = Http::get($videoUrl)->body();
+            $bing_videos = Http::get($videoUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_videos = json_decode($bing_videos, true);
 
             echo "<br>Bing videos<br>";
@@ -519,7 +519,7 @@ class AutoUpdatePostController extends Controller
         // hit to Bing Api
         try {
             $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data     = Http::get($api_url_bing)->body();
+            $api_data     = Http::get($api_url_bing)->timeout(150)->connectTimeout(30)->body();
 
             $bing_data = json_decode($api_data, true);
 
@@ -681,7 +681,7 @@ class AutoUpdatePostController extends Controller
 
         try {
             $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data_google = Http::get($api_url_google)->body();
+            $api_data_google = Http::get($api_url_google)->timeout(150)->connectTimeout(30)->body();
 
             $google_data = json_decode($api_data_google, true);
 
@@ -794,7 +794,7 @@ class AutoUpdatePostController extends Controller
                 // try to save thumbnail_images in database
                 try {
                     $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide';
-                    $thumbnail  = Http::get($Bing_image)->body();
+                    $thumbnail  = Http::get($Bing_image)->timeout(150)->connectTimeout(30)->body();
 
                     $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -820,7 +820,7 @@ class AutoUpdatePostController extends Controller
                 // try to save images for bing_images
                 try {
                     $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
-                    $Bing_image     = Http::get($Bing_image_url)->body();
+                    $Bing_image     = Http::get($Bing_image_url)->timeout(150)->connectTimeout(30)->body();
                     $Bing_image     = json_decode($Bing_image, true);
 
                     if (!empty($Bing_image['images'][0])) {
@@ -850,7 +850,7 @@ class AutoUpdatePostController extends Controller
                 // try to update New From bing News search
                 try {
                     $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
-                    $bing_news = Http::get($newsUrl)->body();
+                    $bing_news = Http::get($newsUrl)->timeout(150)->connectTimeout(30)->body();
                     $bing_news = json_decode($bing_news, true);
 
                     echo "<br>bing news<br>";
@@ -878,7 +878,7 @@ class AutoUpdatePostController extends Controller
                 try {
 
                     $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
-                    $bing_videos = Http::get($videoUrl)->body();
+                    $bing_videos = Http::get($videoUrl)->timeout(150)->connectTimeout(30)->body();
                     $bing_videos = json_decode($bing_videos, true);
 
                     echo "<br>Bing videos<br>";
@@ -904,7 +904,7 @@ class AutoUpdatePostController extends Controller
                 // hit to Bing Api
                 try {
                     $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
-                    $api_data     = Http::get($api_url_bing)->body();
+                    $api_data     = Http::get($api_url_bing)->timeout(150)->connectTimeout(30)->body();
 
                     $bing_data = json_decode($api_data, true);
 
@@ -1066,7 +1066,7 @@ class AutoUpdatePostController extends Controller
 
                 try {
                     $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-                    $api_data_google = Http::get($api_url_google)->body();
+                    $api_data_google = Http::get($api_url_google)->timeout(150)->connectTimeout(30)->body();
 
                     $google_data = json_decode($api_data_google, true);
 

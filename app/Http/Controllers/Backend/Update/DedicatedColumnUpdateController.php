@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
+use App\Http\Controllers\Controller;
 use App\Models\IpRecord;
 use App\Models\PostContent;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class DedicatedColumnUpdateController extends Controller
@@ -19,20 +19,23 @@ class DedicatedColumnUpdateController extends Controller
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
+
         echo "<a href='$url' target='_blank'>$url</a>";
+
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+
+        if (empty($ip->ip_address)) {
+            dd("Please Add New ip in DataBase to Scrape");
+        }
+
         $post_content->update([
             'is_bing_results' => 1,
         ]);
 
-        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
-        if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
-        }
-
         // hit to Bing Api
         try {
             $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data     = Http::get($api_url_bing)->body();
+            $api_data     = Http::get($api_url_bing)->timeout(150)->connectTimeout(30)->body();
 
             $bing_data = json_decode($api_data, true);
 
@@ -192,114 +195,33 @@ class DedicatedColumnUpdateController extends Controller
 
         }
 
-        try {
-            $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data_google = Http::get($api_url_google)->body();
-
-            $google_data = json_decode($api_data_google, true);
-
-            $google_related_keywords = (!empty($google_data['relatedKeywordsGoogle'])) ? serialize($google_data['relatedKeywordsGoogle']) : null;
-            $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'])) ? serialize($google_data['richSnippetGoogle']) : null;
-
-        } catch (\Throwable $th) {
-            echo "Something bad with google.com Please check: $api_url_google <br>";
-
-        }
-
-        // updating google_related_keywords in PostContent
-        try {
-            $post_content->update([
-                'google_related_keywords' => $google_related_keywords,
-            ]);
-
-        } catch (\Throwable $th) {
-            echo "Something bad with google_related_keywords <br>";
-
-        }
-
-        // updating google_rich_snippet in PostContent
-        try {
-            $post_content->update([
-                'google_rich_snippet' => $google_rich_snippet,
-            ]);
-
-        } catch (\Throwable $th) {
-            echo "Something bad with google_related_keywords <br>";
-
-        }
-
-        $google_faq_questions['questions'][] = (!empty($google_data['questions'])) ? $google_data['questions'] : array();
-        $google_faq_answers['answers'][]     = (!empty($google_data['answers'])) ? $google_data['answers'] : array();
-
-        if (!empty($google_faq_questions['questions'][0]) && !empty($google_faq_answers['answers'][0])) {
-
-            $google_faq = array_merge($google_faq_questions, $google_faq_answers);
-            $google_faq = (!empty($google_faq)) ? serialize($google_faq) : null;
-
-        } else {
-            $google_faq = (!empty($google_faq)) ? serialize($google_faq) : null;
-        }
-
-        // updating google_faq in PostContent
-        try {
-            $post_content->update([
-                'google_faq' => $google_faq,
-            ]);
-
-        } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask <br>";
-
-        }
-
-        $google_result_title['title'][]             = (!empty($google_data['resultTitleGoogle'])) ? $google_data['resultTitleGoogle'] : null;
-        $google_result_description['description'][] = (!empty($google_data['resultDescriptionGoogle'])) ? $google_data['resultDescriptionGoogle'] : null;
-        $google_result_url['url'][]                 = (!empty($google_data['resultUrlGoogle'])) ? $google_data['resultUrlGoogle'] : null;
-
-        if (!empty($google_result_title['title'][0]) && !empty($google_result_description['description'][0]) && !empty($google_result_url['url'][0])) {
-
-            $google_search_result = array_merge($google_result_title, $google_result_description, $google_result_url);
-            $google_search_result = (!empty($google_search_result)) ? serialize($google_search_result) : null;
-
-        } else {
-            $google_faq = (!empty($google_search_result)) ? serialize($google_search_result) : null;
-        }
-
-        // updating google_search_result in PostContent
-        try {
-            $post_content->update([
-                'google_search_result' => $google_search_result,
-            ]);
-
-        } catch (\Throwable $th) {
-            echo "Something bad with google_search_result <br>";
-
-        }
-
     }
 
     public function is_thumbnail_images()
     {
-        $post_content = PostContent::whereNull('is_thumbnail_images')->where('is_thumbnail_images', '0')->first();
+
+        $post_content = PostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_thumbnail_images ");
         }
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
-        $post_content->update([
-            'is_bing_results' => 1,
-        ]);
+        echo "<br>$url<br>";
 
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
+            dd("Please Add New ip in DataBase to Scrape");
         }
+
+        $post_content->update([
+            'is_thumbnail_images' => 1,
+        ]);
 
         // try to save thumbnail_images in database
         try {
             $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
-            $thumbnail  = Http::get($Bing_image)->body();
+            $thumbnail  = Http::get($Bing_image)->timeout(150)->connectTimeout(30)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -324,27 +246,30 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_images()
     {
-        $post_content = PostContent::whereNull('is_bing_images')->where('is_bing_images', '0')->first();
+        $post_content = PostContent::whereNull('bing_images')->where('is_bing_images', '0')->first();
+
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_images ");
         }
+
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
-        $post_content->update([
-            'is_bing_results' => 1,
-        ]);
+        echo "<br>$url<br>";
 
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
+            dd("Please Add New ip in DataBase to Scrape");
         }
+
+        $post_content->update([
+            'is_bing_images' => 1,
+        ]);
 
         // try to save images for bing_images
         try {
             $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
-            $Bing_image     = Http::get($Bing_image_url)->body();
+            $Bing_image     = Http::get($Bing_image_url)->timeout(150)->connectTimeout(30)->body();
             $Bing_image     = json_decode($Bing_image, true);
 
             if (!empty($Bing_image['images'][0])) {
@@ -374,27 +299,29 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_news()
     {
-        $post_content = PostContent::whereNull('is_bing_news')->where('is_bing_news', '0')->first();
+        $post_content = PostContent::whereNull('bing_news')->where('is_bing_news', '0')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_news");
         }
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
-        $post_content->update([
-            'is_bing_results' => 1,
-        ]);
+
+        echo "<br>$url<br>";
 
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
+            dd("Please Add New ip in DataBase to Scrape");
         }
+
+        $post_content->update([
+            'is_bing_news' => 1,
+        ]);
 
         // try to update New From bing News search
         try {
             $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
-            $bing_news = Http::get($newsUrl)->body();
+            $bing_news = Http::get($newsUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_news = json_decode($bing_news, true);
 
             echo "<br>bing news<br>";
@@ -421,28 +348,30 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_video()
     {
-        $post_content = PostContent::whereNull('is_bing_news')->where('is_bing_news', '0')->first();
+        $post_content = PostContent::whereNull('bing_videos')->where('is_bing_video', '0')->first();
         if (empty($post_content)) {
-            dd("No Record Found to Update is_bing_news");
+            dd("No Record Found to Update is_bing_video");
         }
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
-        $post_content->update([
-            'is_bing_results' => 1,
-        ]);
+
+        echo "<br>$url<br>";
 
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
-            die("Please Add New ip in DataBase to Scrape");
+            dd("Please Add New ip in DataBase to Scrape");
         }
+
+        $post_content->update([
+            'is_bing_video' => 1,
+        ]);
 
         //try to update video from bing search
         try {
 
             $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
-            $bing_videos = Http::get($videoUrl)->body();
+            $bing_videos = Http::get($videoUrl)->timeout(150)->connectTimeout(30)->body();
             $bing_videos = json_decode($bing_videos, true);
 
             echo "<br>Bing videos<br>";
@@ -469,27 +398,29 @@ class DedicatedColumnUpdateController extends Controller
     public function is_google_results()
     {
 
-        $post_content = PostContent::whereNull('is_bing_news')->where('is_bing_news', '0')->first();
+        $post_content = PostContent::whereNull('google_search_result')->where('is_google_results', '0')->first();
         if (empty($post_content)) {
-            dd("No Record Found to Update is_bing_news");
+            dd("No Record Found to Update is_google_results");
         }
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
-        echo "$url";
-        $post_content->update([
-            'is_bing_results' => 1,
-        ]);
+
+        echo "<br>$url<br>";
 
         $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
             die("Please Add New ip in DataBase to Scrape");
         }
 
+        $post_content->update([
+            'is_google_results' => 1,
+        ]);
+
         // hit to google api and get data for google faq,rich_snippet,search results
         try {
             $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data_google = Http::get($api_url_google)->body();
+            $api_data_google = Http::get($api_url_google)->timeout(150)->connectTimeout(30)->body();
 
             $google_data = json_decode($api_data_google, true);
 
