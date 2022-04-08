@@ -771,6 +771,12 @@ class AutoUpdatePostController extends Controller
 
     public static function addPost($slug)
     {
+
+        $ip = IpRecord::where('status', 'OK')->inRandomOrder()->first();
+        if (empty($ip->ip_address)) {
+            die("Please Add New ip in DataBase to Scrape");
+        }
+
         $keyword = str_replace('-', ' ', $slug);
 
         if (!empty($slug)) {
