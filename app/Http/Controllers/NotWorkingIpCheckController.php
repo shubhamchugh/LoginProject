@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IpRecord;
+use Carbon\Carbon;
 use App\Models\Post;
+use App\Models\IpRecord;
 use Illuminate\Support\Facades\Http;
 
 class NotWorkingIpCheckController extends Controller
@@ -11,20 +12,22 @@ class NotWorkingIpCheckController extends Controller
     public function check_ip()
     {
 
-        // $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'desc')->first();
-        // dd();
-        // $nowTime = Carbon::now();
-        // $minutes = $nowTime->diffInMinutes($ip_SCRAPING->updated_at);
-        // dd($minutes);
-        // if (empty($ip_SCRAPING->ip_address)) {
-        //     echo "All ip are working fine<br>";
-        // }
-        // die;
-        // if(){
-        //     $ip_SCRAPING->update([
-        //         'status' => 'NOT_WORKING',
-        //     ]);
-        // }
+        $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'asc')->first();
+
+        if (!empty($ip_SCRAPING->ip_address)) {
+            $nowTime = Carbon::now();
+            $minutes = $nowTime->diffInMinutes($ip_SCRAPING->updated_at);
+
+            if (10 < $minutes) {
+                $ip_SCRAPING->update([
+                    'status' => 'NOT_WORKING',
+                ]);
+                echo "$ip_SCRAPING->ip_address Status Change SCRAPING to NOT_WORKING<br>";
+            }
+
+        } else {
+            echo "All ip are working fine<br>";
+        }
 
         $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->inRandomOrder()->first();
         if (empty($ip->ip_address)) {
@@ -45,7 +48,7 @@ class NotWorkingIpCheckController extends Controller
         echo "Bing Api Url: $api_url_bing<br>";
 
         try {
-            $api_data = Http::timeout(20)->get($api_url_bing)->body();
+            $api_data = Http::timeout(60)->get($api_url_bing)->body();
 
             echo "<br>Bing APi Data :<br>";
             print_r($api_data);
