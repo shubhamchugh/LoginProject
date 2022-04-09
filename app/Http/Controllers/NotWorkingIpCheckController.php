@@ -14,6 +14,10 @@ class NotWorkingIpCheckController extends Controller
 
         $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'asc')->first();
 
+        $ip_SCRAPING->update([
+            'status' => 'CHECKING',
+        ]);
+
         if (!empty($ip_SCRAPING->ip_address)) {
             $nowTime = Carbon::now();
             $minutes = $nowTime->diffInMinutes($ip_SCRAPING->updated_at);
