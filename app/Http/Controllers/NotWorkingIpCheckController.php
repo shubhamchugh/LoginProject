@@ -29,7 +29,7 @@ class NotWorkingIpCheckController extends Controller
             echo "All ip are working fine<br>";
         }
 
-        $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->inRandomOrder()->first();
+        $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->orderBy('updated_at', 'asc')->first();
         if (empty($ip->ip_address)) {
             die("All ip are working fine");
         }
