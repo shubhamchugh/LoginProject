@@ -12,24 +12,23 @@ class NotWorkingIpCheckController extends Controller
     public function check_ip()
     {
 
-        $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'asc')->first();
+        $ip_SCRAPING = IpRecord::where('status', 'SCRAPING')->orderBy('updated_at', 'asc')->get();
 
-        if (!empty($ip_SCRAPING->ip_address)) {
-            $ip_SCRAPING->update([
-                'status' => 'CHECKING',
-            ]);
-            $nowTime = Carbon::now();
-            $minutes = $nowTime->diffInMinutes($ip_SCRAPING->updated_at);
+        if (!empty($ip_SCRAPING)) {
+            foreach ($ip_SCRAPING as $ip_data) {
+                $nowTime = Carbon::now();
+                $minutes = $nowTime->diffInMinutes($ip_data->updated_at);
 
-            if (10 < $minutes) {
-                $ip_SCRAPING->update([
-                    'status' => 'NOT_WORKING',
-                ]);
-                echo "$ip_SCRAPING->ip_address Status Change SCRAPING to NOT_WORKING<br>";
+                if (10 < $minutes) {
+                    $ip_data->update([
+                        'status' => 'NOT_WORKING',
+                    ]);
+                    echo "$ip_data->ip_address Status Change SCRAPING to NOT_WORKING<br>";
+                }
+
             }
-
         } else {
-            echo "All ip are working fine<br>";
+            echo "No Ip Found Under SCRAPING TAG<br>";
         }
 
         $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->orderBy('updated_at', 'asc')->first();
