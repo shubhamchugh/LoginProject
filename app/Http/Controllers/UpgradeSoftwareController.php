@@ -29,6 +29,7 @@ class UpgradeSoftwareController extends Controller
 
         echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
         echo shell_exec('cd .. && php artisan migrate');
+        echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
 
         Artisan::call('cache:clear');
         print_r(Artisan::output());
