@@ -44,4 +44,7 @@ return [
     'WORDPRESS_DB_CAT_ID'      => env('WORDPRESS_DB_CAT_ID'),
     'Bing_search_result_check' => env('Bing_search_result_check'),
     'SITEMAP_PAGE_PAGINATION'  => env('SITEMAP_PAGE_PAGINATION', 50),
+    'Auto_Update_And_create'   => env('Auto_Update_And_create', false),
+    'Update_Post_Link'         => env('Update_Post_Link', false),
+
 ];

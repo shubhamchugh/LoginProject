@@ -55,6 +55,9 @@ popular_post=true
 Bing_SERP=false
 Bing_news=false
 Bing_search_result_check=false
+Auto_Update_And_create=false
+Update_Post_Link=false
+
 
 Bing_API_Key=
 

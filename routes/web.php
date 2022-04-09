@@ -13,6 +13,7 @@ use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
 use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
+use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
  */
 
 Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
+
+Route::get('count-create-post-content', CountCreatePostContentController::class)->name('count_create');
 
 //cache clear
 Route::get('clear', [CacheClearController::class, 'clear'])->name('clear');
@@ -150,7 +153,7 @@ Route::get(config('constant.CID') . '/{id}', [
     'as'   => 'post.cid',
 ]);
 
-if (config('app.debug')) {
+if (config('constant.Update_Post_Link')) {
 //Update Existing Post Content
     Route::get('/update-post-content/{post_content_id}/{keyword}', [
         'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',

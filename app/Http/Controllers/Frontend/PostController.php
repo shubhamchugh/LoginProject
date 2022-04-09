@@ -10,17 +10,22 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
 {
     public function show(Post $post, GeneralSettings $settings)
     {
         $postContent = $post->content->toArray();
-
+        if (empty($postContent)) {
+            return response(404);
+        }
         //if Post Content not found then first get the post content and refresh the page
         if (empty($postContent)) {
-            // AutoUpdatePostController::update_and_create($post->id, $post->post_title);
-            return redirect()->route('post.show', ['post' => $post->slug]);
+            if (config('constant.Auto_Update_And_create')) {
+                AutoUpdatePostController::update_and_create($post->id, $post->post_title);
+                return redirect()->route('post.show', ['post' => $post->slug]);
+            }
         }
 
         $postContent             = $postContent[mt_rand(0, (count($postContent) - 1))];

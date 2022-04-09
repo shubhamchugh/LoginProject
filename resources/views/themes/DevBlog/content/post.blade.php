@@ -15,7 +15,7 @@
                 <span class="time">
                     Updated {{ $updated_at->diffforhumans() ?? "" }}
                 </span>
-                @if (config('app.debug'))
+                @if (config('constant.Update_Post_Link'))
                 <span class="comment">
                     <a class="text-link" target="_blank" href="{{ route('post_content.update_existing',[
                         'post_content_id' => $postContent['id'],
