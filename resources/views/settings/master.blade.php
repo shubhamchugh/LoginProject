@@ -6,10 +6,15 @@
         @section('pagetitle')
 
         @show
-
+        @if (config('app.debug'))
         @section('content')
 
         @show
+        @else
+
+        Please Enable Debug to edit Settings
+
+        @endif
 
     </div>
     <!--//main-wrapper-->

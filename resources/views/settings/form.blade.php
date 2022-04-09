@@ -1,4 +1,3 @@
-@if (config('app.debug'))
 <div class="card-body">
     <div class="demo-spacing-0">
         @include('backend.partials.message')
@@ -164,8 +163,3 @@
 
     </div>
 </div>
-@else
-
-Please Enable Debug to edit Settings
-
-@endif
