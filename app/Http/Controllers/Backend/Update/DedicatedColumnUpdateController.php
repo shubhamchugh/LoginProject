@@ -50,6 +50,7 @@ class DedicatedColumnUpdateController extends Controller
         } catch (\Throwable $th) {
             $ip->update([
                 'status' => 'NOT_WORKING',
+                'ERROR'  => 'Response Not Get: ' . $api_url_bing,
             ]);
             echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
