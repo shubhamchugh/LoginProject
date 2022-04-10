@@ -39,7 +39,7 @@ class isBingNewsCommand extends Command
     public function handle()
     {
         $scraping_url = route('is_bing_news.update');
-        Http::timeout(20)->get($scraping_url)->getBody();
+        Http::timeout(60)->get($scraping_url)->getBody();
         $this->info('Successfully hit to Bing News Update Url:' . $scraping_url);
     }
 }

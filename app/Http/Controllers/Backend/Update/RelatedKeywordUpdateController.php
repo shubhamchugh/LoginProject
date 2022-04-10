@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
-use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
-use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class RelatedKeywordUpdateController extends Controller
 {
