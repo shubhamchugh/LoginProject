@@ -298,6 +298,7 @@ class FaqScrapeController extends Controller
                     $keyword->update(['is_scraped' => 'bing_api_hit_fail']);
                     $ip->update([
                         'status' => 'NOT_WORKING',
+                        'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
                     ]);
                     echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }
@@ -329,6 +330,7 @@ class FaqScrapeController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
                     $ip->update([
                         'status' => 'NOT_WORKING',
+                        'ERROR'  => 'proper data not found- ' . $api_url_bing,
                     ]);
                     echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }

@@ -14,5 +14,6 @@ class IpRecord extends Model
     protected $fillable = [
         'status',
         'ip_address',
+        'ERROR',
     ];
 }
