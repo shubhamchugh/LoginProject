@@ -15,5 +15,6 @@ class IpRecord extends Model
         'status',
         'ip_address',
         'ERROR',
+        'scrape_count',
     ];
 }

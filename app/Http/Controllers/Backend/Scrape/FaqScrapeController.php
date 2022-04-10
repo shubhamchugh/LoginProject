@@ -10,6 +10,7 @@ use App\Models\SourceUrl;
 use App\Models\PostContent;
 use Illuminate\Http\Request;
 use App\Models\ScrapingFailed;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -323,8 +324,9 @@ class FaqScrapeController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
 
                     $ip->update([
-                        'status' => 'OK',
-                        'ERROR'  => null,
+                        'status'       => 'OK',
+                        'ERROR'        => null,
+                        'scrape_count' => DB::raw('scrape_count + 1'),
                     ]);
 
                 } else {

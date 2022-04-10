@@ -8,6 +8,7 @@ use App\Models\FakeUser;
 use App\Models\IpRecord;
 use App\Models\PostContent;
 use App\Models\ScrapingFailed;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -262,8 +263,10 @@ class AutoUpdatePostController extends Controller
             $bing_search_result = array_merge($result_title, $result_description, $result_url);
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
             $ip->update([
-                'status' => 'OK',
-                'ERROR'  => null,
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+
             ]);
 
         } else {
@@ -658,8 +661,9 @@ class AutoUpdatePostController extends Controller
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
 
             $ip->update([
-                'status' => 'OK',
-                'ERROR'  => null,
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
         } else {
             $ip->update([
@@ -1066,8 +1070,9 @@ class AutoUpdatePostController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
 
                     $ip->update([
-                        'status' => 'OK',
-                        'ERROR'  => null,
+                        'status'       => 'OK',
+                        'ERROR'        => null,
+                        'scrape_count' => DB::raw('scrape_count + 1'),
                     ]);
 
                 } else {
