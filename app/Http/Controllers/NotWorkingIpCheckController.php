@@ -31,7 +31,11 @@ class NotWorkingIpCheckController extends Controller
             echo "No Ip Found Under SCRAPING TAG<br>";
         }
 
-        $ip = IpRecord::where('status', 'NOT_WORKING')->orWhere('status', 'DISCARD')->orderBy('updated_at', 'asc')->first();
+        $ip = IpRecord::where('status', 'NOT_WORKING')
+            ->orWhere('status', 'DISCARD')
+            ->orWhere('status', 'NOT_RESPONDING')
+            ->orderBy('updated_at', 'asc')
+            ->first();
         if (empty($ip->ip_address)) {
             die("All ip are working fine");
         }
