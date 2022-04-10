@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Scrape;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
-use App\Models\Post;
-use App\Models\PostContent;
-use App\Models\ScrapingFailed;
 use App\Models\SourceUrl;
-use Carbon\Carbon;
+use App\Models\PostContent;
 use Illuminate\Http\Request;
+use App\Models\ScrapingFailed;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class FaqScrapeController extends Controller
@@ -317,7 +317,7 @@ class FaqScrapeController extends Controller
                 $result_title['result_title'][]             = (!empty($bing_data['resultTitle'])) ? $bing_data['resultTitle'] : null;
                 $result_description['result_description'][] = (!empty($bing_data['resultDescription'])) ? $bing_data['resultDescription'] : null;
                 $result_url['result_url'][]                 = (!empty($bing_data['resultUrl'])) ? $bing_data['resultUrl'] : null;
-
+                dd($result_url['result_url']);
                 if (!empty($result_title) && !empty($result_description) && !empty($result_url['result_url'][0])) {
                     $bing_search_result = array_merge($result_title, $result_description, $result_url);
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
@@ -330,7 +330,7 @@ class FaqScrapeController extends Controller
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
                     $ip->update([
                         'status' => 'NOT_WORKING',
-                        'ERROR'  => 'proper data not found- ' . $api_url_bing,
+                        'ERROR'  => 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url,
                     ]);
                     echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }
