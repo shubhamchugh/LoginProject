@@ -1214,6 +1214,10 @@ class AutoUpdatePostController extends Controller
                 }
 
             } else {
+                $ip->update([
+                    'status' => 'OK',
+                    'ERROR'  => null,
+                ]);
 
                 ScrapingFailed::create([
                     'source_value' => $keyword,

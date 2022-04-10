@@ -473,6 +473,11 @@ class FaqScrapeController extends Controller
             } else {
                 $keyword->update(['is_scraped' => 'duplicate']);
 
+                $ip->update([
+                    'status' => 'OK',
+                    'ERROR'  => null,
+                ]);
+
                 ScrapingFailed::create([
                     'source_value' => $keyword->value,
                     'error'        => 'Duplicate Removed From DataBase Id:' . $keyword->id,
@@ -482,6 +487,10 @@ class FaqScrapeController extends Controller
             }
 
         } else {
+            $ip->update([
+                'status' => 'OK',
+                'ERROR'  => null,
+            ]);
             dd("No Keywords Found. Please Add Keywords To scrape or STOP Scraping");
         }
     }
