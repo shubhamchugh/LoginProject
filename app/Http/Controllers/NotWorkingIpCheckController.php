@@ -22,10 +22,10 @@ class NotWorkingIpCheckController extends Controller
                 if (10 < $minutes) {
                     $ip_data->update([
                         'status' => 'NOT_WORKING',
+                        'ERROR'  => 'NOT_WORKING due to inactive more then 10 min',
                     ]);
                     echo "$ip_data->ip_address Status Change SCRAPING to NOT_WORKING<br>";
                 }
-
             }
         } else {
             echo "No Ip Found Under SCRAPING TAG<br>";
@@ -65,7 +65,6 @@ class NotWorkingIpCheckController extends Controller
                 $ip->update([
                     'status' => 'OK',
                     'ERROR'  => null,
-
                 ]);
                 echo "<br>No Need To Check Ip Status is OK";
             } else {
