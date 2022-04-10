@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\IpRecord;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class NotWorkingIpCheckController extends Controller
@@ -67,8 +68,9 @@ class NotWorkingIpCheckController extends Controller
 
             if (!empty($result_title) && !empty($result_description) && !empty($result_url['result_url'][0])) {
                 $ip->update([
-                    'status' => 'OK',
-                    'ERROR'  => null,
+                    'status'       => 'OK',
+                    'ERROR'        => null,
+                    'scrape_count' => DB::raw('scrape_count + 1'),
                 ]);
                 echo "<br>No Need To Check Ip Status is OK";
             } else {
