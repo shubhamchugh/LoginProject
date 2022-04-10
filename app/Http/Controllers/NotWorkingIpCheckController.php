@@ -64,6 +64,8 @@ class NotWorkingIpCheckController extends Controller
             if (!empty($result_title) && !empty($result_description) && !empty($result_url['result_url'][0])) {
                 $ip->update([
                     'status' => 'OK',
+                    'ERROR'  => null,
+
                 ]);
                 echo "<br>No Need To Check Ip Status is OK";
             } else {

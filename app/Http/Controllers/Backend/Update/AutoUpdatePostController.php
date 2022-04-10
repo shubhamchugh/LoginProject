@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Update;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\FakeUser;
 use App\Models\IpRecord;
-use App\Models\Post;
 use App\Models\PostContent;
 use App\Models\ScrapingFailed;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class AutoUpdatePostController extends Controller
@@ -263,11 +263,14 @@ class AutoUpdatePostController extends Controller
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
             $ip->update([
                 'status' => 'OK',
+                'ERROR'  => null,
             ]);
 
         } else {
+            $error_msg = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
             $ip->update([
                 'status' => 'NOT_WORKING',
+                'ERROR'  => $error_msg,
             ]);
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
         }
@@ -657,10 +660,13 @@ class AutoUpdatePostController extends Controller
 
             $ip->update([
                 'status' => 'OK',
+                'ERROR'  => null,
             ]);
         } else {
+            $error_msg = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
             $ip->update([
                 'status' => 'NOT_WORKING',
+                'ERROR'  => $error_msg,
             ]);
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
         }
@@ -1063,12 +1069,15 @@ class AutoUpdatePostController extends Controller
 
                     $ip->update([
                         'status' => 'OK',
+                        'ERROR'  => null,
                     ]);
 
                 } else {
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
+                    $error_msg          = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
                     $ip->update([
                         'status' => 'NOT_WORKING',
+                        'ERROR'  => $error_msg,
                     ]);
                 }
                 $post_description = (!empty($result_description['result_description'][0][0])) ? $result_description['result_description'][0][0] : null;
