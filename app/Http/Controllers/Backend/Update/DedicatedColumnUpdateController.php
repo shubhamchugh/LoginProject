@@ -79,15 +79,10 @@ class DedicatedColumnUpdateController extends Controller
         } else {
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'DATA NOT FOUND UPDATING NOT FOUND DATA',
+                'ERROR'  => 'DATA NOT FOUND- ' . $api_url_bing,
             ]);
 
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
-            $error_msg          = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
-            $ip->update([
-                'status' => 'NOT_WORKING',
-                'ERROR'  => $error_msg,
-            ]);
         }
         $post_description = (!empty($result_description['result_description'][0][0])) ? $result_description['result_description'][0][0] : null;
         // updating bing_search_result in PostContent
