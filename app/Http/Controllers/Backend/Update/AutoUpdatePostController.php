@@ -267,6 +267,11 @@ class AutoUpdatePostController extends Controller
             ]);
 
         } else {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'DATA NOT FOUND UPDATING NOT FOUND DATA',
+            ]);
+
             $error_msg = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
             $ip->update([
                 'status' => 'NOT_WORKING',
@@ -663,6 +668,10 @@ class AutoUpdatePostController extends Controller
                 'ERROR'  => null,
             ]);
         } else {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'DATA NOT FOUND UPDATING NOT FOUND DATA',
+            ]);
             $error_msg = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
             $ip->update([
                 'status' => 'NOT_WORKING',
@@ -1074,7 +1083,11 @@ class AutoUpdatePostController extends Controller
 
                 } else {
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
-                    $error_msg          = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'DATA NOT FOUND UPDATING NOT FOUND DATA',
+                    ]);
+                    $error_msg = 'API_URL' . $api_url_bing . '<br>TITLE: ' . $result_title . '<br>DEC: ' . $result_description . '<br>url: ' . $result_url;
                     $ip->update([
                         'status' => 'NOT_WORKING',
                         'ERROR'  => $error_msg,
