@@ -317,7 +317,7 @@ class FaqScrapeController extends Controller
                 $result_title['result_title'][]             = (!empty($bing_data['resultTitle'])) ? $bing_data['resultTitle'] : null;
                 $result_description['result_description'][] = (!empty($bing_data['resultDescription'])) ? $bing_data['resultDescription'] : null;
                 $result_url['result_url'][]                 = (!empty($bing_data['resultUrl'])) ? $bing_data['resultUrl'] : null;
-                dd($result_url['result_url']);
+
                 if (!empty($result_title) && !empty($result_description) && !empty($result_url['result_url'][0])) {
                     $bing_search_result = array_merge($result_title, $result_description, $result_url);
                     $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
