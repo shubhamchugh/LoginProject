@@ -27,6 +27,7 @@ class AutoUpdatePostController extends Controller
         }
         $ip->update([
             'status' => 'SCRAPING',
+            'ERROR'  => config('app.url'),
         ]);
         echo "Post_Content_id: $post_content_id<br>";
         echo "Keyword: $keyword<br>";
@@ -419,6 +420,7 @@ class AutoUpdatePostController extends Controller
 
         $ip->update([
             'status' => 'SCRAPING',
+            'ERROR'  => config('app.url'),
         ]);
         echo "We are updating post For better experience Please Refresh Page";
 
@@ -816,6 +818,7 @@ class AutoUpdatePostController extends Controller
 
         $ip->update([
             'status' => 'SCRAPING',
+            'ERROR'  => config('app.url'),
         ]);
         $keyword = str_replace('-', ' ', $slug);
 

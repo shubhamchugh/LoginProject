@@ -31,6 +31,7 @@ class DedicatedColumnUpdateController extends Controller
 
         $ip->update([
             'status' => 'SCRAPING',
+            'ERROR'  => config('app.url'),
         ]);
 
         $post_content->update([
