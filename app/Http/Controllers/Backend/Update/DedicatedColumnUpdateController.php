@@ -12,7 +12,7 @@ class DedicatedColumnUpdateController extends Controller
 {
     public function is_bing_results()
     {
-        $post_content = PostContent::whereNull('bing_search_result')->where('is_bing_results', '0')->first();
+        $post_content = PostContent::whereNull('bing_search_result')->where('is_bing_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_results");
         }
@@ -221,7 +221,7 @@ class DedicatedColumnUpdateController extends Controller
     public function is_thumbnail_images()
     {
 
-        $post_content = PostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->first();
+        $post_content = PostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_thumbnail_images ");
         }
@@ -267,7 +267,7 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_images()
     {
-        $post_content = PostContent::whereNull('bing_images')->where('is_bing_images', '0')->first();
+        $post_content = PostContent::whereNull('bing_images')->where('is_bing_images', '0')->orderBy('updated_at', 'asc')->first();
 
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_images ");
@@ -320,7 +320,7 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_news()
     {
-        $post_content = PostContent::whereNull('bing_news')->where('is_bing_news', '0')->first();
+        $post_content = PostContent::whereNull('bing_news')->where('is_bing_news', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_news");
         }
@@ -370,7 +370,7 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_video()
     {
-        $post_content = PostContent::whereNull('bing_videos')->where('is_bing_video', '0')->first();
+        $post_content = PostContent::whereNull('bing_videos')->where('is_bing_video', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_video");
         }
@@ -420,7 +420,7 @@ class DedicatedColumnUpdateController extends Controller
     public function is_google_results()
     {
 
-        $post_content = PostContent::whereNull('google_search_result')->where('is_google_results', '0')->first();
+        $post_content = PostContent::whereNull('google_search_result')->where('is_google_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_google_results");
         }
