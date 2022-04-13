@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CacheClearController;
+use App\Http\Controllers\ResetDatabaseController;
 use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
 use App\Http\Controllers\UpgradeSoftwareController;
@@ -27,6 +28,17 @@ use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
  */
 
 Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
+
+if (config('constant.RESET_SCRAPING')) {
+    //Update Existing Post Content
+    Route::get('is_google_results_reset', [ResetDatabaseController::class, 'is_google_results_reset']);
+    Route::get('is_bing_video_reset', [ResetDatabaseController::class, 'is_bing_video_reset']);
+    Route::get('is_bing_images_reset', [ResetDatabaseController::class, 'is_bing_images_reset']);
+    Route::get('is_thumbnail_images_reset', [ResetDatabaseController::class, 'is_thumbnail_images_reset']);
+    Route::get('is_bing_results_reset', [ResetDatabaseController::class, 'is_bing_results_reset']);
+    Route::get('is_scraped_reset', [ResetDatabaseController::class, 'is_scraped_reset']);
+
+}
 
 Route::get('count-create-post-content', CountCreatePostContentController::class)->name('count_create');
 

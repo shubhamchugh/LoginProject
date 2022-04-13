@@ -31,7 +31,7 @@ class DedicatedColumnUpdateController extends Controller
 
         $ip->update([
             'status' => 'SCRAPING',
-            'ERROR'  => config('app.url'),
+            'ERROR'  => request()->getHost(),
         ]);
 
         $post_content->update([
@@ -50,7 +50,7 @@ class DedicatedColumnUpdateController extends Controller
         } catch (\Throwable $th) {
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'Response Not Get: ' . $api_url_bing,
+                'ERROR'  => 'api_url_bing Response Not Get: ' . $api_url_bing,
             ]);
             echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
 
@@ -83,7 +83,7 @@ class DedicatedColumnUpdateController extends Controller
         } else {
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'DATA NOT FOUND- ' . $api_url_bing,
+                'ERROR'  => 'api_url_bing DATA NOT FOUND- ' . $api_url_bing,
             ]);
 
             $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
@@ -235,6 +235,11 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+            'ERROR'  => request()->getHost(),
+        ]);
+
         $post_content->update([
             'is_thumbnail_images' => 1,
         ]);
@@ -249,6 +254,11 @@ class DedicatedColumnUpdateController extends Controller
             echo "<br>Thumbnail: <br>";
             echo "$thumbnail<br>";
 
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+            ]);
             //Updating thumbnail_images in database
             try {
                 $post_content->update([
@@ -256,10 +266,18 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'thumbnail_images DATA Not Get: ' . $Bing_image,
+                ]);
                 echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
 
             }
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'thumbnail_images response Not Get: ' . $Bing_image,
+            ]);
             echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
@@ -283,6 +301,15 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+            'ERROR'  => request()->getHost(),
+        ]);
+
+        $post_content->update([
+            'is_thumbnail_images' => 1,
+        ]);
+
         $post_content->update([
             'is_bing_images' => 1,
         ]);
@@ -299,6 +326,12 @@ class DedicatedColumnUpdateController extends Controller
                 $images = (!empty($Bing_image)) ? serialize($Bing_image) : null;
             }
 
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+            ]);
+
             echo "<br>Images: <br>";
             print_r($images);
 
@@ -309,9 +342,17 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'Bing_image_url DATA Not Get: ' . $Bing_image_url,
+                ]);
                 echo "Fail to store Bing images In database check:$Bing_image_url<br>";
             }
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'Bing_image_url response Not Get: ' . $Bing_image_url,
+            ]);
 
             echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
@@ -336,6 +377,11 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+            'ERROR'  => request()->getHost(),
+        ]);
+
         $post_content->update([
             'is_bing_news' => 1,
         ]);
@@ -351,6 +397,12 @@ class DedicatedColumnUpdateController extends Controller
 
             $bing_news = (!empty($bing_news)) ? serialize($bing_news) : null;
 
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+            ]);
+
             //Updating news in database
             try {
                 $post_content->update([
@@ -358,11 +410,19 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'newsUrl data Not Get: ' . $newsUrl,
+                ]);
                 echo "Fail to store Bing News In database check: $newsUrl<br>";
 
             }
 
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'newsUrl response Not Get: ' . $newsUrl,
+            ]);
             echo "Something bad With Bing News Please check: $newsUrl <br>";
 
         }
@@ -385,6 +445,11 @@ class DedicatedColumnUpdateController extends Controller
             dd("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+            'ERROR'  => request()->getHost(),
+        ]);
+
         $post_content->update([
             'is_bing_video' => 1,
         ]);
@@ -401,6 +466,12 @@ class DedicatedColumnUpdateController extends Controller
 
             $bing_videos = (!empty($bing_videos)) ? serialize($bing_videos) : null;
 
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+            ]);
+
             //Updating Videos in database
             try {
                 $post_content->update([
@@ -408,10 +479,18 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'videoUrl data Not Get: ' . $videoUrl,
+                ]);
                 echo "Fail to store Bing Video in Database please check: $videoUrl<br>";
 
             }
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'videoUrl response Not Get: ' . $videoUrl,
+            ]);
             echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
 
         }
@@ -435,6 +514,11 @@ class DedicatedColumnUpdateController extends Controller
             die("Please Add New ip in DataBase to Scrape");
         }
 
+        $ip->update([
+            'status' => 'SCRAPING',
+            'ERROR'  => request()->getHost(),
+        ]);
+
         $post_content->update([
             'is_google_results' => 1,
         ]);
@@ -449,7 +533,17 @@ class DedicatedColumnUpdateController extends Controller
             $google_related_keywords = (!empty($google_data['relatedKeywordsGoogle'])) ? serialize($google_data['relatedKeywordsGoogle']) : null;
             $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'])) ? serialize($google_data['richSnippetGoogle']) : null;
 
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
+            ]);
+
         } catch (\Throwable $th) {
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'api_url_google response Not Get: ' . $api_url_google,
+            ]);
             echo "Something bad with google.com Please check: $api_url_google <br>";
 
         }

@@ -46,5 +46,6 @@ return [
     'SITEMAP_PAGE_PAGINATION'  => env('SITEMAP_PAGE_PAGINATION', 50),
     'Auto_Update_And_create'   => env('Auto_Update_And_create', false),
     'Update_Post_Link'         => env('Update_Post_Link', false),
+    'RESET_SCRAPING'           => env('RESET_SCRAPING', false),
 
 ];

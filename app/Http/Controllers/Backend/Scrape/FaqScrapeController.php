@@ -41,7 +41,7 @@ class FaqScrapeController extends Controller
         }
         $ip->update([
             'status' => 'SCRAPING',
-            'ERROR'  => config('app.url'),
+            'ERROR'  => request()->getHost(),
         ]);
 
         if (empty($refKey)) {

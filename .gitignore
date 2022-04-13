@@ -14,3 +14,5 @@ yarn-error.log
 /.idea
 /.vscode
 /storage/Google_account_file.json
+/public/sitemap.xml
+/public/sitemap-*.xml
