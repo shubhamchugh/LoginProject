@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Helpers\GeneralSettings;
-use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralSettings;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomeController extends Controller
 {

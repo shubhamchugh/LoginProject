@@ -2,22 +2,22 @@ mode: increment
 blade-directive: version
 current:
   label: v
-  major: 3
-  minor: 4
-  patch: 0
+  major: 1
+  minor: 0
+  patch: 3
   prerelease: null
   buildmetadata: null
-  commit: 5ba34b
+  commit: d0adbc
   timestamp:
     year: 2022
     month: 4
-    day: 4
-    hour: 10
-    minute: 47
-    second: 53
+    day: 20
+    hour: 6
+    minute: 35
+    second: 59
     timezone: UTC
 commit:
-  mode: git-local
+  mode: absorb
   length: 6
   increment-by: 1
 git:

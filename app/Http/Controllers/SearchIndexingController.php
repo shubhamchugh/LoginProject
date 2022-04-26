@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IndexResult;
-use App\Models\Post;
-use Carbon\Carbon;
 use Google;
+use Carbon\Carbon;
+use App\Models\Post;
+use App\Models\IndexResult;
 use Google_Service_Indexing;
-use Google_Service_Indexing_UrlNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Google_Service_Indexing_UrlNotification;
 
 class SearchIndexingController extends Controller
 {
 
     public function google_indexing(Request $request)
     {
-        if (empty(file_get_contents(storage_path('Google_account_file.json')))) {
-            dd("Please Add Google Index Api to Google_account_file.json for Send Request to Google");
+        try {
+            $google_json_file = file_get_contents(storage_path('Google_account_file.json'));
+        } catch (\Throwable $th) {
+            //throw $th;
+            die('Please Add Google Index Api to Google_account_file.json for Send Request to Google');
         }
+
         $urls        = array();
         $batch_count = (!empty($request->batch)) ? $request->batch : 10;
 

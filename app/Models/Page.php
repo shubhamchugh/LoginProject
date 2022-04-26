@@ -21,9 +21,9 @@ class Page extends Model
         'page_content',
         'status',
         'published_at',
-        
+
     ];
-    
+
     public function author()
     {
         return $this->belongsTo(User::class);
@@ -61,7 +61,7 @@ class Page extends Model
 
     public function publicationLabel()
     {
-        
+
         if (!$this->published_at) {
             return '<span class="badge badge-pill badge-light-primary mr-1">Draft</span>';
         } elseif ($this->published_at && $this->published_at->isFuture()) {
@@ -73,7 +73,7 @@ class Page extends Model
 
     public function getDateAttribute($value)
     {
-        return is_null($this->published_at) ? '': $this->published_at->diffForHumans();
+        return is_null($this->published_at) ? '' : $this->published_at->diffForHumans();
     }
 
     public function dateFormatted($showTimes = false)
