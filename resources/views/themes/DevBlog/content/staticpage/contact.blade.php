@@ -20,8 +20,8 @@
                 <div class="detail_title_1">
 
                 </div>
-                <p>For any help/query/problem send us : <a href="{{ $settings->google_forms_contact }}"
-                        target="_blank">Link</a>
+                <p>For any help/query/problem : <a href="{{ $settings->google_forms_contact }}" target="_blank">Fill
+                        this form</a>
                 </p>
             </div>
 
