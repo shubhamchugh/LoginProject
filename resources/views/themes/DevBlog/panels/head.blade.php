@@ -20,5 +20,6 @@
     {!! $settings->header_code !!}
     <!-- MINIFIED -->
     {!! SEO::generate() !!}
+    <link rel="shortcut icon" href="{{ asset('faq-icon.png') }}" />
 
 </head>

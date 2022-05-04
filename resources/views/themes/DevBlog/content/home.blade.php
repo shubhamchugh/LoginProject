@@ -42,14 +42,6 @@
                     </button>
                 </div>
             </form>
-
-
-
-
-
-
-
-
             <!--//Search-form-->
         </div>
         <!--//single-form-max-width-->
@@ -100,8 +92,8 @@
 
         @endforeach
 
-        {{ $posts->links('pagination::DevBlog') }}
-
+        {{ $posts->links() }}
+        {{-- theme name:'pagination::DevBlog' --}}
     </div>
 
 </section>

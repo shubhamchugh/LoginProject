@@ -20,10 +20,10 @@ class HomeController extends Controller
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
             $posts = Post::with('content')->inRandomOrder()->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
-                ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
+                ->simplePaginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 
             //SEO FOR HOME PAGE
-            SEOTools::setTitle($settings->home_title);
+            SEOTools::setTitle($settings->home_title . ' | Page' . $posts->currentPage());
             SEOTools::setDescription($settings->home_page_description);
             SEOTools::opengraph()->setUrl('http://current.url.com');
             SEOTools::setCanonical(URL::current());
