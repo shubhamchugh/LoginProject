@@ -19,7 +19,10 @@ class HomeController extends Controller
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
-            $posts = Post::with('content')->inRandomOrder()->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
+            $posts = Post::with('content')
+            // ->inRandomOrder()
+                ->orderBy('id', 'ASC')
+                ->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
                 ->simplePaginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 
             //SEO FOR HOME PAGE
