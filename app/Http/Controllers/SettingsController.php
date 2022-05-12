@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
 use App\Http\Requests\GeneralSettingsRequest;
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -26,6 +26,8 @@ class SettingsController extends Controller
         $settings->author_name           = $request->input('author_name');
         $settings->bellow_title_ads      = $request->input('bellow_title_ads');
         $settings->about_us              = $request->input('about_us');
+        $settings->before_title          = $request->input('before_title');
+        $settings->after_title           = $request->input('after_title');
         $settings->save();
 
         return redirect()->back()->with('message', 'settings saved');
@@ -46,7 +48,8 @@ class SettingsController extends Controller
             'author_name'           => $settings->author_name,
             'bellow_title_ads'      => $settings->bellow_title_ads,
             'about_us'              => $settings->about_us,
-
+            'before_title'          => $settings->before_title,
+            'after_title'           => $settings->after_title,
         ]);
     }
 

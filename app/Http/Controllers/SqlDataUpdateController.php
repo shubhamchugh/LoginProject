@@ -20,6 +20,8 @@ class SqlDataUpdateController extends Controller
             'author_name'           => json_encode('AuthorName'),
             'bellow_title_ads'      => json_encode(''),
             'about_us'              => json_encode('FAQ is an open global project. Our aim is to provide explanations of possible technical topics and problem solving techniques in the form of questions and answers. We hope that our project will provide people with understanding difficult problems, how to solve them, through the engineering perspective.'),
+            'before_title'          => json_encode(''),
+            'after_title'           => json_encode(''),
         ];
 
         foreach ($data as $name => $payload) {

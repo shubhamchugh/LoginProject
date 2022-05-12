@@ -158,6 +158,37 @@
             </div>
             {{-- about_us end --}}
 
+
+
+            {{-- before_title start --}}
+            <div class="form-group {{ $errors->has('before_title') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">before_title</label>
+                <input type="text" id="first-name-vertical" class="form-control" name="before_title"
+                    placeholder="before_title" value="{{ old('before_title', $before_title ?? null)}}" />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('before_title'))
+                <span class="help-block text-warning">{{ $errors->first('before_title') }}</span>
+                @endif
+            </div>
+            {{-- before_title end --}}
+
+
+            {{-- after_title start --}}
+            <div class="form-group {{ $errors->has('after_title') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">after_title</label>
+                <input type="text" id="first-name-vertical" class="form-control" name="after_title"
+                    placeholder="after_title" value="{{ old('after_title', $after_title ?? null)}}" />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('after_title'))
+                <span class="help-block text-warning">{{ $errors->first('after_title') }}</span>
+                @endif
+            </div>
+            {{-- after_title end --}}
+
             <button type="submit" class="btn btn-primary mr-1">Update</button>
         </div>
 
