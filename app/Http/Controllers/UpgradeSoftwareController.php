@@ -67,7 +67,7 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
         echo "<h2>Settings Update Output</h2>";
-        $url        = request()->getHost() . '/sql-update';
+        $url        = url('/sql-update');
         $sql_update = Http::get($url)->body();
         print_r($sql_update);
     }

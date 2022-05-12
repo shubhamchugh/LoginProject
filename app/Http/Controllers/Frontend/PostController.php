@@ -58,7 +58,7 @@ class PostController extends Controller
         $seo_image = (!empty($bing_images['images'][mt_rand(0, $totalimages)])) ? $bing_images['images'][mt_rand(0, $totalimages)] : json_encode(['murl' => url('themes/DevBlog/assets/images/profile.png')]);
 
         $before_title = (!empty($settings->before_title)) ? $settings->before_title : "";
-        $after_title  = (!empty($settings->before_title)) ? $settings->before_title : "";
+        $after_title  = (!empty($settings->after_title)) ? $settings->after_title : "";
 
         SEOTools::setTitle($before_title . ' ' . ucwords($post->post_title) . ' ' . $after_title);
         SEOTools::setDescription($SEO_dec);
