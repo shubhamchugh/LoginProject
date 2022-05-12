@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
 
 class UpgradeSoftwareController extends Controller
@@ -16,6 +17,7 @@ class UpgradeSoftwareController extends Controller
     public function __invoke(Request $request)
     {
         echo "<pre>";
+        echo "<h2>Git Update Output</h2>";
         echo shell_exec("git config --global --add safe.directory '*'");
         echo shell_exec('cd .. && git status');
 
@@ -32,6 +34,7 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && php artisan migrate');
         echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
 
+        echo "<h2>Cache Clear Update Output</h2>";
         Artisan::call('cache:clear');
         print_r(Artisan::output());
 
@@ -63,5 +66,9 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && sudo chmod -R 777 public');
         echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
+        echo "<h2>Settings Update Output</h2>";
+        $url        = request()->getHost() . '/sql-update';
+        $sql_update = Http::get($url)->body();
+        print_r($sql_update);
     }
 }
