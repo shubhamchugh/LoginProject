@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\FakeUser;
 use App\Models\PostContent;
-use App\Models\User;
-use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -45,7 +45,7 @@ class Post extends Model
 
     public function fakeAuthor()
     {
-        return $this->belongsTo(FakeUser::class, 'fake_user_id');
+        return $this->belongsTo(FakeUser::class, 'id');
     }
 
     public function author()

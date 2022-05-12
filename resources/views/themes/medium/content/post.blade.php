@@ -1,0 +1,379 @@
+@extends('themes.medium.layouts.master')
+@section('content')
+<!-- Begin Article
+================================================== -->
+<div class="container">
+    <div class="row">
+
+        @include('themes.medium.panels.sidebar')
+
+        <!-- Begin Post -->
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+            <div class="mainheading">
+
+                <h1 class="posttitle text-capitalize">{{ $post->post_title ?? "" }}</h1>
+
+            </div>
+            <div class="meta mb-3">
+                <span class="post-read">
+                    by {{ $post->fakeAuthor->name ?? "" }}
+                </span>
+                <span class="dot"></span>
+                <span class="post-date">
+                    Published {{ $post->published_at->diffforhumans() ?? "" }}
+                </span>
+                <span class="dot"></span>
+                <span class="post-date">
+                    Updated {{ $updated_at->diffforhumans() ?? "" }}
+                </span>
+                <span class="dot"></span>
+                <span class="post-read">{{ rand(3,10) }} min read</span>
+
+                @if (config('constant.Update_Post_Link'))
+                <span class="dot"></span>
+                <span class="comment">
+                    <a class="link-dark" target="_blank" href="{{ route('post_content.update_existing',[
+                        'post_content_id' => $postContent['id'],
+                        'keyword' => $post['source_value'],
+                        ]) ?? "" }}"> Update Post </a>
+                </span>
+                @endif
+            </div>
+
+            <div align="center">
+                {!! $settings->bellow_title_ads !!}
+            </div>
+
+            <div class="article-post">
+
+                {{-- Custom Content Above Content start--}}
+                @if ((config('constant.post_content_above') == true) && !empty($postContent['post_content_above']))
+                <div class="mt-5 mb-3">
+                    {!! $postContent['post_content_above'] !!}
+                </div>
+                @endif
+                {{-- Custom Content Above Content en--}}
+
+                {{-- Bing Random Image start--}}
+                @if((config('constant.bing_image_first') == true) && !empty($bing_images['images'][0]))
+                <figure class="blog-banner">
+                    <img class="featured-image img-fluid"
+                        src="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['murl'] ?? ""}}"
+                        alt="image">
+                    <figcaption class="mt-2 text-center figure-caption">Image Credit: <a class="theme-link"
+                            href="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['purl'] ?? ""}}"
+                            rel="noopener noreferrer nofollow" target="_blank">{{
+                            json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['t'] ?? ""
+                            }}</a></figcaption>
+                </figure>
+                @endif
+                {{-- Bing Random Image end --}}
+
+                {{-- Google And Bing Rich Snippe --}}
+                @if (config('constant.bing_rich_snippet_text') == true)
+                <p> {!! $bing_rich_snippet['bing_rich_snippet_text'][0][0] ?? ""!!}</p>
+                @endif
+
+
+                @if (config('constant.google_rich_snippet') == true)
+                <p> {!! $google_rich_snippet[0] ?? "" !!}</p>
+                @endif
+
+
+                {{-- Bing Full richSnippet link --}}
+                @if ((config('constant.bing_rich_snippet_link') == true) &&
+                !empty($bing_rich_snippet['bing_rich_snippet_link'][0][0] ) )
+                <a href="{{ $bing_rich_snippet['bing_rich_snippet_link'][0][0] ?? "" }}"
+                    rel="noopener noreferrer nofollow" target="_blank">Full
+                    Answer</a><br><br>
+                @endif
+
+
+                {{-- Bing Random videostart--}}
+                @if(!empty($bing_videos[0]) &&
+                (config('constant.bing_videos_first') == true))
+                <div class="ratio ratio-16x9">
+                    <iframe width="560" height="315"
+                        src=" {{ str_replace('watch?v=','embed/',json_decode($bing_videos[mt_rand(0,$totalvideos)],true)['pgurl']) }}"
+                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+
+                @endif
+                {{-- Bing Random video end --}}
+
+                {{-- related Keywords bing start--}}
+                @if ((config('constant.bing_related_keywords') == true) && !empty($bing_related_keywords))
+                <div class="row my-6 mt-5 mb-3">
+                    <h2>Related Posts: </h2>
+                    @foreach ( $bing_related_keywords as $bing_keyword)
+                    <li class="col-md-6">
+                        <a rel="noopener noreferrer nofollow"
+                            href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $bing_keyword)]) }}"
+                            target="_blank" class="text-dec-non" title="{{ $bing_keyword }}">{{
+                            $bing_keyword }}</a>
+                    </li>
+                    @endforeach
+                </div>
+                @endif
+                {{-- related Keywords bing end --}}
+
+                @if ((config('constant.post_content_middle') == true) && !empty($postContent['post_content_middle']))
+                <div class="mt-5 mb-3">
+                    {!! $postContent['post_content_middle'] !!}
+                </div>
+                @endif
+
+                {{-- Bing People Also Aks --}}
+                @if ((config('constant.bing_paa') == true) && !empty($bing_paa['paa_questions']))
+                @for($i = 0; $i < count($bing_paa['paa_questions'][0]); $i++) <h3 class="mt-5 mb-3">
+                    {!! $bing_paa['paa_questions'][0][$i] ?? "" !!}
+                    </h3>
+
+                    <p>
+                        {!! $bing_paa['paa_Answers'][0][$i] ?? "" !!}
+                    </p>
+                    @endfor
+
+
+
+                    {{-- Bing Random Image start--}}
+                    @if((config('constant.bing_images_second') == true) && !empty($bing_images['images'][0]))
+                    <figure class="blog-banner">
+                        <img class="featured-image img-fluid"
+                            src="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['murl'] }}"
+                            alt="image">
+                        <figcaption class="mt-2 text-center image-caption">Image Credit: <a class="theme-link"
+                                href="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['purl'] }}"
+                                rel="noopener noreferrer nofollow" target="_blank">{{
+                                json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['t']
+                                }}</a></figcaption>
+                    </figure>
+                    @endif
+                    {{-- Bing Random Image end --}}
+
+                    @endif
+                    {{-- Bing People Also Aks end --}}
+
+
+
+
+
+
+                    {{-- Google Faq Questions start --}}
+                    @if ((config('constant.google_faq') == true) && !empty($google_faq['questions']))
+                    @for($i = 0; $i < count($google_faq['questions'][0]); $i++) <h3 class="mt-5 mb-3">
+                        {!! $google_faq['questions'][0][$i] ?? "" !!}
+                        </h3>
+
+                        <p>
+                            {!! $google_faq['answers'][0][$i] ?? "" !!}
+                        </p>
+                        @endfor
+
+
+
+
+                        {{-- Bing Random videostart--}}
+                        @if((config('constant.bing_videos_second') == true) && !empty($bing_videos[0]))
+                        <div class="ratio ratio-16x9">
+                            <iframe width="560" height="315"
+                                src=" {{ str_replace('watch?v=','embed/',json_decode($bing_videos[mt_rand(0,$totalvideos)],true)['pgurl']) }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+
+                        @endif
+                        {{-- Bing Random video end --}}
+                        @endif
+                        {{-- Google Faq Questions end --}}
+
+
+
+                        {{-- Bing Slider Questions start--}}
+                        @if ((config('constant.bing_slider_faq') ==
+                        true) && !empty($bing_slider_faq['slider_questions'][0]) )
+                        @for($i = 0; $i < count($bing_slider_faq['slider_questions'][0]); $i++) <h3 class="mt-5 mb-3">
+                            {!! $bing_slider_faq['slider_questions'][0][$i] ?? "" !!}
+                            </h3>
+
+                            <p>
+                                {!! $bing_slider_faq['slider_answers'][0][$i] ?? "" !!}
+                            </p>
+                            @endfor
+                            @endif
+                            {{-- Bing Slider Questions start end--}}
+
+                            {{-- related Keywords Google start--}}
+                            @if ( (config('constant.google_related_keywords') ==
+                            true) && !empty($google_related_keywords))
+                            <div class="row my-6 mt-5 mb-3">
+                                <h2 class="title">Posts you might like: </h2>
+                                @foreach ( $google_related_keywords as $google_keyword)
+                                <li class="col-md-12">
+                                    <a rel="noopener noreferrer nofollow"
+                                        href="{{ route('scrape.keyword.update',['keyword'=>str_replace(' ', '-', $google_keyword)]) }}"
+                                        target="_blank" class="text-dec-non" title="{{ $google_keyword }}">{{
+                                        $google_keyword }}</a>
+                                </li>
+                                @endforeach
+                            </div>
+                            @endif
+                            {{-- related Keywords Google end --}}
+
+
+                            {{-- Bing pop Questions start--}}
+                            @if ((config('constant.pop_questions') ==
+                            true) && !empty($bing_pop_faq['pop_questions'][0]))
+                            @for($i = 0; $i < count($bing_pop_faq['pop_questions'][0]); $i++) {{-- Bing Random Image
+                                start--}} @if(!empty($bing_images['images'][0]) && ($i % 3==0)) <figure
+                                class="blog-banner">
+                                <img class="featured-image img-fluid"
+                                    src="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['murl'] }}"
+                                    alt="image">
+                                <figcaption class="mt-2 text-center image-caption">Image Credit: <a class="theme-link"
+                                        href="{{ json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['purl'] }}"
+                                        rel="noopener noreferrer nofollow" target="_blank">{{
+                                        json_decode($bing_images['images'][mt_rand(0,$totalimages)],true)['t']
+                                        }}</a></figcaption>
+                                </figure>
+                                @endif
+                                {{-- Bing Random Image end --}}
+
+                                <h3 class="mt-5 mb-3">
+                                    {!! $bing_pop_faq['pop_questions'][0][$i] ?? "" !!}
+                                </h3>
+
+                                <p>
+                                    {!! $bing_pop_faq['pop_answers'][0][$i] ?? "" !!}
+                                </p>
+                                @endfor
+                                @endif
+                                {{-- Bing pop Questions start end--}}
+
+
+
+
+                                {{-- Bing Slider Questions start--}}
+                                @if (!empty($bing_tab_faq['tab_questions'][0]) && (config('constant.bing_tab_faq') ==
+                                true))
+                                @for($i = 0; $i < count($bing_tab_faq['tab_questions'][0]); $i++) <h3 class="mt-5 mb-3">
+                                    {!! $bing_tab_faq['tab_questions'][0][$i] ?? "" !!}
+                                    </h3>
+
+                                    <p>
+                                        {!! $bing_tab_faq['tab_answers'][0][$i] ?? "" !!}
+                                    </p>
+                                    @endfor
+                                    @endif
+                                    {{-- Bing Slider Questions start end--}}
+
+
+                                    @if (!empty($postContent['post_content_after']) &&
+                                    (config('constant.post_content_after') ==
+                                    true))
+                                    <div class="mt-5 mb-3">
+                                        {!! $postContent['post_content_after'] !!}
+                                    </div>
+                                    @endif
+
+
+                                    {{-- Popular Posts start--}}
+                                    @if (config('constant.popular_post') ==
+                                    true)
+                                    <div class="mt-5 mb-3">
+                                        <h2 class="title">Popular Posts:</h2>
+
+
+
+                                        <div class="graybg">
+                                            <div class="container">
+                                                <div class="row listrecent listrelated">
+
+                                                    @foreach ($sidebar as $item)
+
+                                                    <!-- begin post -->
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-block">
+                                                                <h2 class="card-title"><a
+                                                                        href="{{ route('post.show',$item->slug) }}">{{
+                                                                        $loop->iteration }}. {{
+                                                                        $item->post_title }}
+                                                                    </a><i class="fa fa-external-link"
+                                                                        aria-hidden="true"></i>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end post -->
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    {{-- Popular Posts end--}}
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+        {{-- bing_search_result start --}}
+        @if (config('constant.Bing_SERP') == true && 0 < count($bing_search_result['result_url'][0]) ) @for ($i=0; $i <
+            count($bing_search_result['result_url'][0]); $i++) <div class="post-box mt-2">
+            <h3 class="text-primary cursorp">{{ $i+1 }}.{{
+                $bing_search_result['result_title'][0][$i]
+                }}</h3>
+            <p><strong>Url:</strong>{{ $bing_search_result['result_url'][0][$i] }}</p>
+            <p>
+                <span class="badge bg-success">{{rand(1,36)}} hours ago</span>
+                {!! $bing_search_result['result_description'][0][$i] !!}
+            <div class="d-lg-flex align-items-center justify-content-between">
+                <div class="text-end">
+                    <span class="float-right">
+                        <a href="{{ $bing_search_result['result_url'][0][$i] }}" rel="nofollow" target="_blank"
+                            class="btn btn-primary btn-sm">Show
+                            details <i class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                </div>
+            </div>
+    </div>
+    @endfor
+    @endif
+    {{-- bing_search_result end--}}
+
+
+    {{-- bing_news start--}}
+    @if (config('constant.Bing_news')==true && 0 < count($bing_news['title']) ) @for ($i=0; $i <
+        count($bing_news['title']); $i++) <div class="post-box mt-2 bg-warning bg-gradient bg-opacity-70">
+        <h3 class="text-primary cursorp">{{ $i+1 }}. {{ $bing_news['title'][$i]}}</h3>
+        <p>
+            <span class="badge bg-success">{{rand(1,36)}} hours ago</span>
+            {{ $bing_news['description'][$i] }}
+
+        <div class="d-lg-flex align-items-center justify-content-between">
+            <span class="badge rounded-pill bg-info text-dark">{{ $indexedArray[array_rand($indexedArray)]
+                }}</span>
+            <div>
+                <strong>{{rand(1,360000)}} People Read</strong>
+            </div>
+        </div>
+</div>
+@endfor
+@endif
+{{-- bing_news end--}}
+
+
+<!--//container-->
+</article>
+
+<div class="hideshare"></div>
+@endsection

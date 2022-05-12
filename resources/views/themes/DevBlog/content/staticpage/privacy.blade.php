@@ -1,13 +1,6 @@
 @extends('themes.DevBlog.layouts.master')
 
-
-@section('title', 'Home Page')
 @section('content')
-
-
-
-
-
 
 <article class="blog-post px-3 py-5 p-md-5">
         <div class="container single-col-max-width">
@@ -846,7 +839,7 @@
                 @endforeach
                 @endif
         </div>
-        {{-- Bing Slider Questions end--}}
+        {{-- Popular Posts end --}}
 
 </article>
 @endsection

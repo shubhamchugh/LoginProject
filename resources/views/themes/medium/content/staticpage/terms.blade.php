@@ -1,0 +1,51 @@
+@extends('themes.medium.layouts.master')
+
+@section('content')
+
+<article class="blog-post px-3 py-5 p-md-5">
+    <div class="container single-col-max-width">
+        <header class="blog-post-header">
+            <h1 class="title text-capitalize  mb-2">Terms</h1>
+            <div class="meta mb-3">
+            </div>
+        </header>
+
+        <div class="blog-post-body">
+            <div class="container margin_60_35">
+                <div class="detail_title_1">
+
+                </div>
+                <p> this is the Terms page</p>
+            </div>
+
+        </div>
+        {{-- Popular Posts start--}}
+        @if (config('constant.popular_post') ==
+        true)
+        <div class="mt-5 mb-3">
+            <h2 class="title">Popular Posts:</h2>
+            @foreach ($sidebar as $item)
+            <li class="list-group-item">
+                {{ $loop->iteration }}. <a href="{{ route('post.show',$item->slug) }}" title="{{ $item->post_title }}">
+                    {{
+                    $item->post_title }}
+                    <sup><i class="fa fa-external-link" aria-hidden="true"></i></sup></a>
+            </li>
+            @endforeach
+            @endif
+        </div>
+        {{-- Popular Posts end--}}
+
+    </div>
+    <!--//container-->
+
+
+</article>
+@endsection
+
+
+
+@section('head')
+<meta name="description" content="Terms">
+<title>Terms</title>
+@endsection

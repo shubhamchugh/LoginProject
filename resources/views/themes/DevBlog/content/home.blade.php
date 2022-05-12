@@ -49,11 +49,6 @@
     <!--//container-->
 </section>
 
-
-
-
-
-
 <section class="blog-list px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         @foreach ($posts as $post)
@@ -92,7 +87,7 @@
 
         @endforeach
 
-        {{ $posts->links() }}
+        {{ $posts->links("pagination::DevBlog") }}
         {{-- theme name:'pagination::DevBlog' --}}
     </div>
 
