@@ -12,7 +12,7 @@ class DedicatedColumnUpdateController extends Controller
 {
     public function is_bing_results()
     {
-        $post_content = JsonPostContent::whereNull('bing_search_result')->where('is_bing_results', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_search_result_url')->where('is_bing_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_results");
         }
@@ -330,7 +330,7 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_bing_news()
     {
-        $post_content = JsonPostContent::whereNull('bing_news')->where('is_bing_news', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_news_title')->where('is_bing_news', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_news");
         }
@@ -473,7 +473,7 @@ class DedicatedColumnUpdateController extends Controller
 
     public function is_google_results()
     {
-        $post_content = JsonPostContent::whereNull('google_search_result')->where('is_google_results', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('google_search_result_url')->where('is_google_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_google_results");
         }

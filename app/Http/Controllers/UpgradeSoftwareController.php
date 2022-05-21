@@ -31,7 +31,10 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
 
         echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
+
+        echo "<h2>Migration Details</h2>";
         echo shell_exec('cd .. && php artisan migrate');
+
         echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
 
         echo "<h2>Cache Clear Update Output</h2>";
@@ -57,6 +60,10 @@ class UpgradeSoftwareController extends Controller
         print_r(Artisan::output());
 
         Artisan::call('event:clear');
+        print_r(Artisan::output());
+
+        echo "<h2>Admin Reset</h2>";
+        Artisan::call('db:seed --force');
         print_r(Artisan::output());
 
         echo shell_exec('cd .. && sudo chmod -R o+rw bootstrap/cache');

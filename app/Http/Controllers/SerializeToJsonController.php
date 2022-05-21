@@ -160,7 +160,7 @@ class SerializeToJsonController extends Controller
                 echo "Already Converted to Json Maybe";
             }
 
-            if (is_serialized($postContent->bing_pop_faq)) {
+            if (is_serialized($postContent->google_faq)) {
                 $google_faq_data = unserialize($postContent->google_faq);
 
                 $json_post_content->update([
