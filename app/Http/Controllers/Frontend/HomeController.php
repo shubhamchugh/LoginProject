@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
-use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
 {
@@ -19,7 +19,7 @@ class HomeController extends Controller
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
-            $posts = Post::with('content', 'fakeAuthor')
+            $posts = Post::with('content')
 
             // ->inRandomOrder()
                 ->orderBy('id', 'ASC')
@@ -29,7 +29,7 @@ class HomeController extends Controller
             //SEO FOR HOME PAGE
             SEOTools::setTitle($settings->home_title . ' | Page' . $posts->currentPage());
             SEOTools::setDescription($settings->home_page_description);
-            SEOTools::opengraph()->setUrl('http://current.url.com');
+            SEOTools::opengraph()->setUrl(URL::current());
             SEOTools::setCanonical(URL::current());
             SEOTools::opengraph()->addProperty('type', 'articles');
             SEOTools::jsonLd()->addImage(asset('themes/DevBlog/assets/images/profile.png'));

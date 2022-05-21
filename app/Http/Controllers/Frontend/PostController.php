@@ -60,7 +60,9 @@ class PostController extends Controller
         $before_title = (!empty($settings->before_title)) ? $settings->before_title : "";
         $after_title  = (!empty($settings->after_title)) ? $settings->after_title : "";
 
-        SEOTools::setTitle($before_title . ' ' . ucwords($post->post_title) . ' ' . $after_title);
+        $title = (!empty($post_title_seo)) ? $post_title_seo : ($before_title . ' ' . ucwords($post->post_title) . ' ' . $after_title);
+
+        SEOTools::setTitle($title);
         SEOTools::setDescription($SEO_dec);
         SEOTools::opengraph()->setUrl(URL::current());
         SEOMeta::addMeta('article:published_time', $updated_at->toW3CString(), 'property');

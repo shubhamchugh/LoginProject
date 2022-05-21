@@ -15,7 +15,7 @@ class FakeUser extends Model
         'name',
     ];
 
-    public function posts()
+    public function post()
     {
         return $this->hasMany(Post::class, 'fake_user_id');
     }

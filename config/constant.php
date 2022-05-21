@@ -47,5 +47,6 @@ return [
     'Auto_Update_And_create'   => env('Auto_Update_And_create', false),
     'Update_Post_Link'         => env('Update_Post_Link', false),
     'RESET_SCRAPING'           => env('RESET_SCRAPING', false),
+    'TRANSFER_TO_JSON_COUNT'   => env('TRANSFER_TO_JSON_COUNT', 500),
 
 ];

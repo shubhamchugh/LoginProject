@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Casts\Json;
 use App\Models\User;
 use App\Models\FakeUser;
-use App\Models\PostContent;
+use App\Models\JsonPostContent;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,8 +20,13 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
+    protected $casts = [
+        'bing_related_keywords_json' => Json::class,
+    ];
+
     protected $fillable = [
         'post_title',
+        'post_title_seo',
         'is_content',
         'post_type',
         'post_title',
@@ -40,12 +46,12 @@ class Post extends Model
 
     public function content()
     {
-        return $this->hasMany(PostContent::class, 'post_id');
+        return $this->hasMany(JsonPostContent::class, 'post_id');
     }
 
-    public function fakeAuthor()
+    public function FakeUser()
     {
-        return $this->belongsTo(FakeUser::class, 'id');
+        return $this->belongsTo(FakeUser::class, 'fake_user_id');
     }
 
     public function author()
@@ -66,26 +72,6 @@ class Post extends Model
     public function scopeScheduled($query)
     {
         return $query->where("published_at", ">", Carbon::now());
-    }
-
-    public function scopeDraft($query)
-    {
-        return $query->where("status", "=", "0");
-    }
-    public function scopeOnlyPost($query)
-    {
-        return $query->where("post_type", "=", "post");
-    }
-
-    public function publicationLabel()
-    {
-        if (!$this->published_at) {
-            return '<span class="badge badge-pill badge-light-primary mr-1">Draft</span>';
-        } elseif ($this->published_at && $this->published_at->isFuture()) {
-            return '<span class="badge badge-pill badge-light-warning mr-1">Schedule</span>';
-        } else {
-            return '<span class="badge badge-pill badge-light-success mr-1">Published</span>';
-        }
     }
 
     public function getDateAttribute($value)

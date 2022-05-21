@@ -9,6 +9,7 @@ use App\Http\Controllers\CacheClearController;
 use App\Http\Controllers\ResetDatabaseController;
 use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
+use App\Http\Controllers\SerializeToJsonController;
 use App\Http\Controllers\UpgradeSoftwareController;
 use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
@@ -28,6 +29,8 @@ use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
  */
 
 Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
+
+Route::get('convert', [SerializeToJsonController::class, 'JsonConvert']);
 
 if (config('constant.RESET_SCRAPING')) {
     //Update Existing Post Content
@@ -155,13 +158,13 @@ Route::get('/search', [
 
 //Frontend Product Page
 Route::get(config('constant.POST_SLUG') . '/{post}', [
-    'uses' => 'App\Http\Controllers\Frontend\PostController@show',
+    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@show',
     'as'   => 'post.show',
 ])->middleware('checkdate');
 
 //cid Page
 Route::get(config('constant.CID') . '/{id}', [
-    'uses' => 'App\Http\Controllers\Frontend\PostController@cid',
+    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@cid',
     'as'   => 'post.cid',
 ]);
 
@@ -174,8 +177,13 @@ if (config('constant.Update_Post_Link')) {
 }
 
 //Frontend Home Page
+// Route::get('/', [
+//     'uses' => 'App\Http\Controllers\Frontend\HomeController@homeList',
+//     'as'   => 'index',
+// ]);
+
 Route::get('/', [
-    'uses' => 'App\Http\Controllers\Frontend\HomeController@homeList',
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@home',
     'as'   => 'index',
 ]);
 

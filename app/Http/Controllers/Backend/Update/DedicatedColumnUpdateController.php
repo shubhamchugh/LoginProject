@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\Update;
 
 use App\Models\IpRecord;
-use App\Models\PostContent;
+use App\Models\JsonPostContent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
@@ -12,7 +12,7 @@ class DedicatedColumnUpdateController extends Controller
 {
     public function is_bing_results()
     {
-        $post_content = PostContent::whereNull('bing_search_result')->where('is_bing_results', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_search_result')->where('is_bing_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_results");
         }
@@ -38,190 +38,156 @@ class DedicatedColumnUpdateController extends Controller
             'is_bing_results' => 1,
         ]);
 
-        // hit to Bing Api
+        // * hit to Bing Api Start
+        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+        echo "Bing Api Url: $api_url_bing<br>";
         try {
-            $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data     = Http::timeout(60)->get($api_url_bing)->body();
+            $api_data = Http::timeout(90)->get($api_url_bing)->body();
 
             $bing_data = json_decode($api_data, true);
 
-            $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? serialize($bing_data['relatedKeywords']) : null;
+            echo "Bing APi Data :<br>";
+            print_r($bing_data);
 
-        } catch (\Throwable $th) {
-            $ip->update([
-                'status' => 'NOT_WORKING',
-                'ERROR'  => 'api_url_bing Response Not Get: ' . $api_url_bing,
-            ]);
-            echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
-
-        }
-
-        //updating Related Keywords
-        try {
-            $post_content->update([
-                'bing_related_keywords' => $bing_related_keywords,
-            ]);
-
-        } catch (\Throwable $th) {
-            echo "fail to update Bing_keywords";
-
-        }
-
-        $result_title['result_title'][]             = (!empty($bing_data['resultTitle'])) ? $bing_data['resultTitle'] : null;
-        $result_description['result_description'][] = (!empty($bing_data['resultDescription'])) ? $bing_data['resultDescription'] : null;
-        $result_url['result_url'][]                 = (!empty($bing_data['resultUrl'])) ? $bing_data['resultUrl'] : null;
-
-        if (!empty($result_title) && !empty($result_description) && !empty($result_url['result_url'][0])) {
-            $bing_search_result = array_merge($result_title, $result_description, $result_url);
-            $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
             $ip->update([
                 'status'       => 'OK',
                 'ERROR'        => null,
                 'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
 
-        } else {
+            $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? ($bing_data['relatedKeywords']) : null;
+
+        } catch (\Throwable $th) {
+            echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
+
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'api_url_bing DATA NOT FOUND- ' . $api_url_bing,
+                'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
             ]);
-
-            $bing_search_result = (!empty($bing_search_result)) ? serialize($bing_search_result) : null;
+            echo "Please Check ip Carefully something bad with this: .$api_url_bing";
         }
-        $post_description = (!empty($result_description['result_description'][0][0])) ? $result_description['result_description'][0][0] : null;
-        // updating bing_search_result in PostContent
+        //~ hit to Bing Api end
+
+        //* updating Related Keywords start
         try {
             $post_content->update([
-                'bing_search_result' => $bing_search_result,
-                'post_description'   => $post_description,
+                'bing_related_keywords' => $bing_related_keywords,
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with search results";
+            echo "fail to update Bing_keywords<br>";
 
         }
+        //~ updating Related Keywords end
 
-        $bing_paa_questions['paa_questions'][] = (!empty($bing_data['mainQuestions'])) ? $bing_data['mainQuestions'] : null;
-        $bing_paa_answers['paa_Answers'][]     = (!empty($bing_data['resultDescription'])) ? $bing_data['resultDescription'] : null;
+        //* updating bing_search_result,post_description in PostContent start
 
-        if (!empty($bing_paa_questions['paa_questions'][0]) && !empty($bing_paa_answers['paa_Answers'][0])) {
+        $result_title['result_title']             = (!empty($bing_data['resultTitle'])) ? $bing_data['resultTitle'] : null;
+        $result_description['result_description'] = (!empty($bing_data['resultDescription'])) ? $bing_data['resultDescription'] : null;
+        $result_url['result_url']                 = (!empty($bing_data['resultUrl'])) ? $bing_data['resultUrl'] : null;
 
-            $bing_paa = array_merge($bing_paa_questions, $bing_paa_answers);
-            $bing_paa = (!empty($bing_paa)) ? serialize($bing_paa) : null;
+        $post_description = (!empty($result_description['result_description'][0])) ? $result_description['result_description'][0] : null;
 
-        } else {
-            $bing_paa = (!empty($bing_paa)) ? serialize($bing_paa) : null;
-        }
-
-        // updating bing_paa in PostContent
         try {
             $post_content->update([
-                'bing_paa' => $bing_paa,
+                'bing_search_result_title'       => $result_title['result_title'],
+                'bing_search_result_description' => $result_description['result_description'],
+                'bing_search_result_url'         => $result_url['result_url'],
+                'post_description'               => $post_description,
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask";
+            echo "Something bad with search results Please check Api: $api_url_bing<br>";
 
         }
+        //~ updating bing_search_result,post_description in PostContent end
 
-        $bing_rich_snippet_text['bing_rich_snippet_text'][] = (!empty($bing_data['richSnippet'])) ? preg_replace('/<img[^>]+\>/i', ' ', $bing_data['richSnippet']) : null;
-        $bing_rich_snippet_link['bing_rich_snippet_link'][] = (!empty($bing_data['richSnippetLink'])) ? $bing_data['richSnippetLink'] : null;
+        //* updating bing_paa in PostContent start
+        $bing_paa_questions['paa_questions'] = (!empty($bing_data['mainQuestions'])) ? $bing_data['mainQuestions'] : null;
+        $bing_paa_answers['paa_Answers']     = (!empty($bing_data['mainAnswers'])) ? $bing_data['mainAnswers'] : null;
 
-        if (!empty($bing_rich_snippet_text['bing_rich_snippet_text'][0]) && !empty($bing_rich_snippet_link['bing_rich_snippet_link'][0])) {
-
-            $bing_rich_snippet = array_merge($bing_rich_snippet_text, $bing_rich_snippet_link);
-            $bing_rich_snippet = (!empty($bing_rich_snippet)) ? serialize($bing_rich_snippet) : null;
-
-        } else {
-            $bing_rich_snippet = (!empty($bing_rich_snippet)) ? serialize($bing_rich_snippet) : null;
-        }
-
-        // updating bing_rich_snippet in PostContent
         try {
             $post_content->update([
-                'bing_rich_snippet' => $bing_rich_snippet,
+                'bing_paa_questions' => $bing_paa_questions['paa_questions'],
+                'bing_paa_answers'   => $bing_paa_answers['paa_Answers'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask";
+            echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
 
         }
+        //~ updating bing_paa in PostContent end
 
-        $bing_slider_faq_questions['slider_questions'][] = (!empty($bing_data['slideQuestions'])) ? $bing_data['slideQuestions'] : null;
-        $bing_slider_faq_answers['slider_answers'][]     = (!empty($bing_data['slideAnswers'])) ? $bing_data['slideAnswers'] : null;
+        // * updating bing_rich_snippet in PostContent start
+        $bing_rich_snippet_text['bing_rich_snippet_text'] = (!empty($bing_data['richSnippet'][0])) ? preg_replace('/<img[^>]+\>/i', ' ', $bing_data['richSnippet'][0]) : null;
+        $bing_rich_snippet_link['bing_rich_snippet_link'] = (!empty($bing_data['richSnippetLink'][0])) ? $bing_data['richSnippetLink'][0] : null;
 
-        if (!empty($bing_slider_faq_questions['slider_questions'][0]) && !empty($bing_slider_faq_answers['slider_answers'][0])) {
-
-            $bing_slider_faq = array_merge($bing_slider_faq_questions, $bing_slider_faq_answers);
-            $bing_slider_faq = (!empty($bing_slider_faq)) ? serialize($bing_slider_faq) : null;
-
-        } else {
-            $bing_slider_faq = (!empty($bing_slider_faq)) ? serialize($bing_slider_faq) : null;
-        }
-
-        // updating bing_rich_snippet in PostContent
         try {
             $post_content->update([
-                'bing_slider_faq' => $bing_slider_faq,
+                'bing_rich_snippet_text' => $bing_rich_snippet_text['bing_rich_snippet_text'],
+                'bing_rich_snippet_link' => $bing_rich_snippet_link['bing_rich_snippet_link'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask<br>";
+            echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
 
         }
+        //~ updating bing_rich_snippet in PostContent end
 
-        $bing_pop_questions['pop_questions'][] = (!empty($bing_data['popQuestions'])) ? $bing_data['popQuestions'] : null;
-        $bing_pop_answers['pop_answers'][]     = (!empty($bing_data['popAnswers'])) ? $bing_data['popAnswers'] : null;
+        //* updating bing_slider_faq in PostContent start
+        $bing_slider_faq_questions['slider_questions'] = (!empty($bing_data['slideQuestions'])) ? $bing_data['slideQuestions'] : null;
+        $bing_slider_faq_answers['slider_answers']     = (!empty($bing_data['slideAnswers'])) ? $bing_data['slideAnswers'] : null;
 
-        if (!empty($bing_pop_questions['pop_questions'][0]) && !empty($bing_pop_answers['pop_answers'][0])) {
-
-            $bing_pop_faq = array_merge($bing_pop_questions, $bing_pop_answers);
-            $bing_pop_faq = (!empty($bing_pop_faq)) ? serialize($bing_pop_faq) : null;
-
-        } else {
-            $bing_pop_faq = (!empty($bing_pop_faq)) ? serialize($bing_pop_faq) : null;
-        }
-
-        // updating bing_rich_snippet in PostContent
         try {
             $post_content->update([
-                'bing_pop_faq' => $bing_pop_faq,
+                'bing_slider_faq_questions' => $bing_slider_faq_questions['slider_questions'],
+                'bing_slider_faq_answers'   => $bing_slider_faq_answers['slider_answers'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask<br>";
+            echo "Something bad with People Also Ask Please check APi: $api_url_bing<br>";
 
         }
+        //~ updating bing_slider_faq in PostContent end
 
-        $bing_tab_questions['tab_questions'][] = (!empty($bing_data['tabNav'])) ? $bing_data['tabNav'] : null;
-        $bing_tab_answers['tab_answers'][]     = (!empty($bing_data['tabContent'])) ? $bing_data['tabContent'] : null;
+        //* updating bing_pop in PostContent start
+        $bing_pop_questions['pop_questions'] = (!empty($bing_data['popQuestions'])) ? $bing_data['popQuestions'] : null;
+        $bing_pop_answers['pop_answers']     = (!empty($bing_data['popAnswers'])) ? $bing_data['popAnswers'] : null;
 
-        if (!empty($bing_tab_questions['tab_questions'][0]) && !empty($bing_tab_answers['tab_answers'][0])) {
-
-            $bing_tab_faq = array_merge($bing_tab_questions, $bing_tab_answers);
-            $bing_tab_faq = (!empty($bing_tab_faq)) ? serialize($bing_tab_faq) : null;
-
-        } else {
-            $bing_tab_faq = (!empty($bing_tab_faq)) ? serialize($bing_tab_faq) : null;
-        }
-
-        // updating bing_rich_snippet in PostContent
         try {
             $post_content->update([
-                'bing_tab_faq' => $bing_tab_faq,
+                'bing_pop_faq_questions' => $bing_pop_questions['pop_questions'],
+                'bing_pop_faq_answers'   => $bing_pop_answers['pop_answers'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask<br>";
+            echo "Something bad with People Also Ask Please Check Api<br>";
 
         }
+        //~updating bing_pop in PostContent end
+
+        //* updating bing_tab in PostContent start
+        $bing_tab_questions['tab_questions'] = (!empty($bing_data['tabNav'])) ? $bing_data['tabNav'] : null;
+        $bing_tab_answers['tab_answers']     = (!empty($bing_data['tabContent'])) ? $bing_data['tabContent'] : null;
+
+        try {
+            $post_content->update([
+                'bing_tab_faq_questions' => $bing_tab_questions['tab_questions'],
+                'bing_tab_faq_answers'   => $bing_tab_answers['tab_answers'],
+            ]);
+
+        } catch (\Throwable $th) {
+            echo "Something bad with People Also Ask Please Check api: $api_url_bing<br>";
+
+        }
+        //~ updating bing_tab in PostContent end
 
     }
 
     public function is_thumbnail_images()
     {
 
-        $post_content = PostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_thumbnail_images ");
         }
@@ -243,11 +209,11 @@ class DedicatedColumnUpdateController extends Controller
         $post_content->update([
             'is_thumbnail_images' => 1,
         ]);
-
-        // try to save thumbnail_images in database
+        // * try to save thumbnail_images in database start
+        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
         try {
-            $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
-            $thumbnail  = Http::timeout(60)->get($Bing_image)->body();
+
+            $thumbnail = Http::timeout(90)->get($Bing_image)->body();
 
             $thumbnail = (!empty($thumbnail)) ? $thumbnail : "default.jpg";
 
@@ -266,13 +232,14 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
                 $ip->update([
                     'status' => 'NOT_WORKING',
                     'ERROR'  => 'thumbnail_images DATA Not Get: ' . $Bing_image,
                 ]);
                 echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
-
             }
+
         } catch (\Throwable $th) {
             $ip->update([
                 'status' => 'NOT_WORKING',
@@ -281,11 +248,12 @@ class DedicatedColumnUpdateController extends Controller
             echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
+        //~ try to save thumbnail_images for bing_images end
     }
 
     public function is_bing_images()
     {
-        $post_content = PostContent::whereNull('bing_images')->where('is_bing_images', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_images')->where('is_bing_images', '0')->orderBy('updated_at', 'asc')->first();
 
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_images ");
@@ -314,18 +282,18 @@ class DedicatedColumnUpdateController extends Controller
             'is_bing_images' => 1,
         ]);
 
-        // try to save images for bing_images
+        //* try to save images for bing_images start
+        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
         try {
-            $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
-            $Bing_image     = Http::timeout(60)->get($Bing_image_url)->body();
-            $Bing_image     = json_decode($Bing_image, true);
+
+            $Bing_image = Http::timeout(90)->get($Bing_image_url)->body();
+            $Bing_image = json_decode($Bing_image, true);
 
             if (!empty($Bing_image['images'][0])) {
-                $images = (!empty($Bing_image)) ? serialize($Bing_image) : null;
+                $images = (!empty($Bing_image)) ? $Bing_image : null;
             } else {
-                $images = (!empty($Bing_image)) ? serialize($Bing_image) : null;
+                $images = (!empty($Bing_image)) ? $Bing_image : null;
             }
-
             $ip->update([
                 'status'       => 'OK',
                 'ERROR'        => null,
@@ -338,7 +306,7 @@ class DedicatedColumnUpdateController extends Controller
             //Updating images in database
             try {
                 $post_content->update([
-                    'bing_images' => $images,
+                    'bing_images' => $images['images'],
                 ]);
 
             } catch (\Throwable $th) {
@@ -347,21 +315,22 @@ class DedicatedColumnUpdateController extends Controller
                     'ERROR'  => 'Bing_image_url DATA Not Get: ' . $Bing_image_url,
                 ]);
                 echo "Fail to store Bing images In database check:$Bing_image_url<br>";
+
             }
         } catch (\Throwable $th) {
             $ip->update([
                 'status' => 'NOT_WORKING',
                 'ERROR'  => 'Bing_image_url response Not Get: ' . $Bing_image_url,
             ]);
-
             echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
         }
+        //~ try to save images for bing_images end
     }
 
     public function is_bing_news()
     {
-        $post_content = PostContent::whereNull('bing_news')->where('is_bing_news', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_news')->where('is_bing_news', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_news");
         }
@@ -386,16 +355,12 @@ class DedicatedColumnUpdateController extends Controller
             'is_bing_news' => 1,
         ]);
 
-        // try to update New From bing News search
+        //* try to update New From bing News search start
+        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
         try {
-            $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
-            $bing_news = Http::timeout(60)->get($newsUrl)->body();
+
+            $bing_news = Http::timeout(90)->get($newsUrl)->body();
             $bing_news = json_decode($bing_news, true);
-
-            echo "<br>bing news<br>";
-            print_r($bing_news);
-
-            $bing_news = (!empty($bing_news)) ? serialize($bing_news) : null;
 
             $ip->update([
                 'status'       => 'OK',
@@ -403,10 +368,17 @@ class DedicatedColumnUpdateController extends Controller
                 'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
 
+            echo "<br>bing news<br>";
+            print_r($bing_news);
+
+            $bing_news = (!empty($bing_news)) ? $bing_news : null;
+
             //Updating news in database
             try {
                 $post_content->update([
-                    'bing_news' => $bing_news,
+                    'bing_news_title'       => $bing_news['title'],
+                    'bing_news_description' => $bing_news['description'],
+
                 ]);
 
             } catch (\Throwable $th) {
@@ -426,14 +398,16 @@ class DedicatedColumnUpdateController extends Controller
             echo "Something bad With Bing News Please check: $newsUrl <br>";
 
         }
+        //~ try to update New From bing News search end
     }
 
     public function is_bing_video()
     {
-        $post_content = PostContent::whereNull('bing_videos')->where('is_bing_video', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('bing_videos')->where('is_bing_video', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_bing_video");
         }
+
         $keyword = $post_content->post->source_value;
         $slug    = (!empty(config('constant.POST_SLUG'))) ? '/' . config('constant.POST_SLUG') : config('constant.POST_SLUG');
         $url     = url($slug . '/' . $post_content->post->slug);
@@ -454,23 +428,22 @@ class DedicatedColumnUpdateController extends Controller
             'is_bing_video' => 1,
         ]);
 
-        //try to update video from bing search
+        //* try to update video from bing search start
+        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
         try {
-
-            $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
-            $bing_videos = Http::timeout(60)->get($videoUrl)->body();
+            $bing_videos = Http::timeout(90)->get($videoUrl)->body();
             $bing_videos = json_decode($bing_videos, true);
 
             echo "<br>Bing videos<br>";
             print_r($bing_videos);
-
-            $bing_videos = (!empty($bing_videos)) ? serialize($bing_videos) : null;
 
             $ip->update([
                 'status'       => 'OK',
                 'ERROR'        => null,
                 'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
+
+            $bing_videos = (!empty($bing_videos)) ? ($bing_videos) : null;
 
             //Updating Videos in database
             try {
@@ -479,14 +452,15 @@ class DedicatedColumnUpdateController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+                echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
+
                 $ip->update([
                     'status' => 'NOT_WORKING',
                     'ERROR'  => 'videoUrl data Not Get: ' . $videoUrl,
                 ]);
-                echo "Fail to store Bing Video in Database please check: $videoUrl<br>";
-
             }
         } catch (\Throwable $th) {
+
             $ip->update([
                 'status' => 'NOT_WORKING',
                 'ERROR'  => 'videoUrl response Not Get: ' . $videoUrl,
@@ -494,12 +468,12 @@ class DedicatedColumnUpdateController extends Controller
             echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
 
         }
+        //~ try to update video from bing search end
     }
 
     public function is_google_results()
     {
-
-        $post_content = PostContent::whereNull('google_search_result')->where('is_google_results', '0')->orderBy('updated_at', 'asc')->first();
+        $post_content = JsonPostContent::whereNull('google_search_result')->where('is_google_results', '0')->orderBy('updated_at', 'asc')->first();
         if (empty($post_content)) {
             dd("No Record Found to Update is_google_results");
         }
@@ -523,21 +497,25 @@ class DedicatedColumnUpdateController extends Controller
             'is_google_results' => 1,
         ]);
 
-        // hit to google api and get data for google faq,rich_snippet,search results
+        //* Hit to google api and get data for google faq,rich_snippet,search results start
+        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
         try {
-            $api_url_google  = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
-            $api_data_google = Http::timeout(60)->get($api_url_google)->body();
+
+            echo "Google APi Url: $api_url_google<br>";
+            $api_data_google = Http::timeout(90)->get($api_url_google)->body();
 
             $google_data = json_decode($api_data_google, true);
 
-            $google_related_keywords = (!empty($google_data['relatedKeywordsGoogle'])) ? serialize($google_data['relatedKeywordsGoogle']) : null;
-            $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'])) ? serialize($google_data['richSnippetGoogle']) : null;
-
+            echo "Google Api Data:<br>";
+            print_r($google_data);
             $ip->update([
                 'status'       => 'OK',
                 'ERROR'        => null,
                 'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
+
+            $google_related_keywords = (!empty($google_data['relatedKeywordsGoogle'])) ? ($google_data['relatedKeywordsGoogle']) : null;
+            $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
         } catch (\Throwable $th) {
             $ip->update([
@@ -547,75 +525,67 @@ class DedicatedColumnUpdateController extends Controller
             echo "Something bad with google.com Please check: $api_url_google <br>";
 
         }
+        //~ Hit to google api and get data for google faq,rich_snippet,search results end
 
-        // updating google_related_keywords in PostContent
+        //* updating google_related_keywords in PostContent start
         try {
             $post_content->update([
                 'google_related_keywords' => $google_related_keywords,
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with google_related_keywords <br>";
+            echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
 
         }
+        //~ updating google_related_keywords in PostContent end
 
-        // updating google_rich_snippet in PostContent
+        //* updating google_rich_snippet in PostContent start
         try {
             $post_content->update([
                 'google_rich_snippet' => $google_rich_snippet,
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with google_related_keywords <br>";
+            echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
 
         }
+        //~ updating google_rich_snippet in PostContent end
 
-        $google_faq_questions['questions'][] = (!empty($google_data['questions'])) ? $google_data['questions'] : array();
-        $google_faq_answers['answers'][]     = (!empty($google_data['answers'])) ? $google_data['answers'] : array();
+        //* updating google_faq in PostContent start
 
-        if (!empty($google_faq_questions['questions'][0]) && !empty($google_faq_answers['answers'][0])) {
+        $google_faq_questions['questions'] = (!empty($google_data['questions'])) ? $google_data['questions'] : null;
+        $google_faq_answers['answers']     = (!empty($google_data['answers'])) ? $google_data['answers'] : null;
 
-            $google_faq = array_merge($google_faq_questions, $google_faq_answers);
-            $google_faq = (!empty($google_faq)) ? serialize($google_faq) : null;
-
-        } else {
-            $google_faq = (!empty($google_faq)) ? serialize($google_faq) : null;
-        }
-
-        // updating google_faq in PostContent
         try {
             $post_content->update([
-                'google_faq' => $google_faq,
+                'google_faq_questions' => $google_faq_questions['questions'],
+                'google_faq_answers'   => $google_faq_answers['answers'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with People Also Ask <br>";
+            echo "Something bad with People Also Ask Please Check:  $api_url_google<br>";
 
         }
+        //~ updating google_faq in PostContent end
 
-        $google_result_title['title'][]             = (!empty($google_data['resultTitleGoogle'])) ? $google_data['resultTitleGoogle'] : null;
-        $google_result_description['description'][] = (!empty($google_data['resultDescriptionGoogle'])) ? $google_data['resultDescriptionGoogle'] : null;
-        $google_result_url['url'][]                 = (!empty($google_data['resultUrlGoogle'])) ? $google_data['resultUrlGoogle'] : null;
+        //* updating google_search_result in PostContent start
 
-        if (!empty($google_result_title['title'][0]) && !empty($google_result_description['description'][0]) && !empty($google_result_url['url'][0])) {
+        $google_result_title['title']             = (!empty($google_data['resultTitleGoogle'])) ? $google_data['resultTitleGoogle'] : null;
+        $google_result_description['description'] = (!empty($google_data['resultDescriptionGoogle'])) ? $google_data['resultDescriptionGoogle'] : null;
+        $google_result_url['url']                 = (!empty($google_data['resultUrlGoogle'])) ? $google_data['resultUrlGoogle'] : null;
 
-            $google_search_result = array_merge($google_result_title, $google_result_description, $google_result_url);
-            $google_search_result = (!empty($google_search_result)) ? serialize($google_search_result) : null;
-
-        } else {
-            $google_faq = (!empty($google_search_result)) ? serialize($google_search_result) : null;
-        }
-
-        // updating google_search_result in PostContent
         try {
             $post_content->update([
-                'google_search_result' => $google_search_result,
+                'google_search_result_title'       => $google_result_title['title'],
+                'google_search_result_description' => $google_result_description['description'],
+                'google_search_result_url'         => $google_result_url['url'],
             ]);
 
         } catch (\Throwable $th) {
-            echo "Something bad with google_search_result <br>";
+            echo "Something bad with google_search_result Please Check: $api_url_google <br>";
 
         }
+        // ~ updating google_search_result in PostContent end
 
     }
 

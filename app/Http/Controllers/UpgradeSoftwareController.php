@@ -68,7 +68,11 @@ class UpgradeSoftwareController extends Controller
 
         echo "<h2>Settings Update Output</h2>";
         $url        = url('/sql-update');
-        $sql_update = Http::get($url)->body();
-        print_r($sql_update);
+        $sql_update = Http::get($url);
+
+        if (!($sql_update->ok())) {
+            return "Please check env file Domain name";
+        }
+        print_r($sql_update->body());
     }
 }
