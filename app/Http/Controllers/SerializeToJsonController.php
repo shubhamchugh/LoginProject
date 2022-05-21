@@ -14,6 +14,11 @@ class SerializeToJsonController extends Controller
         foreach ($postContent_all as $key => $postContent) {
             $key = ++$key;
             echo "<h1>($key)</h1>";
+
+            $postContent->update([
+                'is_json_transfer' => 1,
+            ]);
+
             $json_post_content = JsonPostContent::create(
                 [
                     'post_id' => $postContent->post_id,
