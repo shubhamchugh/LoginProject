@@ -94,10 +94,9 @@ class PostController extends Controller
 
         SEOTools::setTitle($title);
         SEOTools::setDescription($SEO_dec);
-        SEOTools::opengraph()->setUrl(URL::current());
+        SEOTools::opengraph()->setUrl(URL::current())->addProperty('type', 'articles');
         SEOMeta::addMeta('article:published_time', $updated_at->toW3CString(), 'property');
         SEOTools::setCanonical(URL::current());
-        SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::jsonLd()->addImage(json_decode($seo_image, true)['murl']);
         SEOMeta::setKeywords($keywords);
         //SEO END FOR POST PAGE

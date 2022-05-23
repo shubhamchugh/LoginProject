@@ -152,7 +152,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 //search page
 Route::get('/search', [
-    'uses' => 'App\Http\Controllers\Frontend\HomeController@search',
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@search',
     'as'   => 'search.show',
 ]);
 

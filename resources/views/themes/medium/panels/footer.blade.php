@@ -1,6 +1,14 @@
 <!-- Begin Footer
 ================================================== -->
 <div class="container">
+    <div class="px-3 py-5 p-md-5">
+        @foreach (array_merge(range('A', 'Z'),range(1,9)) as $char)
+        <a href='{{ route("sitemap.show", ["sitemap" => $char]) }}' class="btn   text-center mt-2 "><strong>{{
+                $char
+                }}</strong></a>
+
+        @endforeach
+    </div>
     <div class="footer">
         <p class="pull-left">
             Copyright &copy; 2022 <a href="{{ route('index') }}">{!! $settings->site_name !!}</a> @version

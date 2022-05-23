@@ -4,6 +4,13 @@
 <article class="blog-post px-3 py-5 p-md-5">
     <div class="container single-col-max-width">
         <header class="blog-post-header">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $post->post_title ?? "" }}</li>
+                </ol>
+            </nav>
+
             <h1 class="title text-capitalize  mb-2">{{ $post->post_title ?? "" }}</h1>
             <div class="meta mb-3">
                 <span class="time">
@@ -78,7 +85,7 @@
             @if(!empty($bing_videos[0]) &&
             (config('constant.bing_videos_first') == true))
             <div class="ratio ratio-16x9">
-                <iframe width="560" height="315"
+                <iframe width="796" height="350"
                     src=" {{ str_replace('watch?v=','embed/',json_decode($bing_videos[mt_rand(0,$total_videos)],true)['pgurl']) }}"
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
@@ -160,7 +167,7 @@
                     {{-- Bing Random videostart--}}
                     @if((config('constant.bing_videos_second') == true) && !empty($bing_videos[0]))
                     <div class="ratio ratio-16x9">
-                        <iframe width="560" height="315"
+                        <iframe width="796" height="350"
                             src=" {{ str_replace('watch?v=','embed/',json_decode($bing_videos[mt_rand(0,$total_videos)],true)['pgurl']) }}"
                             frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -343,8 +350,6 @@
 
         <!--//container-->
         </div>
-
-
 
 </article>
 @endsection

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Frontend\json_data;
 
-use App\Helpers\GeneralSettings;
-use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralSettings;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomeController extends Controller
 {
@@ -48,7 +49,7 @@ class HomeController extends Controller
 
         $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
-        $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
+        $sitemap = Post::published()->where("slug", "like", "$sitemap")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
         return view($theme_path_sitemap, [
             'sitemap'  => $sitemap,
@@ -58,10 +59,11 @@ class HomeController extends Controller
 
     public function search(Request $request, GeneralSettings $settings)
     {
+        SEOMeta::setRobots('noindex, nofollow');
+        SEOMeta::getRobots();
         $theme_path_search = 'themes.' . config('constant.THEME_NAME') . '.content.search';
         return view($theme_path_search, [
             'settings' => $settings,
         ]);
     }
-
 }

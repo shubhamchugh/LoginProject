@@ -9,6 +9,13 @@
 
         <!-- Begin Post -->
         <div class="col-md-8 col-md-offset-2 col-xs-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $post->post_title ?? "" }}</li>
+                </ol>
+            </nav>
+
             <div class="mainheading">
 
                 <h1 class="posttitle text-capitalize">{{ $post->post_title ?? "" }}</h1>
