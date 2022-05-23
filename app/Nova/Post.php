@@ -45,15 +45,20 @@ class Post extends Resource
      */
     public function fields(NovaRequest $request)
     {
+
         return [
             ID::make()->sortable(),
+            Text::make('Post Url', function () {
+                $post_url = url($this->slug);
+                return "<a target='_blank' href=$post_url>View Post</a>";
+            })->asHtml(),
             Text::make('post_title'),
-            Text::make('post_title_seo')->nullable(),
-            Slug::make('slug')->from('post_title'),
+            Text::make('post_title_seo')->nullable()->hideFromIndex(),
+            Slug::make('slug')->from('post_title')->hideFromIndex(),
             Select::make('post_type')->options([
                 'post'    => 'Post',
                 'article' => 'Article',
-            ]),
+            ])->hideFromIndex(),
             Boolean::make('google_index')->sortable(),
             Boolean::make('bing_index')->sortable(),
             Boolean::make('wordpress_transfer')->sortable(),

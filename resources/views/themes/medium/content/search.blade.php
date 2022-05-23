@@ -5,13 +5,13 @@
 <div class="container">
     <div class="row">
 
-        @include('themes.medium.panels.sidebar')
+        {{-- @include('themes.medium.panels.sidebar') --}}
 
         <!-- Begin Post -->
         <div class="col-md-8 col-md-offset-2 col-xs-12">
             <div class="mainheading">
 
-                <h1 class="posttitle">Faq List</h1>
+                <h1 class="posttitle">Post List</h1>
 
             </div>
 

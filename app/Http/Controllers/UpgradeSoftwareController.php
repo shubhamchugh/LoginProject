@@ -30,9 +30,6 @@ class UpgradeSoftwareController extends Controller
 
         echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
 
-        echo "<h1>Nova Migration</h1>";
-        echo shell_exec('cd .. && composer config http-basic.nova.laravel.com chugh.shubham12@gmail.com Qusv0TDZczKn06azh9YWHxmHjNpOeo5Hb36ma5MFVkKjuHqRtO');
-
         echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
 
         echo "<h2>Migration Details</h2>";

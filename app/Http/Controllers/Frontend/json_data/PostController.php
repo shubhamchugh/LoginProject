@@ -99,6 +99,7 @@ class PostController extends Controller
         SEOTools::setCanonical(URL::current());
         SEOTools::jsonLd()->addImage(json_decode($seo_image, true)['murl']);
         SEOMeta::setKeywords($keywords);
+        $url_current = URL::current();
         //SEO END FOR POST PAGE
 
         return view($theme_path_post,
@@ -149,6 +150,8 @@ class PostController extends Controller
                 'total_videos'                   => $total_videos,
 
                 'settings'                       => $settings,
+
+                'url_current'                    => $url_current,
             ]);
 
     }

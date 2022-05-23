@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use App\Models\JsonPostContent;
 use Laravel\Nova\Fields\KeyValue;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PostContent extends Resource
@@ -44,6 +45,7 @@ class PostContent extends Resource
     public function fields(NovaRequest $request)
     {
         return [
+            BelongsTo::make('Post', 'post', 'App\Nova\Post')->searchable()->hideFromIndex(),
             ID::make()->sortable(),
             Trix::make('post_description'),
             Text::make('post_thumbnail')->hideFromIndex(),
@@ -84,8 +86,6 @@ class PostContent extends Resource
 
             KeyValue::make('bing_videos')->rules('json'),
             KeyValue::make('bing_images')->rules('json'),
-            // KeyValue::make('bing_search_result')->rules('json'),
-
         ];
     }
 
