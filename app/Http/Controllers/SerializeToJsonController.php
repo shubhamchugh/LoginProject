@@ -11,6 +11,10 @@ class SerializeToJsonController extends Controller
     {
         $postContent_all = PostContent::orderBy('id', 'ASC')->limit(config('constant.TRANSFER_TO_JSON_COUNT'))->get();
 
+        if (empty($postContent_all)) {
+            dd("No data left for convert into json");
+        }
+
         foreach ($postContent_all as $key => $postContent) {
             $key = ++$key;
             echo "<h1>($key)</h1>";

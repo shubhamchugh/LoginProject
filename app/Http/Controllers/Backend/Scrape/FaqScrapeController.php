@@ -80,7 +80,7 @@ class FaqScrapeController extends Controller
 
                 // * try to save thumbnail_images in database start
                 try {
-                    $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+                    $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword->value) . '+' . config('constant.bing_query') . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
 
                     $thumbnail = Http::timeout(90)->get($Bing_image)->body();
 
@@ -109,7 +109,7 @@ class FaqScrapeController extends Controller
 
                 //* try to save images for bing_images start
                 try {
-                    $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword->value) . '+' . config('constant.bing_query');
                     $Bing_image     = Http::timeout(90)->get($Bing_image_url)->body();
                     $Bing_image     = json_decode($Bing_image, true);
 
@@ -143,7 +143,7 @@ class FaqScrapeController extends Controller
 
                 //* try to update New From bing News search start
                 try {
-                    $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $newsUrl   = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.' . config('constant.bing_url') . '/news/search?q=' . str_replace(' ', '+', $keyword->value) . '+' . config('constant.bing_query');
                     $bing_news = Http::timeout(90)->get($newsUrl)->body();
                     $bing_news = json_decode($bing_news, true);
 
@@ -174,7 +174,7 @@ class FaqScrapeController extends Controller
                 //* try to update video from bing search start
                 try {
 
-                    $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '&qft=+filterui:msite-youtube.com';
+                    $videoUrl    = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.' . config('constant.bing_url') . '/videos/search?q=' . str_replace(' ', '+', $keyword->value) . '+' . config('constant.bing_query') . '&qft=+filterui:msite-youtube.com';
                     $bing_videos = Http::timeout(90)->get($videoUrl)->body();
                     $bing_videos = json_decode($bing_videos, true);
 
@@ -202,7 +202,7 @@ class FaqScrapeController extends Controller
 
                 //* Hit to google api and get data for google faq,rich_snippet,search results start
                 try {
-                    $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.' . config('constant.google_url') . '/search?q=' . str_replace(' ', '+', $keyword->value);
                     echo "Google APi Url: $api_url_google<br>";
                     $api_data_google = Http::timeout(90)->get($api_url_google)->body();
 
@@ -216,7 +216,7 @@ class FaqScrapeController extends Controller
 
                     $keyword->update(['is_scraped' => 'google_api_hit_success']);
                 } catch (\Throwable $th) {
-                    echo "Something bad with google.com Please check: $api_url_google <br>";
+                    echo "Something bad with google_com Please check: $api_url_google <br>";
                     $keyword->update(['is_scraped' => 'google_api_hit_fail']);
                 }
                 //~ Hit to google api and get data for google faq,rich_snippet,search results end
@@ -281,7 +281,7 @@ class FaqScrapeController extends Controller
 
                 // * hit to Bing Api Start
                 try {
-                    $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword->value);
+                    $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.' . config('constant.bing_url') . '/search?q=' . str_replace(' ', '+', $keyword->value) . '+' . config('constant.bing_query');
                     echo "Bing Api Url: $api_url_bing<br>";
                     $api_data = Http::timeout(90)->get($api_url_bing)->body();
 

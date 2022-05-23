@@ -48,5 +48,8 @@ return [
     'Update_Post_Link'         => env('Update_Post_Link', false),
     'RESET_SCRAPING'           => env('RESET_SCRAPING', false),
     'TRANSFER_TO_JSON_COUNT'   => env('TRANSFER_TO_JSON_COUNT', 500),
-
+    'engagement_keywords_news' => explode(',', env('engagement_keywords_news', 'best,top')),
+    'bing_url'                 => env('bing_url', 'bing.com'),
+    'google_url'               => env('google_url', 'google.com'),
+    'bing_query'               => env('bing_query', ""),
 ];

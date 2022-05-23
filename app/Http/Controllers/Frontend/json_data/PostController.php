@@ -9,6 +9,7 @@ use App\Helpers\GeneralSettings;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Illuminate\Support\Facades\Config;
 use Artesaos\SEOTools\Facades\SEOTools;
 use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
@@ -64,12 +65,16 @@ class PostController extends Controller
         $bing_tab_faq_questions = (!empty($postContent['bing_tab_faq_questions'])) ? ($postContent['bing_tab_faq_questions']) : null;
         $bing_tab_faq_answers   = (!empty($postContent['bing_tab_faq_answers'])) ? ($postContent['bing_tab_faq_answers']) : null;
 
-        $google_faq           = (!empty($postContent['google_faq'])) ? ($postContent['google_faq']) : null;
+        $google_faq_questions = (!empty($postContent['google_faq_questions'])) ? ($postContent['google_faq_questions']) : null;
+        $google_faq_answers   = (!empty($postContent['google_faq_answers'])) ? ($postContent['google_faq_answers']) : null;
+
         $google_rich_snippet  = (!empty($postContent['google_rich_snippet'])) ? ($postContent['google_rich_snippet']) : null;
         $google_search_result = (!empty($postContent['google_search_result'])) ? ($postContent['google_search_result']) : null;
-        $indexedArray         = array("new", "trend", "hot", "top", "best", "tip", "great", "recommended", "suggest", "worst", "excellent", "fabulous");
-        $total_images         = (!empty($bing_images)) ? (count($bing_images) - 1) : null;
-        $total_videos         = (!empty($bing_videos)) ? (count($bing_videos) - 1) : null;
+
+        $indexedArray = config('constant.engagement_keywords_news');
+
+        $total_images = (!empty($bing_images)) ? (count($bing_images) - 1) : null;
+        $total_videos = (!empty($bing_videos)) ? (count($bing_videos) - 1) : null;
 
         $theme_path_post = 'themes.' . config('constant.THEME_NAME') . '.content.post';
 
@@ -132,7 +137,8 @@ class PostController extends Controller
                 'bing_tab_faq_questions'         => $bing_tab_faq_questions,
                 'bing_tab_faq_answers'           => $bing_tab_faq_answers,
 
-                'google_faq'                     => $google_faq,
+                'google_faq_questions'           => $google_faq_questions,
+                'google_faq_answers'             => $google_faq_answers,
 
                 'google_rich_snippet'            => $google_rich_snippet,
 

@@ -44,7 +44,6 @@
 
 
                             <span class="author-meta">
-                                <span class="post-name"><a href="#">{{ $post->fakeAuthor->name }}</a></span><br />
                                 <span class="post-date">{{
                                     $post->published_at->diffforhumans() ?? ""}}</span><span class="dot"></span><span
                                     class="post-read">{{ rand(3,10) }} min read</span>

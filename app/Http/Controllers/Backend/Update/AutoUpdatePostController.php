@@ -34,7 +34,7 @@ class AutoUpdatePostController extends Controller
 
         $post_content = JsonPostContent::where('id', $post_content_id)->first();
 
-        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
         // * try to save thumbnail_images in database start
         try {
             $thumbnail = Http::timeout(90)->get($Bing_image)->body();
@@ -60,7 +60,7 @@ class AutoUpdatePostController extends Controller
         }
         //~ try to save images for bing_images end
 
-        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         //* try to save images for bing_images start
 
         try {
@@ -95,7 +95,7 @@ class AutoUpdatePostController extends Controller
         //~ try to save images for bing_images end
 
         //* try to update New From bing News search start
-        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.' . config('constant.bing_url') . '/news/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         try {
             $bing_news = Http::timeout(90)->get($newsUrl)->body();
             $bing_news = json_decode($bing_news, true);
@@ -125,7 +125,7 @@ class AutoUpdatePostController extends Controller
         //~ try to update New From bing News search end
 
         //* try to update video from bing search start
-        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.' . config('constant.bing_url') . '/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
         try {
 
             $bing_videos = Http::timeout(90)->get($videoUrl)->body();
@@ -153,7 +153,7 @@ class AutoUpdatePostController extends Controller
         //~ try to update video from bing search end
 
         //* Hit to google api and get data for google faq,rich_snippet,search results start
-        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.' . config('constant.google_url') . '/search?q=' . str_replace(' ', '+', $keyword);
         try {
 
             echo "Google APi Url: $api_url_google<br>";
@@ -168,7 +168,7 @@ class AutoUpdatePostController extends Controller
             $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
         } catch (\Throwable $th) {
-            echo "Something bad with google.com Please check: $api_url_google <br>";
+            echo "Something bad with google_com Please check: $api_url_google <br>";
 
         }
         //~ Hit to google api and get data for google faq,rich_snippet,search results end
@@ -234,7 +234,7 @@ class AutoUpdatePostController extends Controller
         // ~ updating google_search_result in PostContent end
 
         // * hit to Bing Api Start
-        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.' . config('constant.bing_url') . '/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         echo "Bing Api Url: $api_url_bing<br>";
         try {
 
@@ -399,7 +399,7 @@ class AutoUpdatePostController extends Controller
         ]);
 
         // * try to save thumbnail_images in database start
-        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query') . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
         try {
 
             $thumbnail = Http::timeout(90)->get($Bing_image)->body();
@@ -427,7 +427,7 @@ class AutoUpdatePostController extends Controller
         //~ try to save thumbnail_images for bing_images end
 
         //* try to save images for bing_images start
-        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         try {
 
             $Bing_image = Http::timeout(90)->get($Bing_image_url)->body();
@@ -461,7 +461,7 @@ class AutoUpdatePostController extends Controller
         //~ try to save images for bing_images end
 
         //* try to update New From bing News search start
-        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.' . config('constant.bing_url') . '/news/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         try {
 
             $bing_news = Http::timeout(90)->get($newsUrl)->body();
@@ -492,7 +492,7 @@ class AutoUpdatePostController extends Controller
         //~ try to update New From bing News search end
 
         //* try to update video from bing search start
-        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.' . config('constant.bing_url') . '/videos/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query') . '&qft=+filterui:msite-youtube.com';
         try {
             $bing_videos = Http::timeout(90)->get($videoUrl)->body();
             $bing_videos = json_decode($bing_videos, true);
@@ -519,7 +519,7 @@ class AutoUpdatePostController extends Controller
         //~ try to update video from bing search end
 
         //* Hit to google api and get data for google faq,rich_snippet,search results start
-        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.' . config('constant.google_url') . '/search?q=' . str_replace(' ', '+', $keyword);
         try {
 
             echo "Google APi Url: $api_url_google<br>";
@@ -534,7 +534,7 @@ class AutoUpdatePostController extends Controller
             $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
         } catch (\Throwable $th) {
-            echo "Something bad with google.com Please check: $api_url_google <br>";
+            echo "Something bad with google_com Please check: $api_url_google <br>";
 
         }
         //~ Hit to google api and get data for google faq,rich_snippet,search results end
@@ -600,7 +600,7 @@ class AutoUpdatePostController extends Controller
         // ~ updating google_search_result in PostContent end
 
         // * hit to Bing Api Start
-        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.' . config('constant.bing_url') . '/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
         echo "Bing Api Url: $api_url_bing<br>";
         try {
 
@@ -781,7 +781,7 @@ class AutoUpdatePostController extends Controller
             ]);
 
             // * try to save thumbnail_images in database start
-            $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+            $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query') . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
             try {
 
                 $thumbnail = Http::timeout(90)->get($Bing_image)->body();
@@ -809,7 +809,7 @@ class AutoUpdatePostController extends Controller
             //~ try to save images for bing_images end
 
             //* try to save images for bing_images start
-            $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+            $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
             try {
 
                 $Bing_image = Http::timeout(90)->get($Bing_image_url)->body();
@@ -843,7 +843,7 @@ class AutoUpdatePostController extends Controller
             //~ try to save images for bing_images end
 
             //* try to update New From bing News search start
-            $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+            $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.' . config('constant.bing_url') . '/news/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
             try {
 
                 $bing_news = Http::timeout(90)->get($newsUrl)->body();
@@ -874,7 +874,7 @@ class AutoUpdatePostController extends Controller
             //~ try to update New From bing News search end
 
             //* try to update video from bing search start
-            $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+            $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.' . config('constant.bing_url') . '/videos/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query') . '&qft=+filterui:msite-youtube.com';
             try {
 
                 $bing_videos = Http::timeout(90)->get($videoUrl)->body();
@@ -902,7 +902,7 @@ class AutoUpdatePostController extends Controller
             //~ try to update video from bing search end
 
             //* Hit to google api and get data for google faq,rich_snippet,search results start
-            $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+            $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.' . config('constant.google_url') . '/search?q=' . str_replace(' ', '+', $keyword);
             try {
 
                 echo "Google APi Url: $api_url_google<br>";
@@ -917,7 +917,7 @@ class AutoUpdatePostController extends Controller
                 $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
             } catch (\Throwable $th) {
-                echo "Something bad with google.com Please check: $api_url_google <br>";
+                echo "Something bad with google_com Please check: $api_url_google <br>";
 
             }
             //~ Hit to google api and get data for google faq,rich_snippet,search results end
@@ -984,7 +984,7 @@ class AutoUpdatePostController extends Controller
 
             // * hit to Bing Api Start
             try {
-                $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+                $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.' . config('constant.bing_url') . '/search?q=' . str_replace(' ', '+', $keyword) . '+' . config('constant.bing_query');
                 echo "Bing Api Url: $api_url_bing<br>";
                 $api_data = Http::timeout(90)->get($api_url_bing)->body();
 

@@ -39,7 +39,7 @@ class DedicatedColumnUpdateController extends Controller
         ]);
 
         // * hit to Bing Api Start
-        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.bing.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_bing = 'http://' . $ip->ip_address . ':3000/bing?url=https://www.' . config('constant.bing_url') . '/search?q=' . str_replace(' ', '+', $keyword);
         echo "Bing Api Url: $api_url_bing<br>";
         try {
             $api_data = Http::timeout(90)->get($api_url_bing)->body();
@@ -210,7 +210,7 @@ class DedicatedColumnUpdateController extends Controller
             'is_thumbnail_images' => 1,
         ]);
         // * try to save thumbnail_images in database start
-        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
+        $Bing_image = 'http://' . $ip->ip_address . ':3000/bing-thumb?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:aspect-wide&first=1&tsc=ImageBasicHover';
         try {
 
             $thumbnail = Http::timeout(90)->get($Bing_image)->body();
@@ -283,7 +283,7 @@ class DedicatedColumnUpdateController extends Controller
         ]);
 
         //* try to save images for bing_images start
-        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.bing.com/images/search?q=' . str_replace(' ', '+', $keyword);
+        $Bing_image_url = 'http://' . $ip->ip_address . ':3000/bing-images?url=https://www.' . config('constant.bing_url') . '/images/search?q=' . str_replace(' ', '+', $keyword);
         try {
 
             $Bing_image = Http::timeout(90)->get($Bing_image_url)->body();
@@ -356,7 +356,7 @@ class DedicatedColumnUpdateController extends Controller
         ]);
 
         //* try to update New From bing News search start
-        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.bing.com/news/search?q=' . str_replace(' ', '+', $keyword);
+        $newsUrl = 'http://' . $ip->ip_address . ':3000/bing-news?url=https://www.' . config('constant.bing_url') . '/news/search?q=' . str_replace(' ', '+', $keyword);
         try {
 
             $bing_news = Http::timeout(90)->get($newsUrl)->body();
@@ -429,7 +429,7 @@ class DedicatedColumnUpdateController extends Controller
         ]);
 
         //* try to update video from bing search start
-        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.bing.com/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
+        $videoUrl = 'http://' . $ip->ip_address . ':3000/bing-videos?url=https://www.' . config('constant.bing_url') . '/videos/search?q=' . str_replace(' ', '+', $keyword) . '&qft=+filterui:msite-youtube.com';
         try {
             $bing_videos = Http::timeout(90)->get($videoUrl)->body();
             $bing_videos = json_decode($bing_videos, true);
@@ -498,7 +498,7 @@ class DedicatedColumnUpdateController extends Controller
         ]);
 
         //* Hit to google api and get data for google faq,rich_snippet,search results start
-        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.google.com/search?q=' . str_replace(' ', '+', $keyword);
+        $api_url_google = 'http://' . $ip->ip_address . ':3000/google?url=https://www.' . config('constant.google_url') . '/search?q=' . str_replace(' ', '+', $keyword);
         try {
 
             echo "Google APi Url: $api_url_google<br>";
@@ -522,7 +522,7 @@ class DedicatedColumnUpdateController extends Controller
                 'status' => 'NOT_WORKING',
                 'ERROR'  => 'api_url_google response Not Get: ' . $api_url_google,
             ]);
-            echo "Something bad with google.com Please check: $api_url_google <br>";
+            echo "Something bad with google_com Please check: $api_url_google <br>";
 
         }
         //~ Hit to google api and get data for google faq,rich_snippet,search results end
