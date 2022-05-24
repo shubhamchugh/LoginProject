@@ -100,6 +100,9 @@ class JsonPostContent extends Model
 
         'is_bing_results',
         'is_thumbnail_images',
+        
+        'is_json_transfer'
+        
         'is_bing_images',
         'is_bing_news',
         'is_bing_video',
