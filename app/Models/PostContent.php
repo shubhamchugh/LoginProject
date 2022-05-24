@@ -16,6 +16,7 @@ class PostContent extends Model
     protected $fillable = [
         'post_id',
         'fake_user_id',
+        'is_json_transfer',
         'post_description',
         'post_thumbnail',
         'bing_related_keywords',
