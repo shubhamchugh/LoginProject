@@ -9,7 +9,7 @@ class SerializeToJsonController extends Controller
 {
     public function JsonConvert()
     {
-        $postContent_all = PostContent::orderBy('id', 'ASC')->limit(config('constant.TRANSFER_TO_JSON_COUNT'))->get();
+        $postContent_all = PostContent::where('is_json_transfer',0)->orderBy('id', 'ASC')->limit(config('constant.TRANSFER_TO_JSON_COUNT'))->get();
 
         if (empty($postContent_all)) {
             dd("No data left for convert into json");
