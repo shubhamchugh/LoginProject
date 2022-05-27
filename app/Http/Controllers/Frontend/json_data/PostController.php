@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Frontend\json_data;
 
-use Carbon\Carbon;
-use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Helpers\GeneralSettings;
-use Illuminate\Support\Facades\URL;
-use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Support\Facades\Config;
-use Artesaos\SEOTools\Facades\SEOTools;
 use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
+use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 
 class PostController extends Controller
 {
