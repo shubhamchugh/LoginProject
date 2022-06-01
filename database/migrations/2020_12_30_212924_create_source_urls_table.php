@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSourceUrlsTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateSourceUrlsTable extends Migration
     {
         Schema::create('source_urls', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('is_scraped');
+            $table->string('is_scraped')->default('pending');
             $table->string('value');
         });
     }
