@@ -17,6 +17,8 @@ class CreateGeneralSettings extends SettingsMigration
         $this->migrator->add('general.author_name', 'AuthorName');
         $this->migrator->add('general.bellow_title_ads', '');
         $this->migrator->add('general.about_us', 'FAQ is an open global project. Our aim is to provide explanations of possible technical topics and problem solving techniques in the form of questions and answers. We hope that our project will provide people with understanding difficult problems, how to solve them, through the engineering perspective.');
+        $this->migrator->add('general.before_title', '');
+        $this->migrator->add('general.after_title', '');
     }
 
     public function down()
