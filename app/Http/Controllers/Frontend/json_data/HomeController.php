@@ -24,7 +24,7 @@ class HomeController extends Controller
             // ->inRandomOrder()
                 ->orderBy('id', 'ASC')
                 ->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
-                ->paginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
+                ->simplePaginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 
             //SEO FOR HOME PAGE
             SEOTools::setTitle($settings->home_title . ' | Page' . $posts->currentPage());
