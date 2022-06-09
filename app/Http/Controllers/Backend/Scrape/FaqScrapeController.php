@@ -95,12 +95,18 @@ class FaqScrapeController extends Controller
                             'post_thumbnail' => $thumbnail,
                         ]);
                         $keyword->update(['is_scraped' => 'bing_thumbnail_images_updated']);
-                    } catch (\Throwable $th) {
+                    } catch (\Throwable$th) {
                         echo "Fail to store Bing thumbnail In database check: $Bing_image<br>";
                         $keyword->update(['is_scraped' => 'bing_thumbnail_images_update_fail']);
                     }
 
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'API NOT Working- ' . $Bing_image,
+                    ]);
+
                     echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
                     $keyword->update(['is_scraped' => 'bing_thumbnail_images_hit_fail']);
 
@@ -129,12 +135,17 @@ class FaqScrapeController extends Controller
                         ]);
 
                         $keyword->update(['is_scraped' => 'bing_images_updated']);
-                    } catch (\Throwable $th) {
+                    } catch (\Throwable$th) {
 
                         echo "Fail to store Bing images In database check:$Bing_image_url<br>";
                         $keyword->update(['is_scraped' => 'bing_images_update_fail']);
                     }
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'API NOT Working- ' . $Bing_image_url,
+                    ]);
 
                     echo "Something bad With Bing images Please check: $Bing_image_url <br>";
                     $keyword->update(['is_scraped' => 'bing_images_hit_fail']);
@@ -160,12 +171,18 @@ class FaqScrapeController extends Controller
 
                         ]);
                         $keyword->update(['is_scraped' => 'bing_news_updated']);
-                    } catch (\Throwable $th) {
+                    } catch (\Throwable$th) {
                         echo "Fail to store Bing News In database check: $newsUrl<br>";
                         $keyword->update(['is_scraped' => 'bing_news_update_fail']);
                     }
 
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'API NOT Working- ' . $newsUrl,
+                    ]);
+
                     echo "Something bad With Bing News Please check: $newsUrl <br>";
                     $keyword->update(['is_scraped' => 'bing_news_hit_fail']);
                 }
@@ -190,11 +207,17 @@ class FaqScrapeController extends Controller
                         ]);
 
                         $keyword->update(['is_scraped' => 'bing_video_updated']);
-                    } catch (\Throwable $th) {
+                    } catch (\Throwable$th) {
                         echo "Fail to store Bing Video in Database please chec: $videoUrl<br>";
                         $keyword->update(['is_scraped' => 'bing_video_update_fail']);
                     }
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'API NOT Working- ' . $videoUrl,
+                    ]);
+
                     echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
                     $keyword->update(['is_scraped' => 'bing_video_hit_fail']);
                 }
@@ -215,7 +238,13 @@ class FaqScrapeController extends Controller
                     $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
                     $keyword->update(['is_scraped' => 'google_api_hit_success']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
+
+                    $ip->update([
+                        'status' => 'NOT_WORKING',
+                        'ERROR'  => 'API NOT Working- ' . $api_url_google,
+                    ]);
+
                     echo "Something bad with google_com Please check: $api_url_google <br>";
                     $keyword->update(['is_scraped' => 'google_api_hit_fail']);
                 }
@@ -227,7 +256,7 @@ class FaqScrapeController extends Controller
                         'google_related_keywords' => $google_related_keywords,
                     ]);
                     $keyword->update(['is_scraped' => 'google_related_keywords_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_related_keywords _update_fail']);
                 }
@@ -239,7 +268,7 @@ class FaqScrapeController extends Controller
                         'google_rich_snippet' => $google_rich_snippet,
                     ]);
                     $keyword->update(['is_scraped' => 'google_rich_snippet_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with google_related_keywords Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_rich_snippet_update_fail']);
                 }
@@ -255,7 +284,7 @@ class FaqScrapeController extends Controller
                         'google_faq_answers'   => $google_faq_answers['answers'],
                     ]);
                     $keyword->update(['is_scraped' => 'google_faq_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please Check:  $api_url_google<br>";
                     $keyword->update(['is_scraped' => 'google_faq_update_fail']);
                 }
@@ -273,7 +302,7 @@ class FaqScrapeController extends Controller
                         'google_search_result_url'         => $google_result_url['url'],
                     ]);
                     $keyword->update(['is_scraped' => 'google_search_result_update']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with google_search_result Please Check: $api_url_google <br>";
                     $keyword->update(['is_scraped' => 'google_search_result_update_fail']);
                 }
@@ -293,12 +322,12 @@ class FaqScrapeController extends Controller
                     $bing_related_keywords = (!empty($bing_data['relatedKeywords'])) ? ($bing_data['relatedKeywords']) : null;
                     $keyword->update(['is_scraped' => 'bing_api_hit_success']);
 
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Bing Api not responding properly Please check api manually:  $api_url_bing <br>";
                     $keyword->update(['is_scraped' => 'bing_api_hit_fail']);
                     $ip->update([
                         'status' => 'NOT_WORKING',
-                        'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
+                        'ERROR'  => 'API Not Working' . $api_url_bing,
                     ]);
                     echo "Please Check ip Carefully something bad with this: .$api_url_bing";
                 }
@@ -310,7 +339,7 @@ class FaqScrapeController extends Controller
                         'bing_related_keywords' => $bing_related_keywords,
                     ]);
                     $keyword->update(['is_scraped' => 'bing_related_keyword_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "fail to update Bing_keywords<br>";
                     $keyword->update(['is_scraped' => 'bing_related_keyword_fail_to_update']);
                 }
@@ -336,7 +365,7 @@ class FaqScrapeController extends Controller
                         'ERROR'        => null,
                         'scrape_count' => DB::raw('scrape_count + 1'),
                     ]);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with search results Please check Api: $api_url_bing<br>";
                     $ip->update([
                         'status' => 'NOT_WORKING',
@@ -356,7 +385,7 @@ class FaqScrapeController extends Controller
                         'bing_paa_answers'   => $bing_paa_answers['paa_Answers'],
                     ]);
                     $keyword->update(['is_scraped' => 'bing_paa_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_pass_update_fail']);
                 }
@@ -373,7 +402,7 @@ class FaqScrapeController extends Controller
                         'bing_rich_snippet_link' => $bing_rich_snippet_link['bing_rich_snippet_link'],
                     ]);
                     $keyword->update(['is_scraped' => 'bing_rich_snippet_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please check Api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_rich_snippet_update_fail']);
                 }
@@ -389,7 +418,7 @@ class FaqScrapeController extends Controller
                         'bing_slider_faq_answers'   => $bing_slider_faq_answers['slider_answers'],
                     ]);
                     $keyword->update(['is_scraped' => 'bing_slider_faq_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please check APi: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_slider_faq_update_fail']);
                 }
@@ -405,7 +434,7 @@ class FaqScrapeController extends Controller
                         'bing_pop_faq_answers'   => $bing_pop_answers['pop_answers'],
                     ]);
                     $keyword->update(['is_scraped' => 'bing_pop_faq_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please Check Api<br>";
                     $keyword->update(['is_scraped' => 'bing_pop_faq_update_fail']);
                 }
@@ -421,7 +450,7 @@ class FaqScrapeController extends Controller
                         'bing_tab_faq_answers'   => $bing_tab_answers['tab_answers'],
                     ]);
                     $keyword->update(['is_scraped' => 'bing_tab_faq_updated']);
-                } catch (\Throwable $th) {
+                } catch (\Throwable$th) {
                     echo "Something bad with People Also Ask Please Check api: $api_url_bing<br>";
                     $keyword->update(['is_scraped' => 'bing_tab_faq_update_fail']);
                 }

@@ -8,6 +8,7 @@ use App\Models\FakeUser;
 use App\Models\IpRecord;
 use App\Models\ScrapingFailed;
 use App\Models\JsonPostContent;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -55,6 +56,11 @@ class AutoUpdatePostController extends Controller
             }
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $Bing_image,
+            ]);
             echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
@@ -89,6 +95,11 @@ class AutoUpdatePostController extends Controller
             }
         } catch (\Throwable $th) {
 
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $Bing_image_url,
+            ]);
+
             echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
         }
@@ -114,11 +125,18 @@ class AutoUpdatePostController extends Controller
                 ]);
 
             } catch (\Throwable $th) {
+
                 echo "Fail to store Bing News In database check: $newsUrl<br>";
 
             }
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $newsUrl,
+            ]);
+
             echo "Something bad With Bing News Please check: $newsUrl <br>";
 
         }
@@ -147,6 +165,12 @@ class AutoUpdatePostController extends Controller
 
             }
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $videoUrl,
+            ]);
+
             echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
 
         }
@@ -168,6 +192,12 @@ class AutoUpdatePostController extends Controller
             $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $api_url_google,
+            ]);
+
             echo "Something bad with google_com Please check: $api_url_google <br>";
 
         }
@@ -252,7 +282,7 @@ class AutoUpdatePostController extends Controller
 
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
+                'ERROR'  => 'API Not Working' . $api_url_bing,
             ]);
             echo "Please Check ip Carefully something bad with this: .$api_url_bing";
         }
@@ -285,6 +315,12 @@ class AutoUpdatePostController extends Controller
                 'bing_search_result_description' => $result_description['result_description'],
                 'bing_search_result_url'         => $result_url['result_url'],
                 'post_description'               => $post_description,
+            ]);
+
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
 
         } catch (\Throwable $th) {
@@ -421,6 +457,12 @@ class AutoUpdatePostController extends Controller
             }
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $Bing_image,
+            ]);
+
             echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
         }
@@ -455,6 +497,11 @@ class AutoUpdatePostController extends Controller
             }
         } catch (\Throwable $th) {
 
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $Bing_image_url,
+            ]);
+
             echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
         }
@@ -486,6 +533,12 @@ class AutoUpdatePostController extends Controller
             }
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $newsUrl,
+            ]);
+
             echo "Something bad With Bing News Please check: $newsUrl <br>";
 
         }
@@ -513,6 +566,12 @@ class AutoUpdatePostController extends Controller
 
             }
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $videoUrl,
+            ]);
+
             echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
 
         }
@@ -534,6 +593,12 @@ class AutoUpdatePostController extends Controller
             $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
         } catch (\Throwable $th) {
+
+            $ip->update([
+                'status' => 'NOT_WORKING',
+                'ERROR'  => 'API NOT Working- ' . $api_url_google,
+            ]);
+
             echo "Something bad with google_com Please check: $api_url_google <br>";
 
         }
@@ -618,7 +683,7 @@ class AutoUpdatePostController extends Controller
 
             $ip->update([
                 'status' => 'NOT_WORKING',
-                'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
+                'ERROR'  => 'API Not Working' . $api_url_bing,
             ]);
             echo "Please Check ip Carefully something bad with this: .$api_url_bing";
         }
@@ -651,6 +716,11 @@ class AutoUpdatePostController extends Controller
                 'bing_search_result_description' => $result_description['result_description'],
                 'bing_search_result_url'         => $result_url['result_url'],
                 'post_description'               => $post_description,
+            ]);
+            $ip->update([
+                'status'       => 'OK',
+                'ERROR'        => null,
+                'scrape_count' => DB::raw('scrape_count + 1'),
             ]);
 
         } catch (\Throwable $th) {
@@ -803,6 +873,12 @@ class AutoUpdatePostController extends Controller
                 }
 
             } catch (\Throwable $th) {
+
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'API NOT Working- ' . $Bing_image,
+                ]);
+
                 echo "Something bad With thumbnail_images Please check: $Bing_image <br>";
 
             }
@@ -837,6 +913,11 @@ class AutoUpdatePostController extends Controller
                 }
             } catch (\Throwable $th) {
 
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'API NOT Working- ' . $Bing_image_url,
+                ]);
+
                 echo "Something bad With Bing images Please check: $Bing_image_url <br>";
 
             }
@@ -868,6 +949,12 @@ class AutoUpdatePostController extends Controller
                 }
 
             } catch (\Throwable $th) {
+
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'API NOT Working- ' . $newsUrl,
+                ]);
+
                 echo "Something bad With Bing News Please check: $newsUrl <br>";
 
             }
@@ -896,6 +983,12 @@ class AutoUpdatePostController extends Controller
 
                 }
             } catch (\Throwable $th) {
+
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'API NOT Working- ' . $videoUrl,
+                ]);
+
                 echo "some thing bad with Bing Video Search Please check: $videoUrl <br>";
 
             }
@@ -917,6 +1010,12 @@ class AutoUpdatePostController extends Controller
                 $google_rich_snippet     = (!empty($google_data['richSnippetGoogle'][0])) ? ($google_data['richSnippetGoogle'][0]) : null;
 
             } catch (\Throwable $th) {
+
+                $ip->update([
+                    'status' => 'NOT_WORKING',
+                    'ERROR'  => 'API NOT Working- ' . $api_url_google,
+                ]);
+
                 echo "Something bad with google_com Please check: $api_url_google <br>";
 
             }
@@ -1000,7 +1099,7 @@ class AutoUpdatePostController extends Controller
 
                 $ip->update([
                     'status' => 'NOT_WORKING',
-                    'ERROR'  => 'Ip Not Opened Proper- ' . $api_url_bing,
+                    'ERROR'  => 'API Not Working' . $api_url_bing,
                 ]);
                 echo "Please Check ip Carefully something bad with this: .$api_url_bing";
             }
@@ -1033,6 +1132,12 @@ class AutoUpdatePostController extends Controller
                     'bing_search_result_description' => $result_description['result_description'],
                     'bing_search_result_url'         => $result_url['result_url'],
                     'post_description'               => $post_description,
+                ]);
+
+                $ip->update([
+                    'status'       => 'OK',
+                    'ERROR'        => null,
+                    'scrape_count' => DB::raw('scrape_count + 1'),
                 ]);
 
             } catch (\Throwable $th) {
