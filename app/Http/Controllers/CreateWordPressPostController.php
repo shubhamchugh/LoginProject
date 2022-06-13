@@ -19,11 +19,24 @@ class CreateWordPressPostController extends Controller
     public function create(GeneralSettings $settings)
     {
         $post = Post::where('wordpress_transfer', '0')->orderBy('id', 'asc')->first();
+
         if (!empty($post)) {
             $post->update([
                 'wordpress_transfer' => 1,
             ]);
-            $postContent = JsonPostContent::where('post_id', $post->id)->orderBy('id', 'asc')->get()->toArray();
+
+            $postContent = JsonPostContent::where('post_id', $post->id)
+                ->where(function ($query) {
+                    $query->orWhereNotNull('bing_paa_questions')
+                        ->orWhereNotNull('google_faq_questions');
+                })
+                ->orderBy('id', 'asc')
+                ->get()
+                ->toArray();
+
+            if (empty($postContent)) {
+                dd("Post do not have any data Please refresh to send next post to wordpress");
+            }
 
             $postContent = $postContent[mt_rand(0, (count($postContent) - 1))];
 
@@ -149,7 +162,7 @@ class CreateWordPressPostController extends Controller
             echo $post_content;
 
             $data = WP_Posts::create([
-                'post_title'            => $post->post_title,
+                'post_title'            => ucfirst($post->post_title),
                 'post_name'             => $post->slug,
                 'post_author'           => 1,
                 'post_date'             => Carbon::now(),
