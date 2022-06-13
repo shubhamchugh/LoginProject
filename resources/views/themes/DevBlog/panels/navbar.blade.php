@@ -48,7 +48,7 @@
         </ul>
 
         <div class="my-2 my-md-3">
-            <a class="btn btn-primary" href="{{ route('docs',['contact']) }}" target="_blank">Contact</a>
+            <a class="btn btn-primary" href="{{ route('docs',['contact']) }}">Contact</a>
         </div>
     </div>
 </nav>

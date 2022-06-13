@@ -35,6 +35,9 @@ class CreateWordPressPostController extends Controller
                 ->toArray();
 
             if (empty($postContent)) {
+                $post->update([
+                    'wordpress_transfer' => 2,
+                ]);
                 dd("Post do not have any data Please refresh to send next post to wordpress");
             }
 
