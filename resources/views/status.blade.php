@@ -10,7 +10,7 @@
 
 <body>
     <span>
-        <h2>Total Blank Post <small>(bing_pop_faq_questions && google_faq_questions)</small></h2>
+        <h2>Total Blank Post <small>(bing_pop_faq_questions && google_faq_questions == NULL)</small></h2>
     </span>
     <hr>
     <strong>Blank Post: </strong>{{ $blank_post }}
@@ -22,12 +22,12 @@
 
     <h2>Re-scrape Post Status</h2>
     <hr>
-    <strong>is_bing_results:</strong> {{ $is_bing_results }}<br>
-    <strong>is_thumbnail_images: </strong> {{ $is_thumbnail_images }}<br>
-    <strong>is_bing_images: </strong> {{ $is_bing_images }}<br>
-    <strong>is_bing_news: </strong> {{ $is_bing_news }}<br>
-    <strong>is_bing_video: </strong> {{ $is_bing_video }}<br>
-    <strong>is_google_results: </strong>{{ $is_google_results }}
+    <strong>is_bing_results == 0 && bing_search_result_url == NULL :</strong> {{ $is_bing_results }}<br>
+    <strong>is_thumbnail_images == 0 && post_thumbnail == NULL: </strong> {{ $is_thumbnail_images }}<br>
+    <strong>is_bing_images == 0 && bing_images == NULL: </strong> {{ $is_bing_images }}<br>
+    <strong>is_bing_news == 0 && bing_news_title == NULL: </strong> {{ $is_bing_news }}<br>
+    <strong>is_bing_video == 0 && bing_videos == NULL: </strong> {{ $is_bing_video }}<br>
+    <strong>is_google_results == 0 && google_search_result_url == NULL: </strong>{{ $is_google_results }}
 
     <h2>Wordpress Transfer Status</h2>
     <hr>
