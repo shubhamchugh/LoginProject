@@ -52,4 +52,5 @@ return [
     'bing_url'                 => env('bing_url', 'bing.com'),
     'google_url'               => env('google_url', 'google.com'),
     'bing_query'               => env('bing_query', ""),
+    'HOME_PAGE_ORDER'          => env('HOME_PAGE_ORDER', 'ASC'),
 ];

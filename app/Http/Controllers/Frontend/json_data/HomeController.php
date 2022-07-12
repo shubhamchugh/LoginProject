@@ -22,7 +22,7 @@ class HomeController extends Controller
             $posts = Post::with('content')
 
             // ->inRandomOrder()
-                ->orderBy('id', 'ASC')
+                ->orderBy('id', config('constant.HOME_PAGE_ORDER'))
                 ->limit(config('constant.HOMEPAGE_POST_PAGINATION'))
                 ->simplePaginate(config('constant.HOMEPAGE_POST_PAGINATION'), ['id', 'post_title', 'slug', 'published_at', 'updated_at']);
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CacheClearController;
 use App\Http\Controllers\Transfer\ApiToFlarum;
+use App\Http\Controllers\QueryStatusController;
 use App\Http\Controllers\ResetDatabaseController;
 use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
@@ -30,6 +31,8 @@ use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+Route::get('status', QueryStatusController::class)->name('status');
 
 Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
 

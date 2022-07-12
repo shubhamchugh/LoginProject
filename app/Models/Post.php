@@ -90,7 +90,7 @@ class Post extends Model
         return $this->created_at->format($format);
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [

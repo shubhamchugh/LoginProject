@@ -17,8 +17,8 @@
 
     <div class="footer">
         <p class="pull-left">
-            Copyright &copy; 2022 <a href="{{ route('index') }}">{!! $settings->site_name !!}</a> @version
-        </p>
+            Copyright &copy; 2022 <a href="{{ route('index') }}">{!! $settings->site_name !!}</a> | @version
+            Laravel v {{ Illuminate\Foundation\Application::VERSION }} | (PHP v{{ PHP_VERSION }}) </p>
         <p class="pull-right">
             <a href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a> |
             <a href="{{ route('docs',['about']) }}">About</a> |
