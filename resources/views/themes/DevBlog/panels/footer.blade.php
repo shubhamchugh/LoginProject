@@ -16,7 +16,9 @@
 <footer class="footer text-center py-2 theme-bg-dark">
     <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a href="#"
             target="_blank">{{ $settings->site_name }}</a>
-        <div id="version_check"> @version</div>
+        <div id="version_check"> Copyright &copy; 2022 <a href="{{ route('index') }}">{!! $settings->site_name !!}</a> |
+            @version
+            Laravel v {{ Illuminate\Foundation\Application::VERSION }} | (PHP v{{ PHP_VERSION }})</div>
     </small>
 
 </footer>
