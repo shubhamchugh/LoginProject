@@ -56,15 +56,14 @@ class UpgradeSoftwareController extends Controller
         Artisan::call('optimize:clear');
         print_r(Artisan::output());
 
-        Artisan::call('debugbar:clear');
-        print_r(Artisan::output());
-
         Artisan::call('event:clear');
         print_r(Artisan::output());
 
         echo "<h2>Admin Reset</h2>";
         Artisan::call('db:seed --force');
         print_r(Artisan::output());
+
+        echo shell_exec('cd .. && php artisan  debugbar:clear');
 
         echo shell_exec('cd .. && sudo chmod -R o+rw bootstrap/cache');
         echo shell_exec('cd .. && sudo chmod -R o+rw storage');
