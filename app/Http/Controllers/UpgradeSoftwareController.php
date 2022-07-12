@@ -35,7 +35,6 @@ class UpgradeSoftwareController extends Controller
 
         echo "<h2>Migration Details</h2>";
         echo shell_exec('cd .. && php artisan migrate');
-        echo shell_exec('cd .. && php artisan db:seed');
 
         echo "<h2>Cache Clear Update Output</h2>";
         Artisan::call('cache:clear');
@@ -59,11 +58,11 @@ class UpgradeSoftwareController extends Controller
         Artisan::call('event:clear');
         print_r(Artisan::output());
 
-        echo "<h2>Admin Reset</h2>";
+        echo "<h2>Admin and MenuBar Data Reset</h2>";
         Artisan::call('db:seed --force');
         print_r(Artisan::output());
 
-        echo shell_exec('cd .. && php artisan  debugbar:clear');
+        echo shell_exec('cd .. && php artisan debugbar:clear');
 
         echo shell_exec('cd .. && sudo chmod -R o+rw bootstrap/cache');
         echo shell_exec('cd .. && sudo chmod -R o+rw storage');
