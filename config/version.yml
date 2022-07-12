@@ -2,9 +2,9 @@ mode: increment
 blade-directive: version
 current:
   label: v
-  major: 3
-  minor: 1
-  patch: 7
+  major: 4
+  minor: 0
+  patch: 1
   prerelease: null
   buildmetadata: null
   commit: d0adbc

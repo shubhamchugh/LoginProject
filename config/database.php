@@ -83,6 +83,26 @@ return [
             ]) : [],
         ],
 
+        'Flarum_mysql'                  => [
+            'driver'         => 'mysql',
+            'url'            => env('FLARUM_DATABASE_URL'),
+            'host'           => env('FLARUM_DB_HOST', '127.0.0.1'),
+            'port'           => env('FLARUM_DB_PORT', '3306'),
+            'database'       => env('FLARUM_DB_DATABASE', 'forge'),
+            'username'       => env('FLARUM_DB_USERNAME', 'forge'),
+            'password'       => env('FLARUM_DB_PASSWORD', ''),
+            'unix_socket'    => env('FLARUM_DB_SOCKET', ''),
+            'charset'        => 'utf8mb4',
+            'collation'      => 'utf8mb4_unicode_ci',
+            'prefix'         => '',
+            'prefix_indexes' => true,
+            'strict'         => true,
+            'engine'         => null,
+            'options'        => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'NODE_SCRAPER_IP_MANAGER_MYSQL' => [
             'driver'         => 'mysql',
             'url'            => env('WORDPRESS_DATABASE_URL'),

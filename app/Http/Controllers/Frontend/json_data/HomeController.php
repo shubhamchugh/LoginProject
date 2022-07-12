@@ -47,13 +47,15 @@ class HomeController extends Controller
     public function sitemap($sitemap, GeneralSettings $settings)
     {
 
+        $sitemap_letter     = $sitemap;
         $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
         $sitemap = Post::published()->where("slug", "like", "$sitemap")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
         return view($theme_path_sitemap, [
-            'sitemap'  => $sitemap,
-            'settings' => $settings,
+            'sitemap'        => $sitemap,
+            'settings'       => $settings,
+            'sitemap_letter' => $sitemap_letter,
         ]);
     }
 

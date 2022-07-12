@@ -41,6 +41,7 @@ class Post extends Model
         'google_index',
         'bing_index',
         'wordpress_transfer',
+        'Flarum_transfer',
 
     ];
 

@@ -1,6 +1,6 @@
 <!-- Begin Nav
 ================================================== -->
-<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+<nav class="navbar navbar-toggleable-md navbar-light bg-warning fixed-top mediumnavigation">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
         aria-label="Toggle navigation">

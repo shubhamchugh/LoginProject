@@ -6,14 +6,17 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CacheClearController;
+use App\Http\Controllers\Transfer\ApiToFlarum;
 use App\Http\Controllers\ResetDatabaseController;
 use App\Http\Controllers\SqlDataUpdateController;
 use App\Http\Controllers\SearchIndexingController;
 use App\Http\Controllers\SerializeToJsonController;
+use App\Http\Controllers\Transfer\DatabaseToFlarum;
 use App\Http\Controllers\UpgradeSoftwareController;
 use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
+use App\Http\Controllers\Transfer\CreateFlarumFakeUsers;
 use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
 
@@ -50,7 +53,12 @@ Route::get('clear', [CacheClearController::class, 'clear'])->name('clear');
 
 Route::get('google-index', [SearchIndexingController::class, 'google_indexing'])->name('google-index');
 Route::get('bing-index', [SearchIndexingController::class, 'bing_indexing'])->name('bing-index');
+
+//~ Post transfer
 Route::get('wordpress-post-create', [CreateWordPressPostController::class, 'create']);
+Route::get('api-to-flarum', [ApiToFlarum::class, 'create']);
+Route::get('database-to-flarum', [DatabaseToFlarum::class, 'create']);
+Route::get('flarum-user', [CreateFlarumFakeUsers::class, 'create']);
 
 Route::get('settings', [SettingsController::class, 'show'])->name('settings.show');
 Route::post('settings/update', [SettingsController::class, 'update'])->name('settings.update');

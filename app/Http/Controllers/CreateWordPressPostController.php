@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Helpers\GeneralSettings;
+use App\Http\Controllers\Controller;
+use App\Models\JsonPostContent;
 use App\Models\Post;
 use App\Models\WP_Posts;
-use App\Models\JsonPostContent;
-use App\Helpers\GeneralSettings;
-use Illuminate\Support\Facades\URL;
-use App\Http\Controllers\Controller;
 use App\Models\WP_Term_Relationships;
 use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Support\Facades\Config;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 
 class CreateWordPressPostController extends Controller
 {

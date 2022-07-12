@@ -12,6 +12,9 @@
             </div>
         </header>
 
+        @if ($sitemap->isEmpty())
+        Right Now we don't Have Post which Start with letter <strong>{{ $sitemap_letter }}</strong>
+        @endif
         <div class="blog-post-body">
             <ul class="features-checkboxes">
                 @foreach ($sitemap as $sitemaplist)

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Helpers\GeneralSettings;
-use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralSettings;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomeController extends Controller
 {
@@ -47,14 +47,15 @@ class HomeController extends Controller
 
     public function sitemap($sitemap, GeneralSettings $settings)
     {
-
+        $sitemap_letter     = $sitemap;
         $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
         $sitemap = Post::published()->where("slug", "like", "$sitemap%")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
         return view($theme_path_sitemap, [
-            'sitemap'  => $sitemap,
-            'settings' => $settings,
+            'sitemap'        => $sitemap,
+            'settings'       => $settings,
+            'sitemap_letter' => $sitemap_letter,
         ]);
     }
 
