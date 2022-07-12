@@ -18,17 +18,18 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8.12",
         "laravel/jetstream": "^1.6",
+        "laravel/nova": "~4.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "laravelista/comments": "^4.4",
         "laravelium/sitemap": "^8.0",
         "livewire/livewire": "^2.0",
         "mcamara/laravel-localization": "^1.6",
+        "outl1ne/nova-menu-builder": "^7.0",
         "pragmarx/version": "^1.3",
         "probablyrational/wasabi-storage": "^1.3",
         "spatie/browsershot": "^3.42",
-        "spatie/laravel-settings": "^2.4",
-        "laravel/nova": "~4.0"
+        "spatie/laravel-settings": "^2.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
@@ -59,7 +60,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/customFunctions.php" 
+            "app/Helpers/customFunctions.php"
         ]
     },
     "autoload-dev": {

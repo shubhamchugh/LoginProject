@@ -17,7 +17,10 @@ class GeneralSettings extends Settings
     $bellow_title_ads,
     $about_us,
     $before_title,
-        $after_title;
+    $after_title,
+    $loop_ads_1,
+    $loop_ads_2,
+        $loop_ads_3;
 
     public static function group(): string
     {

@@ -143,6 +143,52 @@
             {{-- bellow_title_ads end --}}
 
 
+            {{-- loop_ads_1 start --}}
+            <div class="form-group {{ $errors->has('loop_ads_1') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">loop_ads_1</label>
+                <textarea style="width:635px; height:100px;" id="first-name-vertical" class="form-control"
+                    name="loop_ads_1" placeholder="loop_ads_1"
+                    value="{{ old('loop_ads_1', $loop_ads_1 ?? null)}}">{{ $loop_ads_1 }}</textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('loop_ads_1'))
+                <span class="help-block text-warning">{{ $errors->first('loop_ads_1') }}</span>
+                @endif
+            </div>
+            {{-- loop_ads_1 end --}}
+
+            {{-- loop_ads_2 start --}}
+            <div class="form-group {{ $errors->has('loop_ads_2') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">loop_ads_2</label>
+                <textarea style="width:635px; height:100px;" id="first-name-vertical" class="form-control"
+                    name="loop_ads_2" placeholder="loop_ads_2"
+                    value="{{ old('loop_ads_2', $loop_ads_2 ?? null)}}">{{ $loop_ads_2 }}</textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('loop_ads_2'))
+                <span class="help-block text-warning">{{ $errors->first('loop_ads_2') }}</span>
+                @endif
+            </div>
+            {{-- loop_ads_2 end --}}
+
+            {{-- loop_ads_3 start --}}
+            <div class="form-group {{ $errors->has('loop_ads_3') ? 'is-invalid' : '' }}">
+                <label for="first-name-vertical">loop_ads_3</label>
+                <textarea style="width:635px; height:100px;" id="first-name-vertical" class="form-control"
+                    name="loop_ads_3" placeholder="loop_ads_3"
+                    value="{{ old('loop_ads_3', $loop_ads_3 ?? null)}}">{{ $loop_ads_3 }}</textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter Title</div>
+
+                @if($errors->has('loop_ads_3'))
+                <span class="help-block text-warning">{{ $errors->first('loop_ads_3') }}</span>
+                @endif
+            </div>
+            {{-- loop_ads_3 end --}}
+
+
             {{-- about_us start --}}
             <div class="form-group {{ $errors->has('about_us') ? 'is-invalid' : '' }}">
                 <label for="first-name-vertical">about_us</label>

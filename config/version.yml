@@ -2,7 +2,7 @@ mode: increment
 blade-directive: version
 current:
   label: v
-  major: 4
+  major: 5
   minor: 0
   patch: 1
   prerelease: null

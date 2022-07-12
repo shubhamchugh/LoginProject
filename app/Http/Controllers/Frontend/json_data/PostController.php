@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Frontend\json_data;
 
-use App\Helpers\GeneralSettings;
-use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
-use App\Http\Controllers\Controller;
-use App\Models\Post;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use App\Helpers\GeneralSettings;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Illuminate\Support\Facades\Config;
+use Artesaos\SEOTools\Facades\SEOTools;
+use App\Http\Controllers\Backend\Update\AutoUpdatePostController;
 
 class PostController extends Controller
 {
@@ -102,6 +102,9 @@ class PostController extends Controller
         $url_current = URL::current();
         //SEO END FOR POST PAGE
 
+        $menusResponse = nova_get_menu_by_slug('header');
+        $menus         = $menusResponse['menuItems'];
+
         return view($theme_path_post,
             [
                 'post'                           => $post,
@@ -152,6 +155,8 @@ class PostController extends Controller
                 'settings'                       => $settings,
 
                 'url_current'                    => $url_current,
+
+                'menus'                          => $menus,
             ]);
 
     }

@@ -157,9 +157,9 @@ Route::get('api/{api} ', [
 # ##################### Frontend Route ##################### #
 # ########################################################## #
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 //search page
 Route::get('/search', [

@@ -135,6 +135,10 @@
 
                 {{-- Bing People Also Aks --}}
                 @if ((config('constant.bing_paa') == true) && !empty($bing_paa_questions[0]))
+                {{--loop_ads_1 Ads --}}
+                <div align="center">
+                    {!! $settings->loop_ads_1 !!}
+                </div>
                 @for($i = 0; $i < count(is_countable($bing_paa_questions)?$bing_paa_questions:[]); $i++) <h2
                     class="mt-5 mb-3">
                     {!! $bing_paa_questions[$i] ?? "" !!}
@@ -143,6 +147,7 @@
                         {!! $bing_paa_answers[$i] ?? "" !!}
                     </p>
                     @endfor
+
 
 
                     {{-- Bing Random Image start--}}
@@ -167,6 +172,10 @@
 
                     {{-- Google Faq Questions start --}}
                     @if ((config('constant.google_faq') == true) && !empty($google_faq_questions))
+                    {{--loop_ads_2 Ads --}}
+                    <div align="center">
+                        {!! $settings->loop_ads_2 !!}
+                    </div>
                     @for($i = 0; $i < count(is_countable($google_faq_questions)?$google_faq_questions:[]); $i++) <h2
                         class="mt-5 mb-3">
                         {!! $google_faq_questions[$i] ?? "" !!}
@@ -232,6 +241,10 @@
                             {{-- Bing pop Questions start--}}
                             @if ((config('constant.pop_questions') ==
                             true) && !empty($bing_pop_faq_questions))
+                            {{--loop_ads_3 Ads --}}
+                            <div align="center">
+                                {!! $settings->loop_ads_3 !!}
+                            </div>
                             @for($i = 0; $i < count(is_countable($bing_pop_faq_questions)?$bing_pop_faq_questions:[]);
                                 $i++) <h2 class="mt-5 mb-3">
                                 {!! $bing_pop_faq_questions[$i] ?? "" !!}

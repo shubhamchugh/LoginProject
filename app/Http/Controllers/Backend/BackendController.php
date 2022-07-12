@@ -13,10 +13,10 @@ class BackendController extends Controller
      *
      * @return void
      */
-    
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum', 'verified']);
-        
-    }
+
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum', 'verified']);
+
+    // }
 }

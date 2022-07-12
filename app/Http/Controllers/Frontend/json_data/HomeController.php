@@ -34,10 +34,14 @@ class HomeController extends Controller
             SEOTools::opengraph()->addProperty('type', 'articles');
             SEOTools::jsonLd()->addImage(asset('themes/DevBlog/assets/images/profile.png'));
 
+            $menusResponse = nova_get_menu_by_slug('header');
+            $menus         = $menusResponse['menuItems'];
+
             //SEO FOR HOME PAGE END
             return view($theme_path_home, [
                 'posts'    => $posts,
                 'settings' => $settings,
+                'menus'    => $menus,
             ]);
         } else {
             echo "<h1 align='center'>Post Not Found Please Do Some Scraping</h1>";
@@ -52,20 +56,30 @@ class HomeController extends Controller
 
         $sitemap = Post::published()->where("slug", "like", "$sitemap")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
+        $menusResponse = nova_get_menu_by_slug('header');
+        $menus         = $menusResponse['menuItems'];
+
         return view($theme_path_sitemap, [
             'sitemap'        => $sitemap,
             'settings'       => $settings,
             'sitemap_letter' => $sitemap_letter,
+            'menus'          => $menus,
         ]);
     }
 
     public function search(Request $request, GeneralSettings $settings)
     {
+
         SEOMeta::setRobots('noindex, nofollow');
         SEOMeta::getRobots();
         $theme_path_search = 'themes.' . config('constant.THEME_NAME') . '.content.search';
+
+        $menusResponse = nova_get_menu_by_slug('header');
+        $menus         = $menusResponse['menuItems'];
+
         return view($theme_path_search, [
             'settings' => $settings,
+            'menus'    => $menus,
         ]);
     }
 }

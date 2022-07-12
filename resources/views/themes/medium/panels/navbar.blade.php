@@ -14,27 +14,36 @@
         </a>
         <!-- End Logo -->
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <!-- Begin Menu -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('docs',['about']) }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('docs',['dmca']) }}">Disclaimer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('docs',['privacy']) }}">Privacy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('docs',['contact']) }}">Contact</a>
-                </li>
-            </ul>
-            <!-- End Menu -->
-            @include('themes.medium.panels.search')
+            <div class="container-fluid">
+                <ul class="navbar-nav ml-auto">
+                    @foreach ($menus as $menus_item)
+                    <li class="nav-item">
+                        <a class="nav-link" target={{ $menus_item['target'] }} href="{{ $menus_item['value'] }}">{{
+                            $menus_item['name'] }}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <!-- Begin Menu -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('docs',['about']) }}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('docs',['dmca']) }}">Disclaimer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('docs',['privacy']) }}">Privacy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('docs',['contact']) }}">Contact</a>
+            </li>
+        </ul>
+        <!-- End Menu -->
+        @include('themes.medium.panels.search')
     </div>
 </nav>
 <!-- End Nav
