@@ -34,7 +34,7 @@
         </header>
 
         <div align="center">
-            {!! $settings->bellow_title_ads !!}
+            {{ sprintf($settings->bellow_title_ads, $post->post_title) }}
         </div>
 
         <div class="blog-post-body">
