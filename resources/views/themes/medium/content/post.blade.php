@@ -48,7 +48,7 @@
             </div>
 
             <div align="center">
-                {{ sprintf($settings->bellow_title_ads, $post->post_title) }}
+                {!! $settings->bellow_title_ads !!}
             </div>
 
             <div class="article-post">
