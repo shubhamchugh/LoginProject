@@ -1,4 +1,4 @@
-@extends('themes.DevBlog.layouts.master')
+@extends('themes.medium.layouts.master')
 
 
 @section('content')

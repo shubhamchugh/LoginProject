@@ -1,7 +1,7 @@
 <!-- Begin Fixed Left Share -->
 <div class="col-md-2 col-xs-12">
     <div class="share">
-        <p>
+        {{-- <p>
             Share
         </p>
         <ul>
@@ -24,7 +24,7 @@
                     </svg>
                 </a>
             </li>
-        </ul>
+        </ul> --}}
     </div>
 </div>
 <!-- End Fixed Left Share -->

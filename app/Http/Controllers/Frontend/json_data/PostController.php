@@ -17,7 +17,6 @@ class PostController extends Controller
 {
     public function show(Post $post, GeneralSettings $settings)
     {
-
         $postContent = $post->content->toArray();
 
         if (empty($postContent)) {
@@ -105,7 +104,8 @@ class PostController extends Controller
         $menusResponse = nova_get_menu_by_slug('header');
         $menus         = $menusResponse['menuItems'];
 
-        return view($theme_path_post,
+        return view(
+            $theme_path_post,
             [
                 'post'                           => $post,
                 'postContent'                    => $postContent,
@@ -157,25 +157,36 @@ class PostController extends Controller
                 'url_current'                    => $url_current,
 
                 'menus'                          => $menus,
-            ]);
-
+            ]
+        );
     }
 
     public function cid(Request $request, GeneralSettings $settings)
     {
+        $menusResponse = nova_get_menu_by_slug('header');
+        $menus         = $menusResponse['menuItems'];
+
         $url            = $request->url;
         $title          = $request->title;
         $dec            = $request->dec;
         $slug           = $request->slug;
         $theme_path_cid = 'themes.' . config('constant.THEME_NAME') . '.content.cid';
 
-        return view($theme_path_cid,
+
+        SEOTools::setTitle($title);
+        SEOMeta::setRobots('noindex, nofollow');
+
+        
+        return view(
+            $theme_path_cid,
             [
                 'url'      => $url,
                 'title'    => $title,
                 'dec'      => $dec,
                 'slug'     => $slug,
                 'settings' => $settings,
-            ]);
+                'menus'    => $menus,
+            ]
+        );
     }
 }

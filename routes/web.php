@@ -46,7 +46,6 @@ if (config('constant.RESET_SCRAPING')) {
     Route::get('is_thumbnail_images_reset', [ResetDatabaseController::class, 'is_thumbnail_images_reset']);
     Route::get('is_bing_results_reset', [ResetDatabaseController::class, 'is_bing_results_reset']);
     Route::get('is_scraped_reset', [ResetDatabaseController::class, 'is_scraped_reset']);
-
 }
 
 Route::get('count-create-post-content', CountCreatePostContentController::class)->name('count_create');
@@ -180,32 +179,21 @@ Route::get(config('constant.CID') . '/{id}', [
 ]);
 
 if (config('constant.Update_Post_Link')) {
-//Update Existing Post Content
+    //Update Existing Post Content
     Route::get('/update-post-content/{post_content_id}/{keyword}', [
         'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
         'as'   => 'post_content.update_existing',
     ]);
 }
 
-//Frontend Home Page
-// Route::get('/', [
-//     'uses' => 'App\Http\Controllers\Frontend\HomeController@homeList',
-//     'as'   => 'index',
-// ]);
-
 Route::get('/', [
     'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@home',
     'as'   => 'index',
 ]);
 
-///Frontend Home Page
-// Route::get('/page/{page} ', [
-//     'uses' => 'App\Http\Controllers\Frontend\PageController@show',
-//     'as'   => 'page.show',
-// ]);
 
 Route::get('/sitemap/{sitemap}', [
-    'uses' => 'App\Http\Controllers\Frontend\HomeController@sitemap',
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@sitemap',
     'as'   => 'sitemap.show',
 ]);
 

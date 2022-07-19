@@ -12,8 +12,8 @@ return [
     'THEME_NAME'               => env('THEME_NAME'),
     'GOOGLE_SEARCH'            => env('GOOGLE_SEARCH'),
     'SEARCH_INPUT_TEXT'        => env('SEARCH_INPUT_TEXT'),
-    'CID_STATUS'               => env('CID_STATUS'),
-    'CID'                      => env('CID'),
+    'CID_STATUS'               => env('CID_STATUS', false),
+    'CID'                      => env('CID', 'cid'),
     'POST_UPDATE_DURATION'     => env('POST_UPDATE_DURATION'),
     'NODE_SCRAPER_IP'          => env('NODE_SCRAPER_IP'),
     'DEFAULT_IMAGE'            => env('DEFAULT_IMAGE'),
@@ -53,4 +53,6 @@ return [
     'google_url'               => env('google_url', 'google.com'),
     'bing_query'               => env('bing_query', ""),
     'HOME_PAGE_ORDER'          => env('HOME_PAGE_ORDER', 'ASC'),
+    'Bing_SERP_TOP'            => env('Bing_SERP_TOP', false),
+    'Bing_SERP_TOP_COUNT'      => env('Bing_SERP_TOP_COUNT', 3),
 ];
