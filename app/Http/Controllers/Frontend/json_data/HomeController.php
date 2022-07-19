@@ -14,7 +14,6 @@ class HomeController extends Controller
 {
     public function home(GeneralSettings $settings)
     {
-
         $last_id = Post::latest()->first('id');
         if (!empty($last_id)) {
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
@@ -50,15 +49,15 @@ class HomeController extends Controller
 
     public function sitemap($sitemap, GeneralSettings $settings)
     {
-
         $sitemap_letter     = $sitemap;
         $theme_path_sitemap = 'themes.' . config('constant.THEME_NAME') . '.content.sitemap';
 
-        $sitemap = Post::published()->where("slug", "like", "$sitemap")->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
+        $sitemap = Post::where("slug", "like", "$sitemap%")
+        ->paginate(config('constant.SITEMAP_PAGE_PAGINATION'));
 
         $menusResponse = nova_get_menu_by_slug('header');
         $menus         = $menusResponse['menuItems'];
-
+        
         return view($theme_path_sitemap, [
             'sitemap'        => $sitemap,
             'settings'       => $settings,
@@ -69,7 +68,6 @@ class HomeController extends Controller
 
     public function search(Request $request, GeneralSettings $settings)
     {
-
         SEOMeta::setRobots('noindex, nofollow');
         SEOMeta::getRobots();
         $theme_path_search = 'themes.' . config('constant.THEME_NAME') . '.content.search';
