@@ -7,6 +7,22 @@ Disallow:
 User-agent: dotbot
 Disallow: /
 
+
+User-agent: MJ12bot
+Disallow: /
+
+User-Agent: Neevabot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: proximic
+Disallow: /
+
+
 User-agent: *
 Disallow: /related-keyword/*
 Allow: /
+
+
