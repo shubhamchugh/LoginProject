@@ -56,8 +56,17 @@
             @if (config('constant.Bing_SERP_TOP') == true && 0 <
                 count(is_countable($bing_search_result_url)?$bing_search_result_url:[]) ) @for ($i=0; $i <
                 config('constant.Bing_SERP_TOP_COUNT'); $i++) <div class="alert bg-warning">
-                <h3 class="text-primary cursorp"><a href="{{ $bing_search_result_url[$i]  }}">{{
-                        $bing_search_result_title[$i] ?? "" }}</a>
+                <h3 class="text-primary cursorp">
+                    <a href="{{ $bing_search_result_url[$i]  }}">
+                        {{ $bing_search_result_title[$i] ?? "" }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                            <path fill-rule="evenodd"
+                                d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                        </svg>
+                    </a>
                 </h3>
                 <p>
 
@@ -66,10 +75,12 @@
 
                     @if (config('constant.CID_STATUS'))
                     <a href="{{ route('post.cid', ['id' => $post->id, 'title' =>$bing_search_result_title[$i], 'url' => $bing_search_result_url[$i], 'dec' =>$bing_search_result_description[$i], 'slug' => URL::current()]) }}"
-                        rel="nofollow" target="_blank" class="btn btn-primary btn-sm float-right">Go To The Portal</a>
+                        rel="nofollow" target="_blank" class="btn btn-primary btn-sm float-right"> >> Go To The
+                        Portal</a>
                     @else
                     <a class="btn btn-primary btn-sm float-right" href="{{ $bing_search_result_url[$i]  }}"
-                        rel="nofollow" target="_blank">Go To The Portal</a>
+                        rel="nofollow" target="_blank"> >> Go To The Portal
+                    </a>
                     @endif
 
         </div>
