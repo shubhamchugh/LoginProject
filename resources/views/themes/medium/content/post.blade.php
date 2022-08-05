@@ -56,7 +56,8 @@
             @if (config('constant.Bing_SERP_TOP') == true && 0 <
                 count(is_countable($bing_search_result_url)?$bing_search_result_url:[]) ) @for ($i=0; $i <
                 config('constant.Bing_SERP_TOP_COUNT'); $i++) <div class="alert bg-warning">
-                <h3 class="text-primary cursorp">{{ $i+1 }}.{{ $bing_search_result_title[$i] ?? "" }}
+                <h3 class="text-primary cursorp"><a href="{{ $bing_search_result_url[$i]  }}">{{
+                        $bing_search_result_title[$i] ?? "" }}</a>
                 </h3>
                 <p>
 
@@ -65,11 +66,10 @@
 
                     @if (config('constant.CID_STATUS'))
                     <a href="{{ route('post.cid', ['id' => $post->id, 'title' =>$bing_search_result_title[$i], 'url' => $bing_search_result_url[$i], 'dec' =>$bing_search_result_description[$i], 'slug' => URL::current()]) }}"
-                        rel="nofollow" target="_blank" class="btn btn-primary btn-sm float-right">Read
-                        More</a>
+                        rel="nofollow" target="_blank" class="btn btn-primary btn-sm float-right">Go To The Portal</a>
                     @else
-                    <a class="btn btn-primary btn-sm float-right" href=" {{ $bing_search_result_url[$i]  }}"
-                        rel="nofollow" target="_blank">Read More</a>
+                    <a class="btn btn-primary btn-sm float-right" href="{{ $bing_search_result_url[$i]  }}"
+                        rel="nofollow" target="_blank">Go To The Portal</a>
                     @endif
 
         </div>
