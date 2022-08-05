@@ -28,7 +28,9 @@ class UpgradeSoftwareController extends Controller
         echo shell_exec('cd .. && sudo chmod -R 777 public');
         echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
-        echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
+        echo shell_exec('cd .. && git remote set-url origin https://github.com/shubhamchugh/LoginProject.git
+        && git reset --hard && git clean -d -f && git pull');
+
         echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
 
         echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
