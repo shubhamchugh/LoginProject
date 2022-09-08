@@ -18,6 +18,7 @@ use App\Http\Controllers\NotWorkingIpCheckController;
 use App\Http\Controllers\CreateWordPressPostController;
 use App\Http\Controllers\Frontend\StaticPageController;
 use App\Http\Controllers\Transfer\CreateFlarumFakeUsers;
+use App\Http\Controllers\Backend\Update\BlankPostUpdateController;
 use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
 
@@ -33,6 +34,8 @@ use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
  */
 
 Route::get('status', QueryStatusController::class)->name('status');
+
+Route::get('blank_post_update', BlankPostUpdateController::class)->name('blank_post_update');
 
 Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
 

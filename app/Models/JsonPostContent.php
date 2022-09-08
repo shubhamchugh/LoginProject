@@ -106,6 +106,8 @@ class JsonPostContent extends Model
         'is_bing_video',
         'is_google_results',
 
+        'BlankPostCheck',
+
         'created_at',
         'updated_at',
     ];
