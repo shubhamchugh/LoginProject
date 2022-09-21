@@ -21,16 +21,18 @@ class BlankPostUpdateController extends Controller
             {
                 dd("Blank Post Not Found");
             }
-        $blank_post->update([
-                'BlankPostCheck' => 'scraping'
-        ]);              
-
+       
         try {
             $update = AutoUpdatePostController::update_existing($blank_post->id,$blank_post->post->post_title);
         
             $blank_post->update([
                 'BlankPostCheck' => 'done'
             ]);
+
+            $blank_post->post->update([
+                'status' => 'publish'
+            ]);
+
         } catch (\Throwable $th) {
             //throw $th;
             $blank_post->update([

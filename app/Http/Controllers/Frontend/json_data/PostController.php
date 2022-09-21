@@ -19,6 +19,10 @@ class PostController extends Controller
     {
         $postContent = $post->content->toArray();
 
+        if ($post->status !== 'publish') {
+            return response(404);
+        }
+
         if (empty($postContent)) {
             return response(404);
         }

@@ -9,6 +9,13 @@
 </head>
 
 <body>
+
+    <span>
+        <h2>Total Publish Unpublish Post Count</h2>
+    </span>
+    <hr>
+    <strong>Publish Post:</strong>{{ $publish_post }}    <br>
+    <strong>Unpublish Post:</strong>{{ $unpublish_post  }}<br>
     <span>
         <h2>Total Blank Post <small>(bing_pop_faq_questions && google_faq_questions == NULL)</small></h2>
     </span>

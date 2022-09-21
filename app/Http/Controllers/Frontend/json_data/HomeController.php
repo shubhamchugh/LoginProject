@@ -19,7 +19,7 @@ class HomeController extends Controller
             $theme_path_home = 'themes.' . config('constant.THEME_NAME') . '.content.home';
 
             $posts = Post::with('content')
-
+            ->where('status','publish')
             // ->inRandomOrder()
                 ->orderBy('id', config('constant.HOME_PAGE_ORDER'))
                 ->limit(config('constant.HOMEPAGE_POST_PAGINATION'))

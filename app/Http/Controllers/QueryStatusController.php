@@ -18,6 +18,13 @@ class QueryStatusController extends Controller
             $is_scraped_status[$distinct_record->is_scraped] = $count;
         }
 
+
+        $publish_post = Post::where('status','publish')->count();
+        $unpublish_post = Post::where('status','unpublish')->count();
+
+
+
+
         $is_bing_results = JsonPostContent::whereNull('bing_search_result_url')->where('is_bing_results', '0')->count();
 
         $is_thumbnail_images = JsonPostContent::whereNull('post_thumbnail')->where('is_thumbnail_images', '0')->count();
@@ -100,6 +107,8 @@ class QueryStatusController extends Controller
             'bing_index_status'         => $bing_index_status,
             'Flarum_transfer_status'    => $Flarum_transfer_status,
             'blank_post'                => $blank_post,
+            'publish_post'              => $publish_post,
+            'unpublish_post'            => $unpublish_post
         ]);
     }
 

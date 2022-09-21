@@ -16,7 +16,10 @@ class SidebarView
     {
         // $last_id = Post::orderBy('id', 'DESC')->published()->first();
         // $sidebar = Post::published()->wherein('id', (getRandomNumberArray(1, $last_id->id, config('constant.SIDEBAR_POST_COUNT'))))->get();
-        $sidebar = Post::published()->inRandomOrder()->limit(10)->get(['id', 'post_title', 'slug']);
+        $sidebar = Post::where('status','publish')
+        ->inRandomOrder()
+        ->limit(10)
+        ->get(['id', 'post_title', 'slug']);
         $View->with([
             'sidebar' => $sidebar,
         ]);
