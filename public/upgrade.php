@@ -1,16 +1,21 @@
 <?php
 $path =  shell_exec('cd .. && pwd');
 $currentDomain = $_SERVER['SERVER_NAME'];
-$currentDomain_sql = $currentDomain.'/sql-update';
+$UserName =  trim(shell_exec('whoami'));
+
+$ownership_fix_command = 'sudo chown -R '.$UserName.':'.$UserName.' '.$path;
+$file_permissions_command = 'sudo chmod 755 -R '.$path;
+
+print_r(shell_exec($ownership_fix_command));
+print_r(shell_exec($file_permissions_command));
+
+
+$git_permissions = 'git config --global --add safe.directory '.$path;
+
 echo "<pre>";
 echo "<strong>WebApp Path:</strong> $path<br>";
 echo "<strong>Domain Url:</strong> $currentDomain <br>";
 echo "<strong>Sql Update Url:</strong> $currentDomain_sql";
-
-
-echo "<h2>Git Update Output</h2>";
-echo shell_exec("git config --global --add safe.directory '*'");
-echo shell_exec('cd .. && git status');
 
 echo shell_exec('cd .. && sudo chmod -R o+rw bootstrap/cache');
 echo shell_exec('cd .. && sudo chmod -R o+rw storage');
@@ -19,13 +24,17 @@ echo shell_exec('cd .. && sudo chmod -R 777 bootstrap/cache');
 echo shell_exec('cd .. && sudo chmod -R 777 public');
 echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
+
+echo "<h2>Git Update Output</h2>";
+echo shell_exec($git_permissions);
+
+echo shell_exec('cd .. && git status');
 echo shell_exec('cd .. && git remote set-url origin https://github.com/shubhamchugh/LoginProject.git');
-
 echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
-
 echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
-
 echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
+
+
 
 echo "<h2>Migration Details</h2>";
 echo shell_exec('cd .. && php artisan migrate');
@@ -64,7 +73,11 @@ echo shell_exec('cd .. && sudo chmod -R 777 public');
 echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
 
+print_r(shell_exec($ownership_fix_command));
+print_r(shell_exec($file_permissions_command));
+
 echo "<h2>Settings Update Output</h2>";
+$currentDomain_sql = $currentDomain.'/sql-update';
 $curl = curl_init();
  curl_setopt($curl, CURLOPT_URL, "$currentDomain_sql"); // set live website where data from
  curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // default
@@ -86,5 +99,9 @@ $curl = curl_init();
  echo $route_cache;
  echo $event_cache;
  echo $config_cache;
+
+ print_r(shell_exec($ownership_fix_command));
+print_r(shell_exec($file_permissions_command));
+
 
  echo '<strong>Last Reboot: </strong>' . shell_exec('who -b');
