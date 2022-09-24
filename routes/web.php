@@ -40,7 +40,6 @@ Route::get('unpublish_blank_post',UnpublishBlankPost::class)->name('unpublish_bl
 
 Route::get('blank_post_update', BlankPostUpdateController::class)->name('blank_post_update');
 
-Route::get('upgrade', UpgradeSoftwareController::class)->name('upgrade');
 
 Route::get('convert', [SerializeToJsonController::class, 'JsonConvert']);
 
@@ -55,9 +54,6 @@ if (config('constant.RESET_SCRAPING')) {
 }
 
 Route::get('count-create-post-content', CountCreatePostContentController::class)->name('count_create');
-
-//cache clear
-Route::get('clear', [CacheClearController::class, 'clear'])->name('clear');
 
 Route::get('google-index', [SearchIndexingController::class, 'google_indexing'])->name('google-index');
 Route::get('bing-index', [SearchIndexingController::class, 'bing_indexing'])->name('bing-index');
