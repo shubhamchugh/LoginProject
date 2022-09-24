@@ -82,6 +82,7 @@ $curl = curl_init();
  curl_setopt($curl, CURLOPT_URL, "$currentDomain_sql"); // set live website where data from
  curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // default
  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // default
+ curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
  curl_setopt($curl, CURLOPT_TIMEOUT, 60); //timeout in seconds
  $content = curl_exec($curl);
 
