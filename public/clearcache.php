@@ -1,4 +1,9 @@
 <?php
+$path =  shell_exec('cd .. && pwd');
+$UserName =  trim(shell_exec('whoami'));
+
+$ownership_fix_command = 'sudo chown -R '.$UserName.':'.$UserName.' '.$path;
+$file_permissions_command = 'sudo chmod 755 -R '.$path;
 
 echo "<h2>Cache Clear Update Output</h2>";
 $cache_clear = shell_exec('cd .. && php artisan cache:clear');
@@ -19,4 +24,12 @@ echo $optimize_clear;
 echo $event_clear;
 echo $config_clear;
 
+print_r(shell_exec('cd .. && cd storage/logs && rm -rf *.log'));
+
+print_r(shell_exec($ownership_fix_command));
+print_r(shell_exec($file_permissions_command));
+
+
+
 echo '<strong>Last Reboot: </strong>' . shell_exec('who -b');
+
