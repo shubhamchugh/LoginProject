@@ -35,6 +35,7 @@ echo shell_exec('cd .. && git remote set-url origin https://github.com/shubhamch
 echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
 echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
 echo "<h2>Composer install</h2>";
+echo shell_exec('cd .. && composer self-update');
 echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer install');
 
 
