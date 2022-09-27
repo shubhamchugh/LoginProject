@@ -5,7 +5,7 @@ $UserName =  trim(shell_exec('whoami'));
 $ownership_fix_command = 'sudo chown -R '.$UserName.':'.$UserName.' '.$path;
 $file_permissions_command = 'sudo chmod 755 -R '.$path;
 
-
+echo "<pre>";
 print_r(shell_exec($ownership_fix_command));
 print_r(shell_exec($file_permissions_command));
 
