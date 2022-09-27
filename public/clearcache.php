@@ -10,7 +10,7 @@ print_r(shell_exec($ownership_fix_command));
 print_r(shell_exec($file_permissions_command));
 
 echo "<h2>Composer install</h2>";
-echo shell_exec('composer self-update');
+echo shell_exec('cd .. && composer self-update');
 echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer install');
 
 echo "<h2>Cache Clear Update Output</h2>";
