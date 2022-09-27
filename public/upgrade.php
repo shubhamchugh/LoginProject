@@ -3,6 +3,8 @@ $path =  shell_exec('cd .. && pwd');
 $currentDomain = $_SERVER['SERVER_NAME'];
 $UserName =  trim(shell_exec('whoami'));
 
+$currentDomain_sql = $currentDomain.'/sql-update';
+
 $ownership_fix_command = 'sudo chown -R '.$UserName.':'.$UserName.' '.$path;
 $file_permissions_command = 'sudo chmod 755 -R '.$path;
 
@@ -77,7 +79,6 @@ print_r(shell_exec($ownership_fix_command));
 print_r(shell_exec($file_permissions_command));
 
 echo "<h2>Settings Update Output</h2>";
-$currentDomain_sql = $currentDomain.'/sql-update';
 $curl = curl_init();
  curl_setopt($curl, CURLOPT_URL, "$currentDomain_sql"); // set live website where data from
  curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // default
