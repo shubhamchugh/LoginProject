@@ -34,7 +34,8 @@ echo shell_exec('cd .. && git status');
 echo shell_exec('cd .. && git remote set-url origin https://github.com/shubhamchugh/LoginProject.git');
 echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
 echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
-echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
+echo "<h2>Composer install</h2>";
+echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer install');
 
 
 
@@ -73,6 +74,10 @@ echo shell_exec('cd .. && sudo chmod -R 777 storage');
 echo shell_exec('cd .. && sudo chmod -R 777 bootstrap/cache');
 echo shell_exec('cd .. && sudo chmod -R 777 public');
 echo shell_exec('cd .. && sudo chmod -R o+rw public');
+
+
+echo "<h2>Composer update</h2>";
+echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
 
 
 print_r(shell_exec($ownership_fix_command));
