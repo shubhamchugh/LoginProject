@@ -28,6 +28,7 @@ echo $optimize_clear;
 echo $event_clear;
 echo $config_clear;
 
+echo "<strong>logs removed</strong>";
 print_r(shell_exec('cd .. && cd storage/logs && rm -rf *.log'));
 
 print_r(shell_exec($ownership_fix_command));
