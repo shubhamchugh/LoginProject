@@ -28,6 +28,7 @@ echo shell_exec('cd .. && sudo chmod -R o+rw public');
 
 
 echo "<h2>Git Update Output</h2>";
+echo $git_permissions;
 echo shell_exec($git_permissions);
 
 echo shell_exec('cd .. && git status');
@@ -110,7 +111,7 @@ $curl = curl_init();
  echo $config_cache;
 
  print_r(shell_exec($ownership_fix_command));
-print_r(shell_exec($file_permissions_command));
+ print_r(shell_exec($file_permissions_command));
 
 
  echo '<strong>Last Reboot: </strong>' . shell_exec('who -b');
