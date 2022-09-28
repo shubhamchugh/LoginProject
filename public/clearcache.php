@@ -37,3 +37,4 @@ print_r(shell_exec($file_permissions_command));
 
 echo '<strong>Last Reboot: </strong>' . shell_exec('who -b');
 
+die;
