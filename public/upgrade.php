@@ -34,14 +34,15 @@ echo shell_exec('cd .. && git status');
 echo shell_exec('cd .. && git remote set-url origin https://github.com/shubhamchugh/LoginProject.git');
 echo shell_exec('cd .. && git reset --hard && git clean -d -f && git pull');
 echo shell_exec('cd .. && git update-index --skip-worktree public/themes/DevBlog/assets/images/profile.png');
-echo "<h2>Composer install</h2>";
+
+echo "<h2>Composer self update</h2>";
 echo shell_exec('cd .. && composer self-update');
-echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer install');
-
-
 
 echo "<h2>Migration Details</h2>";
 echo shell_exec('cd .. && php artisan migrate');
+
+echo "<h2>Admin and MenuBar Data Reset</h2>";
+echo shell_exec('cd .. && php artisan db:seed --force');
 
 
 echo "<h2>Cache Clear Update Output</h2>";

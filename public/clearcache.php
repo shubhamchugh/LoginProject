@@ -9,9 +9,6 @@ echo "<pre>";
 print_r(shell_exec($ownership_fix_command));
 print_r(shell_exec($file_permissions_command));
 
-echo "<h2>Composer install</h2>";
-echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer install');
-
 echo "<h2>Cache Clear Update Output</h2>";
 $cache_clear = shell_exec('cd .. && php artisan cache:clear');
 $cache_truncate = shell_exec('cd .. && php artisan cache:truncate');

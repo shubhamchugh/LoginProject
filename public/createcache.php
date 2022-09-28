@@ -21,4 +21,7 @@ echo $route_cache;
 echo $event_cache;
 echo $config_cache;
 
+print_r(shell_exec($ownership_fix_command));
+print_r(shell_exec($file_permissions_command));
+
 echo '<strong>Last Reboot: </strong>' . shell_exec('who -b');
