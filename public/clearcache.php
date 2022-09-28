@@ -30,10 +30,6 @@ echo $config_clear;
 
 print_r(shell_exec('cd .. && cd storage/logs && rm -rf *.log'));
 
-
-echo "<h2>Composer update</h2>";
-echo shell_exec('cd .. && COMPOSER_MEMORY_LIMIT=-1 composer update');
-
 print_r(shell_exec($ownership_fix_command));
 print_r(shell_exec($file_permissions_command));
 
