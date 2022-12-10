@@ -36,20 +36,18 @@ class WordAi_API
                 'return_rewrites' => $return_rewrites,
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // set curl without result echo
+        
         $result = curl_exec($ch);
+        
         curl_close($ch);
 
         $result = json_decode($result,true);
-
-        $result['text'] = explode('|',str_replace(array("{", "}"),"",$result['text']));
-
-        foreach ($result['text'] as $count => $value) {
-            if ($count > 0) {
-                $result['rewrite'][] = $value;
-            }
-        }
         
-        return $result;
+        $updated = preg_replace('/[{](.*)[|]/',"",$result['text']);
+        $updated  =str_replace('}','',$updated);        
+        
+        
+        return  $updated;
     }
 
 
