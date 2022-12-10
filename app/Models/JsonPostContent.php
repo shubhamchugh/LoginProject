@@ -51,6 +51,7 @@ class JsonPostContent extends Model
 
     protected $fillable = [
         'post_id',
+        'rewrite_id',
         'fake_user_id',
 
         'post_description',

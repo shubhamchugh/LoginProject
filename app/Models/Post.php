@@ -26,6 +26,7 @@ class Post extends Model
 
     protected $fillable = [
         'post_title',
+        'is_rewrite',
         'post_title_seo',
         'is_content',
         'post_type',
@@ -47,7 +48,7 @@ class Post extends Model
 
     public function content()
     {
-        return $this->hasMany(JsonPostContent::class, 'post_id');
+        return $this->hasMany(JsonPostContent::class, 'post_id')->where('rewrite_id','=', config('constant.RE_WRITE_ID'));
     }
 
     public function FakeUser()

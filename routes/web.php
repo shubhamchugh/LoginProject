@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\Update\UnpublishBlankPost;
 use App\Http\Controllers\Backend\Update\BlankPostUpdateController;
 use App\Http\Controllers\Backend\Update\DedicatedColumnUpdateController;
 use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
+use App\Http\Controllers\Rewrite\RewritePostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,10 @@ use App\Http\Controllers\Backend\Update\CountCreatePostContentController;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+
+
+Route::get('rewrite',[RewritePostController::class,'index'])->name('index.rewrite');
 
 Route::get('status', QueryStatusController::class)->name('status');
 

@@ -47,6 +47,7 @@ class PostContent extends Resource
         return [
             BelongsTo::make('Post', 'post', 'App\Nova\Post')->searchable()->hideFromIndex(),
             ID::make()->sortable(),
+            Text::make('rewrite_id'),
             Trix::make('post_description'),
             Text::make('post_thumbnail')->hideFromIndex(),
             Trix::make('google_rich_snippet'),

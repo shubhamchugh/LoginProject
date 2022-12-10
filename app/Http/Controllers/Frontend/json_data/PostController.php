@@ -34,9 +34,9 @@ class PostController extends Controller
                 return redirect()->route('post.show', ['post' => $post->slug]);
             }
         }
-
+       
         $postContent = $postContent[mt_rand(0, (count($postContent) - 1))];
-
+        
         $author     = $postContent['fake_user_id'];
         $updated_at = Carbon::parse($postContent['updated_at']);
 

@@ -55,4 +55,7 @@ return [
     'HOME_PAGE_ORDER'          => env('HOME_PAGE_ORDER', 'ASC'),
     'Bing_SERP_TOP'            => env('Bing_SERP_TOP', false),
     'Bing_SERP_TOP_COUNT'      => env('Bing_SERP_TOP_COUNT', 3),
+    'WORD_AI_EMAIL' =>  env('WORD_AI_EMAIL'),
+    'WORD_AI_KEY' => env('WORD_AI_KEY'),
+    'RE_WRITE_ID' => env('RE_WRITE_ID',0)
 ];
