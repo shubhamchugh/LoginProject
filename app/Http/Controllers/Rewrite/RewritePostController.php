@@ -12,7 +12,19 @@ class RewritePostController extends Controller
 {
     public function index()
     {
+        if (config('constant.RE_WRITE_ID') != 0) {
+            dd("Please Change RE_WRITE_ID to 0 in .env file");
+        }
+        
         $post = Post::where('is_rewrite', 'pending')->first();
+
+        if (empty($post)) {
+            dd("no post found for rewrite");
+        }
+
+        $post->update([
+            'is_rewrite' => 'doing',
+        ]);
 
         $oldContent = $post->content->first();
                 
@@ -85,6 +97,20 @@ class RewritePostController extends Controller
 
             $rewriteContent->update([
                 'bing_rich_snippet_text' => $bing_rich_snippet_text_updated,
+            ]);
+        }
+
+
+        if (!empty($oldContent->post_description)) {
+            $post_description_rewrite_array =  WordAi_API::response($oldContent->post_description);
+            foreach ($post_description_rewrite_array['rewrite'] as  $post_description_rewrite) {
+                $post_description_rewrite_new[] = $post_description_rewrite;
+            }
+            $post_description_updated[] =  implode(',', $post_description_rewrite_new);
+            $post_description_rewrite_new = array();
+
+            $rewriteContent->update([
+                'post_description' => $post_description_updated,
             ]);
         }
 
