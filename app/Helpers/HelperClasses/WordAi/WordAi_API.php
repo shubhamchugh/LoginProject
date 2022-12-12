@@ -2,6 +2,7 @@
 
 namespace App\Helpers\HelperClasses\WordAi;
 
+
 class WordAi_API
 {
     const REWRITE_ENDPOINT = "https://wai.wordai.com/api/rewrite";
@@ -23,7 +24,6 @@ class WordAi_API
         $this->EMAIL  =  config('constant.WORD_AI_EMAIL');
         $this->KEY  = config('constant.WORD_AI_KEY');
 
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, self::REWRITE_ENDPOINT);
         curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -36,17 +36,19 @@ class WordAi_API
                 'return_rewrites' => $return_rewrites,
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // set curl without result echo
-        
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120); //timeout in seconds
         $result = curl_exec($ch);
-        
-        curl_close($ch);
 
         $result = json_decode($result,true);
         
-        $updated = preg_replace('/[{](.*)[|]/',"",$result['text']);
-        $updated  =str_replace('}','',$updated);        
+        if ($result['status'] == 'Failure') {
+            return $result;
+        }
+        $updated['rewrite'] = preg_replace('/[{](.*)[|]/',"",$result['text']);
+        $updated['rewrite']  = str_replace('}','',$updated['rewrite']);        
         
-        
+        $updated['status'] = $result['status'];
+
         return  $updated;
     }
 
