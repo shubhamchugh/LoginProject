@@ -256,19 +256,19 @@ Route::get('user/confirm/{users}', [
 # ##################### scraping Route ##################### #
 # ######################################################### #
 
-Route::resource('scraping', 'App\Http\Controllers\Backend\Settings\ScrapingPageController');
+// Route::resource('scraping', 'App\Http\Controllers\Backend\Settings\ScrapingPageController');
 
-Route::get('scrape/bing-serp', [
-    'uses' => 'App\Http\Controllers\Backend\scrape\BingSerpScrapeController@bingScrape',
-    'as'   => 'scrape.bing',
-]);
+// Route::get('scrape/bing-serp', [
+//     'uses' => 'App\Http\Controllers\Backend\scrape\BingSerpScrapeController@bingScrape',
+//     'as'   => 'scrape.bing',
+// ]);
 
-Route::get('scrape/faq', [
-    'uses' => 'App\Http\Controllers\Backend\Scrape\FaqScrapeController@FaqScrape',
-    'as'   => 'scrape.faq',
-]);
+// Route::get('scrape/faq', [
+//     'uses' => 'App\Http\Controllers\Backend\Scrape\FaqScrapeController@FaqScrape',
+//     'as'   => 'scrape.faq',
+// ]);
 
-Route::get('related/{keyword}', [
-    'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
-    'as'   => 'scrape.keyword.update',
-]);
+// Route::get('related/{keyword}', [
+//     'uses' => 'App\Http\Controllers\Backend\Update\RelatedKeywordUpdateController@relatedKeywords',
+//     'as'   => 'scrape.keyword.update',
+// ]);
