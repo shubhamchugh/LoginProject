@@ -35,7 +35,56 @@ use App\Http\Controllers\Rewrite\RewritePostController;
 |
  */
 
+# ########################################################## #
+# ##################### Frontend Route ##################### #
+# ########################################################## #
 
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
+
+//search page
+Route::get('/search', [
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@search',
+    'as'   => 'search.show',
+]);
+
+//Frontend Product Page
+Route::get(config('constant.POST_SLUG') . '/{post}', [
+    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@show',
+    'as'   => 'post.show',
+])->middleware('checkdate');
+
+//cid Page
+Route::get(config('constant.CID') . '/{id}', [
+    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@cid',
+    'as'   => 'post.cid',
+]);
+
+if (config('constant.Update_Post_Link')) {
+    //Update Existing Post Content
+    Route::get('/update-post-content/{post_content_id}/{keyword}', [
+        'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
+        'as'   => 'post_content.update_existing',
+    ]);
+}
+
+Route::get('/', [
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@home',
+    'as'   => 'index',
+]);
+
+
+Route::get('/sitemap/{sitemap}', [
+    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@sitemap',
+    'as'   => 'sitemap.show',
+]);
+
+Route::get('/docs/{page}', StaticPageController::class)->name('docs')->where('page', 'about|contact|terms|privacy|dmca');
+
+# ############################################################## #
+# ##################### Frontend Route End ##################### #
+# ############################################################## #
 
 Route::get('rewrite',[RewritePostController::class,'index'])->name('index.rewrite');
 
@@ -158,53 +207,6 @@ Route::get('api/{api} ', [
     'uses' => 'App\Http\Controllers\ApiController@show',
     'as'   => 'api.show',
 ]);
-
-# ########################################################## #
-# ##################### Frontend Route ##################### #
-# ########################################################## #
-
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-//search page
-Route::get('/search', [
-    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@search',
-    'as'   => 'search.show',
-]);
-
-//Frontend Product Page
-Route::get(config('constant.POST_SLUG') . '/{post}', [
-    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@show',
-    'as'   => 'post.show',
-])->middleware('checkdate');
-
-//cid Page
-Route::get(config('constant.CID') . '/{id}', [
-    'uses' => 'App\Http\Controllers\Frontend\json_data\PostController@cid',
-    'as'   => 'post.cid',
-]);
-
-if (config('constant.Update_Post_Link')) {
-    //Update Existing Post Content
-    Route::get('/update-post-content/{post_content_id}/{keyword}', [
-        'uses' => 'App\Http\Controllers\Backend\Update\AutoUpdatePostController@update_existing',
-        'as'   => 'post_content.update_existing',
-    ]);
-}
-
-Route::get('/', [
-    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@home',
-    'as'   => 'index',
-]);
-
-
-Route::get('/sitemap/{sitemap}', [
-    'uses' => 'App\Http\Controllers\Frontend\json_data\HomeController@sitemap',
-    'as'   => 'sitemap.show',
-]);
-
-Route::get('/docs/{page}', StaticPageController::class)->name('docs')->where('page', 'about|contact|terms|privacy|dmca');
 
 # ######################################################### #
 # ##################### Backend Route ##################### #
